@@ -3,6 +3,9 @@ import { Provider } from 'react-redux';
 import { ThemeProvider } from './ThemeProvider';
 import { ErrorBoundary } from 'react-error-boundary';
 import { store } from '@/store';
+import { Toaster } from '@/components/ui/sonner';
+import { RouterProvider } from 'react-router-dom';
+import router from '@/routes';
 
 function ErrorFallback() {
   return (
@@ -13,12 +16,15 @@ function ErrorFallback() {
   );
 }
 
-export function AppProvider({ children }: { children: React.ReactNode }) {
+export function AppProvider() {
   return (
     <React.Suspense fallback={<div>Loading...</div>}>
       <Provider store={store}>
         <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
-          <ErrorBoundary FallbackComponent={ErrorFallback}>{children}</ErrorBoundary>
+          <ErrorBoundary FallbackComponent={ErrorFallback}>
+            <RouterProvider router={router} />
+            <Toaster />
+          </ErrorBoundary>
         </ThemeProvider>
       </Provider>
     </React.Suspense>
