@@ -3,7 +3,6 @@ import { Provider } from 'react-redux';
 import { ThemeProvider } from './ThemeProvider';
 import { ErrorBoundary } from 'react-error-boundary';
 import { store } from '@/store';
-import { Toaster } from '@/components/ui/sonner';
 import { RouterProvider } from 'react-router-dom';
 import router from '@/routes';
 
@@ -23,7 +22,6 @@ export function AppProvider() {
         <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
           <ErrorBoundary FallbackComponent={ErrorFallback}>
             <RouterProvider router={router} />
-            <Toaster />
           </ErrorBoundary>
         </ThemeProvider>
       </Provider>
