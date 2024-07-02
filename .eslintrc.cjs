@@ -15,11 +15,11 @@ module.exports = {
     'plugin:prettier/recommended',
     'prettier',
   ],
-  ignorePatterns: ['dist', '.eslintrc.cjs', 'tailwind.config.js', 'node_modules', 'postcss.config.js', '*.json'],
+  ignorePatterns: ['dist', '.eslintrc.cjs', 'node_modules'],
   parser: '@typescript-eslint/parser',
   plugins: ['react-refresh', 'react', '@typescript-eslint', 'prettier'],
   rules: {
-    'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+    'react-refresh/only-export-components': ['off', { allowConstantExport: true }],
     '@typescript-eslint/no-explicit-any': 'warn',
   },
 };

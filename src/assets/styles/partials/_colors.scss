@@ -1,0 +1,82 @@
+$ecommerce-theme-colors: (
+  default: (
+    //black
+    black: #383838,
+    //white
+    white: #ffffff,
+
+    //gray
+    gray-500: #a7a7a7,
+    gray-300: #ebebeb,
+    gray-100: #fafafa,
+
+    //silver
+    silver-900: #505962,
+    silver-700: #73808c,
+    silver-500: #abb2ba,
+    silver-300: #d5d9dd,
+    silver-100: #f1f2f4,
+
+    //primary-purple
+    primary-purple-default: #985dec,
+    primary-purple-dark: #814fc9,
+    primary-purple-light: #f0e7fc,
+    primary-purple-lighter: #faf7fe,
+    primary-purple-opa: #985dec0d,
+
+    //primary-teal
+    primary-teal-default: #39c9a7,
+    primary-teal-dark: #30ab8e,
+    primary-teal-light: #e1f7f2,
+    primary-teal-lighter: #f5fcfb,
+    primary-teal-opa: #39c9a70d,
+
+    //secondary-blue
+    secondary-blue-default: #3f8efc,
+    secondary-blue-dark: #3679d6,
+    secondary-blue-light: #e2eeff,
+    secondary-blue-lighter: #f5f9ff,
+    secondary-blue-opa: #3f8efc0d,
+
+    //secondary-red
+    secondary-red-default: #f15366,
+    secondary-red-dark: #cd4757,
+    secondary-red-light: #fde5e8,
+    secondary-red-lighter: #fef6f7,
+    secondary-red-opa: #f153660d,
+
+    //secondary-pink
+    secondary-pink-default: #ff5289,
+    secondary-pink-dark: #d94674,
+    secondary-pink-light: #ffe5ed,
+    secondary-pink-lighter: #fff6f9,
+    secondary-pink-opa: #ff52890d,
+
+    //secondary-orange
+    secondary-orange-default: #f58c5c,
+    secondary-orange-dark: #d0774e,
+    secondary-orange-light: #feeee7,
+    secondary-orange-lighter: #fff9f7,
+    secondary-orange-opa: #f58c5c0d,
+
+    //secondary-yellow
+    secondary-yellow-default: #ffc107,
+    secondary-yellow-dark: #d9a406,
+    secondary-yellow-light: #fff6da,
+    secondary-yellow-lighter: #fffcf3,
+    secondary-yellow-opa: #ffc1070d,
+
+    //secondary-gold
+    secondary-gold-default: #ddb21d,
+    secondary-gold-dark: #bc9719,
+    secondary-gold-light: #faf3dd,
+    secondary-gold-lighter: #fdfbf4,
+    secondary-gold-opa: #ddb21d0d,
+
+    app-background: #f5f7f9,
+  ),
+);
+
+@function theme($key: string) {
+  @return map-get($ecommerce-theme-colors, default, $key);
+}
