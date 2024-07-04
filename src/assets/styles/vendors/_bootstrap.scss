@@ -1,3 +1,8 @@
-@use '@assets/styles/partials/colors' as colors;
+@use '@assets/styles/main' as partials;
+
+$input-focus-box-shadow: none !important;
+
+$card-bg: transparent;
+$card-border-radius: 4px;
 
 @import 'node_modules/bootstrap/scss/bootstrap';

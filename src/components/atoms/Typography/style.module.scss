@@ -1,0 +1,97 @@
+@use '@assets/styles/main' as partials;
+
+.typography {
+  margin-bottom: 0;
+  word-break: break-word;
+  color: inherit;
+  fill: inherit;
+}
+
+.colorPrimaryPurple {
+  color: partials.theme(primary-purple-default);
+  fill: partials.theme(primary-purple-default);
+}
+
+.colorPrimaryTeal {
+  color: partials.theme(primary-teal-default);
+  fill: partials.theme(primary-teal-default);
+}
+
+.colorSecondaryBlue {
+  color: partials.theme(secondary-blue-default);
+  fill: partials.theme(secondary-blue-default);
+}
+
+.colorSecondaryRed {
+  color: partials.theme(secondary-red-default);
+  fill: partials.theme(secondary-red-default);
+}
+
+.colorSecondaryPink {
+  color: partials.theme(secondary-pink-default);
+  fill: partials.theme(secondary-pink-default);
+}
+
+.colorSecondaryOrange {
+  color: partials.theme(secondary-orange-default);
+  fill: partials.theme(secondary-orange-default);
+}
+
+.colorSecondaryYellow {
+  color: partials.theme(secondary-yellow-default);
+  fill: partials.theme(secondary-yellow-default);
+}
+
+.colorSecondaryGold {
+  color: partials.theme(secondary-gold-default);
+  fill: partials.theme(secondary-gold-default);
+}
+
+.colorSilver {
+  color: partials.theme(silver-500);
+  fill: partials.theme(silver-500);
+}
+
+.captionNormal {
+  @include partials.CaptionNormal;
+}
+
+.captionSemiBold {
+  @include partials.CaptionSemiBold;
+}
+
+.smallRegular {
+  @include partials.SmallRegular;
+}
+
+.smallSemiBold {
+  @include partials.SmallSemiBold;
+}
+
+.smallBold {
+  @include partials.SmallBold;
+}
+
+.baseRegular {
+  @include partials.BaseRegular;
+}
+
+.baseSemiBold {
+  @include partials.BaseSemiBold;
+}
+
+.baseBold {
+  @include partials.BaseBold;
+}
+
+.largeRegular {
+  @include partials.LargeRegular;
+}
+
+.largeSemiBold {
+  @include partials.LargeSemiBold;
+}
+
+.largeBold {
+  @include partials.LargeBold;
+}

@@ -17,6 +17,7 @@
   min-height: 100vh;
   width: 100%;
   background-color: partials.theme(app-background);
+  color: partials.theme(black);
 }
 
 html {
@@ -41,4 +42,8 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.text-line-through {
+  text-decoration: line-through;
 }
