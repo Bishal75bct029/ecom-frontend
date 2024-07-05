@@ -12,6 +12,13 @@ export const publicRouter: RouteObject[] = [
           return { Component: Homepage };
         },
       },
+      {
+        path: '',
+        lazy: async () => {
+          const { Homepage } = await import('@/pages/HomePage');
+          return { Component: Homepage };
+        },
+      },
     ],
   },
 ];

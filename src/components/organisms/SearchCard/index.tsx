@@ -14,6 +14,7 @@ interface SearchCardProps {
   discount: number;
   rating: number;
   image: string;
+  totalRatings: number;
 }
 
 const PriceView: FC<Pick<SearchCardProps, 'discount' | 'price'>> = ({ discount, price }) => {
@@ -36,7 +37,7 @@ const PriceView: FC<Pick<SearchCardProps, 'discount' | 'price'>> = ({ discount, 
   );
 };
 
-const SearchCard: FC<SearchCardProps> = ({ to, name, totalSold, price, discount, rating, image }) => {
+const SearchCard: FC<SearchCardProps> = ({ to, name, totalSold, price, discount, rating, image, totalRatings }) => {
   const navigate = useNavigate();
 
   return (
@@ -46,13 +47,20 @@ const SearchCard: FC<SearchCardProps> = ({ to, name, totalSold, price, discount,
       </div>
       <Stack className="px-3 mt-2 pb-3">
         <Typography className={style.searchItemName}>{name}</Typography>
-        <div className="d-flex gap-2">
+        <div className="d-flex gap-1">
           <StarRating initialValue={rating} size={18} readonly />
-          <Typography color="silver-700" fontsStyle="caption-normal" className="mt-2">
-            {totalSold} Sold
+          <Typography color="silver-500" fontsStyle="caption-semi-bold" style={{ marginTop: '9px' }}>
+            ({totalRatings})
           </Typography>
         </div>
-        <PriceView {...{ discount, price }} />
+        <Stack direction="horizontal" className="justify-content-between">
+          <PriceView {...{ discount, price }} />
+          {totalSold > 0 && (
+            <Typography color="silver-700" fontsStyle="caption-normal" className="mt-1">
+              {totalSold} Sold
+            </Typography>
+          )}
+        </Stack>
       </Stack>
     </Card>
   );

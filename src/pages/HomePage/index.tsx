@@ -11,6 +11,7 @@ const randomData = (total: number) =>
     totalSold: faker.number.int({ min: 100, max: 500 }),
     price: parseInt(faker.commerce.price({ dec: 0 })),
     discount: faker.number.int({ min: 0, max: 100 }),
+    totalRatings: faker.number.int({ min: 0, max: 200 }),
   }));
 
 export const Homepage = () => {

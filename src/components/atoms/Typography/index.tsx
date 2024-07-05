@@ -1,5 +1,5 @@
 import { DetailedHTMLProps, FC, HTMLAttributes, ReactNode } from 'react';
-import style from './style.module.scss';
+import styles from './style.module.scss';
 
 export type TypographyColors =
   | 'inherit'
@@ -37,35 +37,36 @@ export interface TypographyProps {
   fontsStyle?: TypographyFontsStyle;
   role?: string;
   id?: string;
+  style?: React.CSSProperties;
 }
 
 const colorsClass: Record<TypographyColors, string> = {
   inherit: '',
-  'primary-purple': style.colorPrimaryPurple,
-  'primary-teal': style.colorPrimaryTeal,
-  'secondary-blue': style.colorSecondaryBlue,
-  'secondary-red': style.colorSecondaryRed,
-  'secondary-pink': style.colorSecondaryPink,
-  'secondary-orange': style.colorSecondaryOrange,
-  'secondary-yellow': style.colorSecondaryYellow,
-  'secondary-gold': style.colorSecondaryGold,
-  'silver-500': style.colorSilver500,
-  'silver-700': style.colorSilver700,
+  'primary-purple': styles.colorPrimaryPurple,
+  'primary-teal': styles.colorPrimaryTeal,
+  'secondary-blue': styles.colorSecondaryBlue,
+  'secondary-red': styles.colorSecondaryRed,
+  'secondary-pink': styles.colorSecondaryPink,
+  'secondary-orange': styles.colorSecondaryOrange,
+  'secondary-yellow': styles.colorSecondaryYellow,
+  'secondary-gold': styles.colorSecondaryGold,
+  'silver-500': styles.colorSilver500,
+  'silver-700': styles.colorSilver700,
 };
 
 const fontStyle: Record<TypographyFontsStyle, string> = {
   inherit: '',
-  'caption-normal': style.captionNormal,
-  'caption-semi-bold': style.captionSemiBold,
-  'small-regular': style.smallRegular,
-  'small-semi-bold': style.smallSemiBold,
-  'small-bold': style.smallBold,
-  'base-regular': style.baseRegular,
-  'base-semi-bold': style.baseSemiBold,
-  'base-bold': style.baseBold,
-  'large-regular': style.largeRegular,
-  'large-semi-bold': style.largeSemiBold,
-  'large-bold': style.largeBold,
+  'caption-normal': styles.captionNormal,
+  'caption-semi-bold': styles.captionSemiBold,
+  'small-regular': styles.smallRegular,
+  'small-semi-bold': styles.smallSemiBold,
+  'small-bold': styles.smallBold,
+  'base-regular': styles.baseRegular,
+  'base-semi-bold': styles.baseSemiBold,
+  'base-bold': styles.baseBold,
+  'large-regular': styles.largeRegular,
+  'large-semi-bold': styles.largeSemiBold,
+  'large-bold': styles.largeBold,
 };
 
 const Typography: FC<TypographyProps> = ({
@@ -77,17 +78,18 @@ const Typography: FC<TypographyProps> = ({
   role,
   onClick,
   id,
+  style,
 }) => {
   const VariableComponent = component;
   const componentClass = [
-    style.typography,
+    styles.typography,
     colorsClass[color],
     className || '',
     fontStyle[fontsStyle as keyof typeof fontStyle],
   ];
 
   return (
-    <VariableComponent className={componentClass.join(' ')} onClick={onClick} role={role} id={id}>
+    <VariableComponent className={componentClass.join(' ')} onClick={onClick} role={role} id={id} style={style}>
       {children}
     </VariableComponent>
   );
