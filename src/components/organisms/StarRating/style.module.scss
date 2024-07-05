@@ -1,0 +1,32 @@
+.wrapper {
+  display: inline-block;
+  touch-action: none;
+
+  .container {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    vertical-align: middle;
+    user-select: none;
+    touch-action: none;
+  }
+
+  .emptyIcons {
+    display: inline-block;
+    color: #dadada;
+  }
+
+  .filledIcons {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    color: #ffbc0b;
+    transition:
+      width 0.3s ease,
+      color 0.3s ease;
+  }
+}

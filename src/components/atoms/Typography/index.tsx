@@ -11,7 +11,8 @@ export type TypographyColors =
   | 'secondary-orange'
   | 'secondary-yellow'
   | 'secondary-gold'
-  | 'silver';
+  | 'silver-500'
+  | 'silver-700';
 
 export type TypographyFontsStyle =
   | 'inherit'
@@ -48,7 +49,8 @@ const colorsClass: Record<TypographyColors, string> = {
   'secondary-orange': style.colorSecondaryOrange,
   'secondary-yellow': style.colorSecondaryYellow,
   'secondary-gold': style.colorSecondaryGold,
-  silver: style.colorSilver,
+  'silver-500': style.colorSilver500,
+  'silver-700': style.colorSilver700,
 };
 
 const fontStyle: Record<TypographyFontsStyle, string> = {

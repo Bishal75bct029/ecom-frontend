@@ -47,9 +47,14 @@
   fill: partials.theme(secondary-gold-default);
 }
 
-.colorSilver {
+.colorSilver500 {
   color: partials.theme(silver-500);
   fill: partials.theme(silver-500);
+}
+
+.colorSilver700 {
+  color: partials.theme(silver-700);
+  fill: partials.theme(silver-700);
 }
 
 .captionNormal {
