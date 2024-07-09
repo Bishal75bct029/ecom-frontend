@@ -5,4 +5,25 @@ $input-focus-box-shadow: none !important;
 $card-bg: transparent;
 $card-border-radius: 4px;
 
+$btn-line-height: 24px;
+
+$pagination-padding-y: 0.5rem;
+$pagination-color: partials.theme(black);
+$pagination-bg: transparent;
+
+$pagination-focus-color: none;
+$pagination-focus-bg: transparent;
+$pagination-focus-box-shadow: none;
+
+$pagination-hover-border-color: partials.theme(primary-purple-default);
+$pagination-hover-color: partials.theme(primary-purple-default);
+$pagination-hover-bg: transparent;
+
+$pagination-active-color: partials.theme(primary-purple-default);
+$pagination-active-bg: transparent;
+$pagination-active-border-color: partials.theme(primary-purple-default);
+
+$pagination-disabled-color: partials.theme(silver-500);
+$pagination-disabled-bg: transparent;
+
 @import 'node_modules/bootstrap/scss/bootstrap';

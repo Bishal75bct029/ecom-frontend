@@ -7,7 +7,7 @@ export interface StarIconProps {
 export const StarIcon: FC<StarIconProps> = ({ size }) => {
   return (
     <svg
-      stroke="currentColor"
+      stroke="#ffbc0b"
       fill="currentColor"
       viewBox="0 0 24 24"
       width={size}
