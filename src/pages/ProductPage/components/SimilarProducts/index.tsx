@@ -1,6 +1,8 @@
 import { SearchCard } from '@/components/organisms';
 import { faker } from '@faker-js/faker';
+
 import style from './style.module.scss';
+import { Typography } from '@/components/atoms';
 
 const randomData = (total: number) =>
   [...Array(total)].map(() => ({
@@ -14,11 +16,15 @@ const randomData = (total: number) =>
     totalRatings: faker.number.int({ min: 0, max: 200 }),
   }));
 
-const data = randomData(20);
+const data = randomData(10);
 
-const Homepage = () => {
+const SimilarProducts = () => {
   return (
     <>
+      <Typography fontsStyle="large-semi-bold" className="mb-3">
+        Disover Similar Products
+      </Typography>
+
       <div className={style.cardsContainer}>
         {data.map(({ id, ...item }) => (
           <SearchCard key={id} to={`/${id}`} {...item} />
@@ -28,4 +34,4 @@ const Homepage = () => {
   );
 };
 
-export default Homepage;
+export default SimilarProducts;

@@ -35,7 +35,7 @@ body {
 }
 
 .cursor-na {
-  cursor: not-allowed;
+  cursor: not-allowed !important;
 }
 
 .text-ellipsis {
@@ -46,4 +46,8 @@ body {
 
 .text-line-through {
   text-decoration: line-through;
+}
+
+.word-no-break {
+  word-break: normal;
 }

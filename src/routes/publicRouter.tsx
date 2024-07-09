@@ -8,15 +8,15 @@ export const publicRouter: RouteObject[] = [
       {
         path: '',
         lazy: async () => {
-          const { Homepage } = await import('@/pages/HomePage');
+          const { Homepage } = await import('@/pages');
           return { Component: Homepage };
         },
       },
       {
-        path: '',
+        path: ':id',
         lazy: async () => {
-          const { Homepage } = await import('@/pages/HomePage');
-          return { Component: Homepage };
+          const { ProductPage } = await import('@/pages');
+          return { Component: ProductPage };
         },
       },
     ],
