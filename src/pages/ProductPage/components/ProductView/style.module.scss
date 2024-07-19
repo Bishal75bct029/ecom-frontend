@@ -1,0 +1,32 @@
+@use '@assets/styles/main' as partials;
+
+.totalRating {
+  cursor: pointer;
+  margin-top: 8px;
+  &:hover {
+    color: partials.theme(primary-purple-dark);
+    text-decoration: underline;
+  }
+}
+
+.productVariantCard {
+  border: 1px solid partials.theme(gray-500);
+  border-radius: 4px;
+  padding-inline: 4px;
+  cursor: pointer;
+
+  &.selectedVariant {
+    border: 1px solid partials.theme(primary-purple-default);
+    box-shadow: 0px 4px 0px 0px #f0e7fc;
+  }
+
+  &.disabledVariant {
+    color: partials.theme(silver-500);
+    border: 1px solid #ebebeb;
+    cursor: not-allowed;
+  }
+
+  &:hover {
+    @extend .selectedVariant;
+  }
+}

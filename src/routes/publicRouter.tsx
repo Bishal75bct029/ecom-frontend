@@ -13,7 +13,7 @@ export const publicRouter: RouteObject[] = [
         },
       },
       {
-        path: ':id',
+        path: ':productId',
         lazy: async () => {
           const { ProductPage } = await import('@/pages');
           return { Component: ProductPage };

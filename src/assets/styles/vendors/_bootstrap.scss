@@ -26,4 +26,8 @@ $pagination-active-border-color: partials.theme(primary-purple-default);
 $pagination-disabled-color: partials.theme(silver-500);
 $pagination-disabled-bg: transparent;
 
+$card-border-width: 1px;
+$card-border-radius: 4px;
+$card-border-color: partials.theme(gray-300);
+
 @import 'node_modules/bootstrap/scss/bootstrap';

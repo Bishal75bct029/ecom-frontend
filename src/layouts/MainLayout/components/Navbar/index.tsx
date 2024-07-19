@@ -1,4 +1,5 @@
 import { Container, Stack } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 import GlobalMstImage from '@/assets/icons/global-mst.svg';
 import style from './style.module.scss';
@@ -6,10 +7,12 @@ import SearchBar from '../../../../components/organisms/SearchBar';
 import { CartIcon, SignupIcon, UserIcon } from '@/assets/icons';
 
 const Navbar = () => {
+  const navigate = useNavigate();
+
   return (
     <Container fluid className={style.navbar}>
       <Container fluid className={style.layout}>
-        <div className={style.imageContainer}>
+        <div className={style.imageContainer} onClick={() => navigate('/')}>
           <img src={GlobalMstImage} alt="logo" />
         </div>
         <SearchBar />

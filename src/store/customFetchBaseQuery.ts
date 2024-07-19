@@ -1,16 +1,22 @@
+import config from '@/config';
 import { fetchBaseQuery } from '@reduxjs/toolkit/query';
 import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: 'https://jsonplaceholder.typicode.com',
+  baseUrl: config.baseUrl,
   prepareHeaders: (headers) => {
     // get token from localstorage and pass
     headers.set('Authorization', `Bearer token`);
     return headers;
   },
+  credentials: 'include',
+  async responseHandler(response) {
+    const res = await response.json();
+    return res?.data;
+  },
 });
 
-export const customFetchBaseQuery: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = async (
+const customFetchBaseQuery: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = async (
   fetchArgs,
   api,
   extraOptions,
@@ -25,3 +31,5 @@ export const customFetchBaseQuery: BaseQueryFn<string | FetchArgs, unknown, Fetc
 
   return baseQueryResult;
 };
+
+export default customFetchBaseQuery;
