@@ -4,10 +4,16 @@ import { LoginPayload } from './types';
 export const authApi = baseApi.enhanceEndpoints({ addTagTypes: [] }).injectEndpoints({
   endpoints: (builder) => ({
     postLogin: builder.mutation<void, LoginPayload>({
-      query: (body) => ({
+      query: (data) => ({
         url: `api/users/login`,
         method: 'POST',
-        body,
+        data,
+      }),
+    }),
+    postLogout: builder.mutation<void, void>({
+      query: () => ({
+        url: `api/users/logout`,
+        method: 'POST',
       }),
     }),
     getUserDetail: builder.query<any, void>({
@@ -19,4 +25,5 @@ export const authApi = baseApi.enhanceEndpoints({ addTagTypes: [] }).injectEndpo
   }),
 });
 
-export const { usePostLoginMutation, useGetUserDetailQuery, useLazyGetUserDetailQuery } = authApi;
+export const { usePostLoginMutation, useGetUserDetailQuery, useLazyGetUserDetailQuery, usePostLogoutMutation } =
+  authApi;

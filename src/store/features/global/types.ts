@@ -7,7 +7,7 @@ export interface UserDetailType {
     name: string;
     type: string;
     contact: string;
-  };
+  }[];
 }
 
 export type GlobalState = {

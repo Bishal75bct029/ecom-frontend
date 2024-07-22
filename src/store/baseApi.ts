@@ -1,10 +1,10 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 
-import customFetchBaseQuery from './customFetchBaseQuery';
+import axiosBaseQuery from './axiosBaseQuery';
 
 const baseApi = createApi({
   reducerPath: 'baseApiReducer',
-  baseQuery: customFetchBaseQuery,
+  baseQuery: axiosBaseQuery(),
   endpoints: () => ({}),
 });
 
