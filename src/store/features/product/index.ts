@@ -1,34 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
 import { ProductType } from './types';
 import baseApi from '@/store/baseApi';
 
-const initialState: { product?: ProductType } = {
-  product: undefined,
-};
-
-export const productSlice = createSlice({
-  name: 'productSlice',
-  initialState,
-  reducers: {},
-  reducerPath: 'product',
-  extraReducers: (builder) => {
-    builder.addMatcher(productApi.endpoints.getProductById.matchFulfilled, (state, { payload }) => {
-      const variantsArray = [
-        { size: 'M', color: 'blue' },
-        { size: 'L', color: 'blue' },
-        { size: 'XL', color: 'blue' },
-        { size: 'M', color: 'red' },
-        { size: 'L', color: 'red' },
-        { size: 'XL', color: 'red' },
-      ];
-      const productMeta = payload.productMeta.map((meta, i) => ({ ...meta, variants: variantsArray[i] }));
-      const product = { ...payload, attributeOptions: { size: ['M', 'L', 'XL'], color: ['blue', 'red'] }, productMeta };
-      state.product = product;
-    });
-  },
-});
-
-const productApi = baseApi.enhanceEndpoints({ addTagTypes: ['products'] }).injectEndpoints({
+const productApi = baseApi.enhanceEndpoints({ addTagTypes: ['products', 'products-by-category'] }).injectEndpoints({
   endpoints: (builder) => ({
     getProducts: builder.query<ProductType[], void>({
       query: () => ({
@@ -46,14 +19,13 @@ const productApi = baseApi.enhanceEndpoints({ addTagTypes: ['products'] }).injec
     }),
     getProductByCategory: builder.query<ProductType[], { categoryId: string; productId: string }>({
       query: ({ categoryId, productId }) => ({
-        url: `api/products/category?categoryId=${categoryId}&productId=${productId}`,
+        url: `api/products/category`,
         method: 'GET',
+        params: { categoryId, productId },
       }),
-      providesTags: ['products'],
+      providesTags: (_, __, args) => [{ type: 'products-by-category', id: args.categoryId }],
     }),
   }),
 });
 
 export const { useGetProductsQuery, useGetProductByIdQuery, useGetProductByCategoryQuery } = productApi;
-
-export default productSlice.reducer;

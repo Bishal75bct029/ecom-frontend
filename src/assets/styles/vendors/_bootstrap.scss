@@ -30,4 +30,20 @@ $card-border-width: 1px;
 $card-border-radius: 4px;
 $card-border-color: partials.theme(gray-300);
 
+$input-padding-x: 1rem;
+$input-padding-y: 0.75rem;
+$input-border-radius: 4px;
+$input-border-width: 1px;
+$input-border-color: partials.theme(gray-300);
+$input-placeholder-color: partials.theme(silver-500);
+$input-focus-border-color: partials.theme(primary-purple-default);
+$input-focus-box-shadow: none !important;
+
+$form-feedback-icon-invalid: none;
+
+$modal-content-bg: partials.theme(white);
+$enable-validation-icons: false;
+$modal-content-border-color: transparent;
+$modal-backdrop-opacity: 0.7;
+
 @import 'node_modules/bootstrap/scss/bootstrap';

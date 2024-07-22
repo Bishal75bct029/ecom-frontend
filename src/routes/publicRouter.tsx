@@ -13,6 +13,13 @@ export const publicRouter: RouteObject[] = [
         },
       },
       {
+        path: 'login',
+        lazy: async () => {
+          const { LoginPage } = await import('@/pages/AuthPages');
+          return { Component: LoginPage };
+        },
+      },
+      {
         path: ':productId',
         lazy: async () => {
           const { ProductPage } = await import('@/pages');

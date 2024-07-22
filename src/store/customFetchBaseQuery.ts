@@ -10,9 +10,16 @@ const baseQuery = fetchBaseQuery({
     return headers;
   },
   credentials: 'include',
-  async responseHandler(response) {
+  responseHandler: async (response) => {
     const res = await response.json();
     return res?.data;
+  },
+  paramsSerializer: (params) => {
+    const query = Object.keys(params).map((key) => {
+      if (!params[key]) return null;
+      return [key, params[key]].map(encodeURIComponent).join('=');
+    });
+    return query.filter((item) => item).join('&');
   },
 });
 
@@ -21,6 +28,12 @@ const customFetchBaseQuery: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQu
   api,
   extraOptions,
 ) => {
+  if (typeof fetchArgs === 'object' && fetchArgs.body && fetchArgs.body instanceof FormData) {
+    fetchArgs.headers = {
+      ...fetchArgs.headers,
+      'Content-Type': 'multipart/form-data',
+    };
+  }
   const baseQueryResult = await baseQuery(fetchArgs, api, extraOptions);
 
   if (baseQueryResult.error?.status === 401) {
