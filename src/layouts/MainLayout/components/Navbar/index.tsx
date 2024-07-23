@@ -16,10 +16,8 @@ const Navbar = () => {
         </div>
         <div className={style.categoriesContainer}>
           <Typography className={style.categoryText}>Categories</Typography>
-          <div className={style.container}>
-            <div className={style.categories}>
-              <Categories />
-            </div>
+          <div className={style.categories}>
+            <Categories />
           </div>
         </div>
         <SearchBar />

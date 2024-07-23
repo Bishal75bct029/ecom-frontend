@@ -12,6 +12,8 @@ type Category = {
 const Categories = () => {
   const [subCategory, setSubCategory] = useState<Category[] | undefined | null>();
   const [nestedSubCategory, setNestedSubCategory] = useState<Category[] | undefined | null>();
+  const [activeCategory, setActiveCategory] = useState<number | null>(null);
+  const [activeSubCategory, setActiveSubCategory] = useState<number | null>(null);
 
   const categories = [
     {
@@ -125,6 +127,87 @@ const Categories = () => {
           ],
         },
         {
+          name: 'Local Phones',
+          image: '',
+          children: [
+            {
+              name: 'Local Phone',
+              image: '',
+              children: null,
+              parent: {
+                name: 'Electronic Devices',
+                image: 'https://static-01.daraz.com.np/p/35d822d21ab4ea3c1bac36565c852944.jpg_750x750.jpg_.webp',
+              },
+            },
+            {
+              name: 'Redmi Phones',
+              image: 'https://static-01.daraz.com.np/p/45800a055b698f87a3b1ed2732a13ab8.jpg_750x750.jpg_.webp',
+              children: null,
+            },
+          ],
+        },
+        {
+          name: 'Smart Phones',
+          image: '',
+          children: [
+            {
+              name: 'Samsung Phone',
+              image: '',
+              children: null,
+              parent: {
+                name: 'Electronic Devices',
+                image: 'https://static-01.daraz.com.np/p/35d822d21ab4ea3c1bac36565c852944.jpg_750x750.jpg_.webp',
+              },
+            },
+            {
+              name: 'Redmi Phones',
+              image: 'https://static-01.daraz.com.np/p/45800a055b698f87a3b1ed2732a13ab8.jpg_750x750.jpg_.webp',
+              children: null,
+            },
+          ],
+        },
+        {
+          name: 'New Phones',
+          image: '',
+          children: [
+            {
+              name: 'Samsung Phone',
+              image: '',
+              children: null,
+              parent: {
+                name: 'Electronic Devices',
+                image: 'https://static-01.daraz.com.np/p/35d822d21ab4ea3c1bac36565c852944.jpg_750x750.jpg_.webp',
+              },
+            },
+            {
+              name: 'Redmi Phones',
+              image: 'https://static-01.daraz.com.np/p/45800a055b698f87a3b1ed2732a13ab8.jpg_750x750.jpg_.webp',
+              children: null,
+            },
+          ],
+        },
+
+        {
+          name: 'Old Phones',
+          image: '',
+          children: [
+            {
+              name: 'Samsung Phone',
+              image: '',
+              children: null,
+              parent: {
+                name: 'Electronic Devices',
+                image: 'https://static-01.daraz.com.np/p/35d822d21ab4ea3c1bac36565c852944.jpg_750x750.jpg_.webp',
+              },
+            },
+            {
+              name: 'Redmi Phones',
+              image: 'https://static-01.daraz.com.np/p/45800a055b698f87a3b1ed2732a13ab8.jpg_750x750.jpg_.webp',
+              children: null,
+            },
+          ],
+        },
+        {
           name: 'Tablet',
           image: 'https://static-01.daraz.com.np/p/b2f94dd0976797d72d2db484e2238d09.jpg_750x750.jpg_.webp',
           children: [
@@ -141,7 +224,7 @@ const Categories = () => {
           ],
         },
         {
-          name: 'PCS',
+          name: 'PC',
           image: '',
           children: [
             {
@@ -170,45 +253,68 @@ const Categories = () => {
       onMouseLeave={() => {
         setSubCategory(null);
         setNestedSubCategory(null);
+        setActiveCategory(null);
+        setActiveSubCategory(null);
       }}
     >
       <div className={style.singleCategory}>
-        {categories?.map((category) => {
+        {categories?.map((category, index) => {
           return (
             <div
-              className={style.subCategory}
+              className={style.topCategory}
               onMouseEnter={() => {
                 setSubCategory(category['children']);
                 setNestedSubCategory(null);
+                setActiveSubCategory(null);
+                setActiveCategory(index);
               }}
             >
-              <Typography>{category.name}</Typography>
+              <Typography
+                className={`${activeCategory == index ? style.activeCategoryText : ''} ${style.categoryText}`}
+              >
+                {category.name}
+              </Typography>
+              {activeCategory == index && <i className={style.arrowRight}></i>}
             </div>
           );
         })}
       </div>
 
-      <div className={style.singleCategory}>
-        {subCategory?.map((category) => {
-          return (
-            <div className={style.nestedSubCategory} onMouseEnter={() => setNestedSubCategory(category['children'])}>
-              <img src={category.image || 'https://via.placeholder.com/50'} alt="" className={style.image} />
-              <Typography>{category.name}</Typography>
-            </div>
-          );
-        })}
-      </div>
+      {subCategory && (
+        <div className={style.singleCategory}>
+          {subCategory?.map((category, index) => {
+            return (
+              <div
+                className={style.subCategory}
+                onMouseEnter={() => {
+                  setNestedSubCategory(category['children']);
+                  setActiveSubCategory(index);
+                }}
+              >
+                <Typography
+                  className={`${activeSubCategory == index ? style.activeCategoryText : ''} ${style.categoryText}`}
+                >
+                  {category.name}
+                </Typography>
+                {activeSubCategory == index && <i className={style.arrowRight}></i>}
+              </div>
+            );
+          })}
+        </div>
+      )}
 
-      <div className={style.singleCategory} onMouseLeave={() => setNestedSubCategory(null)}>
-        {nestedSubCategory?.map((category) => {
-          return (
-            <div className={style.topCategory}>
-              <img src={category.image || 'https://via.placeholder.com/50'} alt="" className={style.image} />
-              <Typography>{category.name}</Typography>
-            </div>
-          );
-        })}
-      </div>
+      {nestedSubCategory && (
+        <div className={style.singleNestedCategory} onMouseLeave={() => setNestedSubCategory(null)}>
+          {nestedSubCategory?.map((category, index) => {
+            return (
+              <div className={style.nestedSubCategory} key={index}>
+                <img src={category.image || 'https://via.placeholder.com/50'} alt="" className={style.image} />
+                <Typography>{category.name}</Typography>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 };

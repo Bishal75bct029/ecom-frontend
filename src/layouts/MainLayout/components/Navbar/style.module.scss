@@ -7,7 +7,6 @@
   color: #fff;
 
   .layout {
-    padding-inline: 0;
     width: 1440px;
     margin: 0 auto;
     display: flex;
@@ -33,22 +32,29 @@
 
       .categories {
         opacity: 0;
+        display: none;
         position: absolute;
         top: 0;
         width: 100%;
         padding-top: 35px;
+        height: 0;
       }
 
-      &:hover .categories {
-        max-height: 320px;
-        width: 100vw;
-        z-index: 1;
-        overflow-y: scroll;
-        left: -240%;
-        position: absolute;
-        top: 100%;
-        opacity: 1;
-        transition: opacity 0.25s ease-in-out;
+      &:hover {
+        .categories {
+          display: block;
+          height: 320px;
+          box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.2);
+          width: 100vw;
+          z-index: 1;
+          overflow-y: scroll;
+          left: -240%;
+          position: absolute;
+          top: 100%;
+          opacity: 1;
+          padding-top: 35px;
+          transition: opacity 0.25s ease-in-out;
+        }
       }
 
       .categories::-webkit-scrollbar {
