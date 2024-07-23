@@ -1,0 +1,30 @@
+@use '@assets/styles/main' as partials;
+
+.categories {
+  width: auto;
+  display: flex;
+  align-items: top;
+  color: #383838;
+  gap: 2%;
+  padding: 1% 5%;
+  border-right: 2px solid #383838;
+}
+
+.singleCategory {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  .topCategory,
+  .subCategory,
+  .nestedSubCategory {
+    display: flex;
+    flex-direction: column;
+
+    .image {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+  }
+}

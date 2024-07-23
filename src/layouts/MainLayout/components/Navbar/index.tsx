@@ -4,6 +4,8 @@ import GlobalMstImage from '@/assets/icons/global-mst.svg';
 import style from './style.module.scss';
 import SearchBar from '../../../../components/organisms/SearchBar';
 import { CartIcon, SignupIcon, UserIcon } from '@/assets/icons';
+import { Typography } from '@/components/atoms';
+import Categories from '../Categories';
 
 const Navbar = () => {
   return (
@@ -11,6 +13,14 @@ const Navbar = () => {
       <Container fluid className={style.layout}>
         <div className={style.imageContainer}>
           <img src={GlobalMstImage} alt="logo" />
+        </div>
+        <div className={style.categoriesContainer}>
+          <Typography className={style.categoryText}>Categories</Typography>
+          <div className={style.container}>
+            <div className={style.categories}>
+              <Categories />
+            </div>
+          </div>
         </div>
         <SearchBar />
         <Stack direction="horizontal" className={style.rightContainer}>
