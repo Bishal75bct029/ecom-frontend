@@ -6,6 +6,7 @@ import { TextInput, HookTextInput } from './TextInput';
 import HookForm from './HookForm';
 import HookFormProvider from './HookFormProvider';
 import Modal from './Modal';
+import { CheckBox, HookCheckBox } from './Checkbox';
 
 export {
   Typography,
@@ -17,4 +18,6 @@ export {
   HookForm,
   HookFormProvider,
   Modal,
+  CheckBox,
+  HookCheckBox,
 };

@@ -1,0 +1,27 @@
+@use '@assets/styles/main' as partials;
+
+.checkbox {
+  display: block;
+
+  & input {
+    cursor: pointer;
+    border-radius: 2px;
+    border: 1px solid partials.theme(silver-500);
+    background-color: transparent;
+
+    &:checked {
+      background-color: partials.theme(primary-teal-default);
+      border: partials.theme(primary-teal-default) !important;
+    }
+
+    &:focus {
+      border-color: partials.theme(primary-teal-default) !important;
+    }
+  }
+
+  &--radio {
+    & input {
+      border-radius: 50% !important;
+    }
+  }
+}

@@ -27,8 +27,9 @@ const Navbar = () => {
               <SignupIcon width={18} height={18} /> Sign Up
             </div> */}
           </Stack>
-          <div className={[style.cartIcon, 'cursor-pointer'].join(' ')}>
+          <div className={[style.cartIconContainer, 'cursor-pointer'].join(' ')}>
             <CartIcon />
+            <div className={style.cartCount}>11</div>
           </div>
         </Stack>
       </Container>
