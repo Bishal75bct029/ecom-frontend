@@ -71,7 +71,7 @@ axiosInstance.interceptors.response.use(
       isRefreshing = true;
 
       return axios
-        .post(`${originalRequest.baseURL}api/users/refresh`)
+        .post(`${originalRequest.baseURL}api/users/refresh`, {}, { withCredentials: true })
         .then((res: AxiosResponse<void, void>) => {
           if (res.status === 200) {
             refreshAndRetryQueue.forEach(({ config, resolve, reject }) => {
@@ -81,10 +81,12 @@ axiosInstance.interceptors.response.use(
                 .catch((err) => reject(err));
             });
             refreshAndRetryQueue.length = 0;
+            console.log('here');
             return axiosInstance(originalRequest);
           }
         })
-        .catch(() => {
+        .catch((error) => {
+          console.log(error);
           window.location.replace('/');
           return;
         })

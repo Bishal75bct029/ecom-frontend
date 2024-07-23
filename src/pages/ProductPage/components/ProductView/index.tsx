@@ -1,96 +1,32 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Spinner, Stack } from 'react-bootstrap';
 import { ImageCarousel, LoginForm } from '@/components/organisms';
 import { Button, Modal, Typography } from '@/components/atoms';
 import { useGetProductByIdQuery } from '@/store/features/product';
 import style from './style.module.scss';
+import { useAuth, useProductVariantSelection } from '@/hooks';
+import { usePostLoginMutation } from '@/store/features/auth';
 
 const ProductView = () => {
   const { productId } = useParams();
 
   const [quantity, setQuantity] = useState<number>(1);
-  const [selectedCombination, setSelectedCombination] = useState<Record<string, string>>();
-  const [otherAvailableCombo, setOtherAvailableCombo] = useState<Record<string, string[]>>();
-  const [prevImages, setPrevImages] = useState<string[]>([]);
   const [showModal, setShowModal] = useState<boolean>(false);
 
   const { data: productData, isLoading } = useGetProductByIdQuery({ id: `${productId}` }, { skip: !productId });
+  const [postLogin] = usePostLoginMutation();
 
-  const [defaultMeta, availableProductVariants, availableCombinations] = useMemo(() => {
-    const { attributeOptions, metaVariants } = (productData?.productMeta || []).reduce<{
-      attributeOptions: Record<string, string[]>;
-      metaVariants: Record<string, string>[];
-    }>(
-      (acc, meta) => {
-        Object.keys(meta.variant).forEach((key) => {
-          if (!acc.attributeOptions[key]) {
-            acc.attributeOptions[key] = [];
-          }
-          acc.attributeOptions[key] = [...new Set([...acc.attributeOptions[key], meta.variant[key]])];
-        });
-        acc.metaVariants.push(meta.variant);
-        return acc;
-      },
-      { attributeOptions: {}, metaVariants: [] },
-    );
+  const { loginHandler } = useAuth();
 
-    const defaultMeta = productData?.productMeta.find((meta) => meta.isDefault);
-
-    setSelectedCombination(defaultMeta?.variant);
-    setPrevImages(defaultMeta?.image || []);
-
-    return [defaultMeta, attributeOptions, metaVariants];
-  }, [productData]);
-
-  const currentMeta = useMemo(() => {
-    const variant = productData?.productMeta?.find(
-      (meta) => JSON.stringify(meta.variant) === JSON.stringify(selectedCombination),
-    );
-    return variant;
-  }, [selectedCombination, productData]);
-
-  const handleVariantClick = useCallback(
-    (variantOption: string, variantValue: string) => {
-      if (
-        selectedCombination?.[variantOption] === variantValue ||
-        (otherAvailableCombo &&
-          otherAvailableCombo?.[variantOption] &&
-          !otherAvailableCombo?.[variantOption]?.includes(variantValue))
-      )
-        return;
-
-      const otherVariantsAvailableCombo = availableCombinations?.reduce<Record<string, string[]>>(
-        (acc, combination) => {
-          if (combination[variantOption] === variantValue) {
-            Object.keys(combination).forEach((key) => {
-              if (key !== variantOption) {
-                acc[key] = acc[key] ? [...acc[key], combination[key]] : [combination[key]];
-              }
-            });
-          }
-          return acc;
-        },
-        {},
-      );
-
-      setOtherAvailableCombo(otherVariantsAvailableCombo);
-
-      setSelectedCombination((prev) => {
-        const previous = { ...prev };
-        Object.keys(otherVariantsAvailableCombo || {}).forEach((key) => {
-          if (previous && key in previous && !otherVariantsAvailableCombo?.[key].includes(previous[key])) {
-            previous[key] = '';
-          }
-        });
-        return {
-          ...previous,
-          [variantOption]: variantValue,
-        };
-      });
-    },
-    [availableCombinations, selectedCombination, otherAvailableCombo],
-  );
+  const {
+    currentMeta,
+    handleVariantClick,
+    availableProductVariants,
+    otherAvailableCombination,
+    previousProductImages,
+    selectedCombination,
+  } = useProductVariantSelection(productData);
 
   if (isLoading)
     return (
@@ -102,7 +38,7 @@ const ProductView = () => {
   return (
     <>
       <Stack direction="horizontal" gap={3} className="align-items-start">
-        <ImageCarousel size={400} images={currentMeta ? currentMeta?.image || [] : prevImages} />
+        <ImageCarousel size={400} images={currentMeta ? currentMeta?.image || [] : previousProductImages} />
         <Stack>
           {<Typography fontsStyle="large-semi-bold">{productData?.name}</Typography>}
           {/* <Stack direction="horizontal" gap={4}>
@@ -131,7 +67,9 @@ const ProductView = () => {
                       className={[
                         style.productVariantCard,
                         selectedCombination?.[key] === val ? style.selectedVariant : '',
-                        otherAvailableCombo && otherAvailableCombo?.[key] && !otherAvailableCombo?.[key]?.includes(val)
+                        otherAvailableCombination &&
+                        otherAvailableCombination?.[key] &&
+                        !otherAvailableCombination?.[key]?.includes(val)
                           ? style.disabledVariant
                           : '',
                       ].join(' ')}
@@ -156,7 +94,7 @@ const ProductView = () => {
             </Typography>
             <Button
               variant="tertiary"
-              disabled={quantity >= (defaultMeta?.stock || 0)}
+              disabled={quantity >= (currentMeta?.stock || 0)}
               onClick={() => setQuantity(quantity + 1)}
             >
               +
@@ -181,7 +119,7 @@ const ProductView = () => {
       </Stack>
       <Modal onHide={() => setShowModal(false)} show={showModal} fillBody>
         <LoginForm
-          onSubmit={(s) => console.log(s)}
+          onSubmit={(payload) => postLogin(payload).unwrap().then(loginHandler)}
           wrapperClass="px-3 py-4"
           title="Welcome! Please login to continue."
         />
