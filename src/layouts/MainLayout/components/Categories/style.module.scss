@@ -55,13 +55,10 @@
   .activeNestedCategoryText {
     color: #985dec;
     border-radius: 2px;
-    background-color: red;
+  }
 
-    &:hover {
-      .text {
-        color: #985dec;
-      }
-    }
+  .text {
+    white-space: nowrap;
   }
 
   .nestedSubCategory {
