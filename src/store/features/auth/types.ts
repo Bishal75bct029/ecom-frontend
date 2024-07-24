@@ -7,7 +7,7 @@ export interface UserDetailType {
   id: string;
   email: string;
   name: string;
-  image: null;
+  image: string;
   addresses: Address[];
   cart: { productMetaId: string[] };
 }

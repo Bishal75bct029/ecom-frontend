@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Spinner, Stack } from 'react-bootstrap';
 import { ImageCarousel, LoginForm, SearchCard } from '@/components/organisms';
@@ -6,20 +6,18 @@ import { Button, CheckBox, Modal, Typography } from '@/components/atoms';
 import { useGetProductByCategoryQuery, useGetProductByIdQuery } from '@/store/features/product';
 import { useAuth, useProductVariantSelection } from '@/hooks';
 import { usePostLoginMutation } from '@/store/features/auth';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { useAppSelector } from '@/store/hooks';
 import { useAddProductToCartMutation } from '@/store/features/cart';
-import { setGlobalState } from '@/store/features/global';
 import style from './style.module.scss';
 
 const ProductView = () => {
   const { productId } = useParams();
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
 
   const [quantity, setQuantity] = useState<number>(1);
+  const [showModal, setShowModal] = useState<string | false>(false);
 
   const user = useAppSelector((state) => state.global.user);
-  const modalInView = useAppSelector((state) => state.global.modalInView);
 
   const { data: productData, isLoading } = useGetProductByIdQuery({ id: `${productId}` }, { skip: !productId });
   const { data: similarProducts } = useGetProductByCategoryQuery(
@@ -42,18 +40,19 @@ const ProductView = () => {
     selectedCombination,
   } = useProductVariantSelection(productData);
 
-  const handleAddToCart = (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (!currentMeta) return;
-    if (!user) return setGlobalState({ modalInView: 'login' });
-    return addProductToCart({ productMetaId: [currentMeta.id] })
-      .unwrap()
-      .then(() => {
-        dispatch(setGlobalState({ modalInView: 'addToCart' }));
-      });
-  };
-
-  console.log(modalInView);
+  const handleAddToCart = useCallback(
+    (e: React.MouseEvent) => {
+      e.preventDefault();
+      if (!currentMeta) return;
+      if (!user) return setShowModal('login');
+      return addProductToCart({ productMetaId: [currentMeta.id] })
+        .unwrap()
+        .then(() => {
+          setShowModal('addToCart');
+        });
+    },
+    [addProductToCart, currentMeta, user],
+  );
 
   if (isLoading)
     return (
@@ -145,8 +144,8 @@ const ProductView = () => {
           </Stack>
         </Stack>
       </Stack>
-      {modalInView === 'login' && (
-        <Modal onHide={() => setGlobalState({ modalInView: false })} show={modalInView === 'login'} fillBody>
+      {showModal === 'login' && (
+        <Modal onHide={() => setShowModal(false)} show={showModal === 'login'} fillBody>
           <LoginForm
             onSubmit={(payload) => postLogin(payload).unwrap().then(loginHandler)}
             wrapperClass="px-3 py-4"
@@ -154,25 +153,14 @@ const ProductView = () => {
           />
         </Modal>
       )}
-      {modalInView === 'addToCart' && (
-        <Modal
-          onHide={() => setGlobalState({ modalInView: false })}
-          show={modalInView === 'addToCart'}
-          fillBody
-          size="lg"
-        >
+      {showModal === 'addToCart' && (
+        <Modal onHide={() => setShowModal(false)} show={showModal === 'addToCart'} fillBody size="lg">
           <div className="px-4 py-4 overflow-x-hidden">
             <div className="d-flex justify-content-between align-items-center">
               <Typography fontsStyle="large-semi-bold" color="primary-teal" className="d-flex gap-2">
                 <CheckBox checked isRadio /> 1 item added to cart successfully.
               </Typography>
-              <Button
-                size="large"
-                onClick={() => {
-                  dispatch(setGlobalState({ modalInView: false }));
-                  navigate('/cart');
-                }}
-              >
+              <Button size="large" onClick={() => navigate('/cart')}>
                 Go to Cart
               </Button>
             </div>

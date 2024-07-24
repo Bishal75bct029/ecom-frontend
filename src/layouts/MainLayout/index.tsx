@@ -46,7 +46,7 @@ const MainLayout: FC<MainLayoutProps> = ({ children, privateRoutes }) => {
     <>
       <Navbar />
       <Container fluid className={style.mainLayout}>
-        {children ?? <Outlet key={Date.now()} />}
+        {children ?? <Outlet />}
       </Container>
     </>
   );
