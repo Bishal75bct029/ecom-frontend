@@ -17,6 +17,7 @@
     .imageContainer {
       width: 90px;
       height: 100%;
+      cursor: pointer;
 
       & > img {
         width: 100%;
@@ -26,33 +27,30 @@
     }
 
     .categoriesContainer {
-      position: relative;
-      cursor: pointer;
-      z-index: 10;
-
       .categories {
         opacity: 0;
         display: none;
-        position: absolute;
+        cursor: pointer;
+        position: relative;
+        z-index: 10;
         top: 0;
-        width: 100%;
-        padding-top: 35px;
-        height: 0;
+        max-height: 0;
       }
 
       &:hover {
         .categories {
           display: block;
-          height: 320px;
-          box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.2);
-          width: 100vw;
-          z-index: 1;
+          max-height: 100vh;
+  box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.2);
+
+          width: 100%;
+          z-index: 100;
           overflow-y: scroll;
-          left: -240%;
+          left: 0%;
           position: absolute;
-          top: 100%;
+          top: 0;
           opacity: 1;
-          padding-top: 35px;
+          padding-top: 90px;
           transition: opacity 0.25s ease-in-out;
         }
       }
@@ -62,8 +60,8 @@
       }
 
       .categories {
-        -ms-overflow-style: none; /* IE and Edge */
-        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none;
+        scrollbar-width: none;
       }
 
       &:hover .categoryText {
@@ -92,7 +90,8 @@
       }
     }
 
-    .cartIcon {
+    .cartIconContainer {
+      position: relative;
       svg {
         width: 40px;
         height: 35px;
@@ -104,6 +103,22 @@
         circle {
           fill: #fff;
         }
+      }
+
+      .cartCount {
+        position: absolute;
+        border-radius: 50%;
+        top: 0;
+        right: -8px;
+        background-color: partials.theme(secondary-red-default);
+        border-color: transparent;
+        width: 16px;
+        height: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        padding: 9px;
       }
     }
   }

@@ -10,7 +10,7 @@ interface ImageCarouselProps extends Partial<CarouselProps> {
 const ImageCarousel = forwardRef<Carousel, ImageCarouselProps>(({ size = '500px', images, ...rest }, ref) => {
   return (
     <>
-      <div style={{ width: size }}>
+      <div style={{ maxWidth: size }}>
         <Carousel
           className="customCarousal"
           showIndicators={false}
