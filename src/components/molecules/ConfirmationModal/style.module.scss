@@ -1,9 +1,8 @@
 .buttonContainer {
-  margin-top: 20px;
-  gap: 10px;
+  margin-top: 16px;
+  gap: 20px;
 
   & > button {
-    padding: 0.5rem 1rem;
     min-width: auto;
   }
 }

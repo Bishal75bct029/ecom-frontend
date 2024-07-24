@@ -25,19 +25,20 @@
   }
 }
 
+.dialogContent {
+  padding: 32px;
+  min-height: fit-content !important;
+}
+
 .dialogHeader {
   justify-content: flex-start !important;
-  --bs-modal-header-padding: 16px 24px;
+  margin-bottom: 16px;
 
   & :first-child {
     align-items: center;
     gap: 12px;
     display: flex;
   }
-}
-
-.dialogBody {
-  --bs-modal-padding: 24px;
 }
 
 .modalSizeSm {

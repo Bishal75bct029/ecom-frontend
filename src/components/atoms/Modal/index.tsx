@@ -53,7 +53,7 @@ const Modal = ({
       modalSize[size],
       className,
       style.modalContent,
-      isDialogPrompt && 'p-0 gap-0',
+      isDialogPrompt && style.dialogContent,
       fillBody && style.fillDialogBody,
     ].join(' ')}
     dialogClassName={[style.modalDialog, modalSize[size], dialogClassName].join(' ')}
@@ -79,9 +79,7 @@ const Modal = ({
       </div>
     )}
 
-    <BootstrapModal.Body className={[style.modalBody, isDialogPrompt && style.dialogBody].join(' ')}>
-      {children}
-    </BootstrapModal.Body>
+    <BootstrapModal.Body className={style.modalBody}>{children}</BootstrapModal.Body>
   </BootstrapModal>
 );
 

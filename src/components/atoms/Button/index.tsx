@@ -2,7 +2,7 @@ import { ButtonHTMLAttributes, DetailedHTMLProps, FC } from 'react';
 
 import style from './style.module.scss';
 
-export type ButtonTypeGroup = 'primary' | 'secondary' | 'tertiary' | 'dashed';
+export type ButtonTypeGroup = 'primary' | 'secondary' | 'tertiary' | 'dashed' | 'plain' | 'secondary-red';
 
 export type ButtonSizeGroup = 'small' | 'medium' | 'large';
 
@@ -23,6 +23,8 @@ const buttonType: ButtonType = {
   secondary: 'button--secondary',
   tertiary: 'button--tertiary',
   dashed: 'button--dashed',
+  plain: 'button--plain',
+  'secondary-red': 'button--secondary-red',
 };
 
 const Button: FC<ButtonProps> = ({

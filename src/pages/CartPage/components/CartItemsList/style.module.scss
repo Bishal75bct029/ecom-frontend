@@ -74,3 +74,12 @@
     }
   }
 }
+
+.confirmationModalTitle {
+  svg {
+    fill: partials.theme(secondary-red-default);
+    path {
+      fill: partials.theme(secondary-red-default);
+    }
+  }
+}

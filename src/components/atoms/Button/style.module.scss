@@ -89,6 +89,35 @@
     }
   }
 
+  &--secondary-red {
+    background: partials.theme(secondary-red-default);
+    color: partials.theme(white);
+    svg {
+      fill: partials.theme(white);
+      path {
+        fill: partials.theme(white);
+      }
+    }
+
+    &.disabled {
+      background: partials.theme(silver-100);
+      @extend .btnDisabled;
+    }
+  }
+
+  &--plain {
+    background: transparent;
+    border: none !important;
+    box-shadow: none !important;
+    color: partials.theme(black);
+    svg {
+      fill: partials.theme(black);
+      path {
+        fill: partials.theme(black);
+      }
+    }
+  }
+
   &--small {
     @include partials.CaptionSemiBold;
     padding: 4px 16px;
