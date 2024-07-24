@@ -7,5 +7,17 @@ import { ReactComponent as SortIcon } from './sort.svg';
 import { ReactComponent as EyeOpenIcon } from './eyeOpen.svg';
 import { ReactComponent as EyeCloseIcon } from './eyeClosed.svg';
 import { ReactComponent as CloseIcon } from './close.svg';
+import { ReactComponent as DeleteIcon } from './delete.svg';
 
-export { SearchIcon, SignupIcon, UserIcon, CartIcon, ChevronUpIcon, SortIcon, EyeOpenIcon, EyeCloseIcon, CloseIcon };
+export {
+  SearchIcon,
+  SignupIcon,
+  UserIcon,
+  CartIcon,
+  ChevronUpIcon,
+  SortIcon,
+  EyeOpenIcon,
+  EyeCloseIcon,
+  CloseIcon,
+  DeleteIcon,
+};

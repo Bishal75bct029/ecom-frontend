@@ -34,6 +34,7 @@ const Button: FC<ButtonProps> = ({
   onClick,
   loading,
   loadingMessage,
+  type = 'button',
   ...rest
 }) => (
   <button
@@ -47,6 +48,7 @@ const Button: FC<ButtonProps> = ({
       disabled ? 'cursor-na' : '',
       className,
     ].join(' ')}
+    type={type}
     {...rest}
   >
     {loading ? (

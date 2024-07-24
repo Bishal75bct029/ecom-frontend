@@ -5,9 +5,12 @@ import GlobalMstImage from '@/assets/icons/global-mst.svg';
 import style from './style.module.scss';
 import SearchBar from '../../../../components/organisms/SearchBar';
 import { CartIcon, UserIcon } from '@/assets/icons';
+import { useGetUserDetailQuery } from '@/store/features/auth';
 
 const Navbar = () => {
   const navigate = useNavigate();
+
+  const { data: userDetail } = useGetUserDetailQuery();
 
   return (
     <Container fluid className={style.navbar}>
@@ -27,9 +30,11 @@ const Navbar = () => {
               <SignupIcon width={18} height={18} /> Sign Up
             </div> */}
           </Stack>
-          <div className={[style.cartIconContainer, 'cursor-pointer'].join(' ')}>
+          <div className={[style.cartIconContainer, 'cursor-pointer'].join(' ')} onClick={() => navigate('/cart')}>
             <CartIcon />
-            <div className={style.cartCount}>11</div>
+            {(userDetail?.cart?.productMetaId?.length || 0) > 0 && (
+              <div className={style.cartCount}>{userDetail?.cart?.productMetaId?.length || 0}</div>
+            )}
           </div>
         </Stack>
       </Container>

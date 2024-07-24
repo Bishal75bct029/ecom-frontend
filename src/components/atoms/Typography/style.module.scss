@@ -9,52 +9,102 @@
 
 .colorPrimaryPurple {
   color: partials.theme(primary-purple-default);
-  fill: partials.theme(primary-purple-default);
+  svg {
+    fill: partials.theme(primary-purple-default);
+    path {
+      fill: partials.theme(primary-purple-default);
+    }
+  }
 }
 
 .colorPrimaryTeal {
   color: partials.theme(primary-teal-default);
-  fill: partials.theme(primary-teal-default);
+  svg {
+    fill: partials.theme(primary-teal-default);
+    path {
+      fill: partials.theme(primary-teal-default);
+    }
+  }
 }
 
 .colorSecondaryBlue {
   color: partials.theme(secondary-blue-default);
-  fill: partials.theme(secondary-blue-default);
+  svg {
+    fill: partials.theme(secondary-blue-default);
+    path {
+      fill: partials.theme(secondary-blue-default);
+    }
+  }
 }
 
 .colorSecondaryRed {
   color: partials.theme(secondary-red-default);
-  fill: partials.theme(secondary-red-default);
+  svg {
+    fill: partials.theme(secondary-red-default);
+    path {
+      fill: partials.theme(secondary-red-default);
+    }
+  }
 }
 
 .colorSecondaryPink {
   color: partials.theme(secondary-pink-default);
-  fill: partials.theme(secondary-pink-default);
+  svg {
+    fill: partials.theme(secondary-pink-default);
+    path {
+      fill: partials.theme(secondary-pink-default);
+    }
+  }
 }
 
 .colorSecondaryOrange {
   color: partials.theme(secondary-orange-default);
-  fill: partials.theme(secondary-orange-default);
+  svg {
+    fill: partials.theme(secondary-orange-default);
+    path {
+      fill: partials.theme(secondary-orange-default);
+    }
+  }
 }
 
 .colorSecondaryYellow {
   color: partials.theme(secondary-yellow-default);
-  fill: partials.theme(secondary-yellow-default);
+  svg {
+    fill: partials.theme(secondary-yellow-default);
+    path {
+      fill: partials.theme(secondary-yellow-default);
+    }
+  }
 }
 
 .colorSecondaryGold {
   color: partials.theme(secondary-gold-default);
-  fill: partials.theme(secondary-gold-default);
+  svg {
+    fill: partials.theme(secondary-gold-default);
+    path {
+      fill: partials.theme(secondary-gold-default);
+    }
+  }
 }
 
 .colorSilver500 {
   color: partials.theme(silver-500);
-  fill: partials.theme(silver-500);
+  svg {
+    fill: partials.theme(silver-500);
+    path {
+      fill: partials.theme(silver-500);
+    }
+  }
 }
 
 .colorSilver700 {
   color: partials.theme(silver-700);
-  fill: partials.theme(silver-700);
+  svg {
+    fill: partials.theme(silver-700);
+    path {
+      fill: partials.theme(silver-700);
+    }
+  }
 }
 
 .captionNormal {

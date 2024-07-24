@@ -12,4 +12,5 @@ export interface UserDetailType {
 
 export type GlobalState = {
   user: UserDetailType | undefined;
+  modalInView: string | false;
 };

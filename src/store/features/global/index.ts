@@ -3,6 +3,7 @@ import { GlobalState } from './types';
 
 const initialState: GlobalState = {
   user: undefined,
+  modalInView: false,
 };
 
 export const globalSlice = createSlice({
