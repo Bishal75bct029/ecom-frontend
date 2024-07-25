@@ -1,12 +1,12 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import baseApi from './baseApi';
-import { globalSlice } from './features/global';
 import { cartSlice } from './features/cart';
+import { userSlice } from './features/user';
 import { categorySlice } from './features/category';
 
 const rootReducer = combineReducers({
   [baseApi.reducerPath]: baseApi.reducer,
-  [globalSlice.reducerPath]: globalSlice.reducer,
+  [userSlice.reducerPath]: userSlice.reducer,
   [cartSlice.reducerPath]: cartSlice.reducer,
   [categorySlice.reducerPath]: categorySlice.reducer,
 });

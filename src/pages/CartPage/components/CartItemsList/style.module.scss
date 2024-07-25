@@ -1,7 +1,7 @@
 @use '@assets/styles/main' as partials;
 
 .cartItemsContainer {
-  width: 80%;
+  width: 75%;
 
   .cartItem {
     display: flex;
@@ -33,6 +33,11 @@
         -webkit-line-clamp: 2;
         text-overflow: ellipsis;
         overflow: hidden;
+        cursor: pointer;
+
+        &:hover {
+          color: partials.theme(primary-purple-default);
+        }
       }
 
       .variantCard {

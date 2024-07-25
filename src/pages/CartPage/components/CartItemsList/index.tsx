@@ -1,16 +1,18 @@
 import { useCallback, useState } from 'react';
 import { Stack } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import { differenceBy, uniqBy } from 'lodash';
 import { Button, CheckBox, Typography } from '@/components/atoms';
 import { setCartState, useGetCartItemsQuery, useRemoveProductFromCartMutation } from '@/store/features/cart';
-import { CartItemType } from '@/store/features/cart/types';
+import { CartItemTransformedType } from '@/store/features/cart/types';
 import { DeleteIcon } from '@/assets/icons';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { toastSuccess } from '@/utils';
+import { setStorageItem, toastSuccess } from '@/utils';
 import style from './style.module.scss';
 import { ConfirmationModal } from '@/components/molecules';
 
 const CartItemsList = () => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const [selectedCartItem, setSelectedCartItem] = useState<string>('');
@@ -22,27 +24,25 @@ const CartItemsList = () => {
   const [removeProductFromCart] = useRemoveProductFromCartMutation();
 
   const handleSelectItem = useCallback(
-    (items: CartItemType[]) => {
+    (items: CartItemTransformedType[]) => {
       const shouldMergeItems = items.some(
-        (item) => !selectedCartProducts.find((selected) => selected.id === item.productMeta[0].id),
+        (item) => !selectedCartProducts.find((selected) => selected.productMeta.id === item.productMeta.id),
       );
 
       const newItems = shouldMergeItems
-        ? uniqBy([...selectedCartProducts, ...items.map((item) => item.productMeta[0])], 'id')
-        : differenceBy(
-            selectedCartProducts,
-            items.map((item) => item.productMeta[0]),
-            'id',
-          );
+        ? uniqBy([...selectedCartProducts, ...items], 'productMeta.id')
+        : differenceBy(selectedCartProducts, items, 'productMeta.id');
 
       const productQuantities = newItems.reduce<Record<string, number>>(
         (acc, item) => ({
           ...acc,
-          [item.id]: selectedProductQuantities[item.id] || 1,
+          [item.productMeta.id]: selectedProductQuantities[item.productMeta.id] || 1,
         }),
         {},
       );
 
+      setStorageItem('selectedCartProducts', newItems);
+      setStorageItem('selectedProductQuantities', productQuantities);
       dispatch(setCartState({ selectedCartProducts: newItems, selectedProductQuantities: productQuantities }));
     },
     [selectedCartProducts, dispatch, selectedProductQuantities],
@@ -53,14 +53,13 @@ const CartItemsList = () => {
       const currentQuantity = selectedProductQuantities[id] || 1;
       const newQuantity = operation === 'add' ? currentQuantity + 1 : Math.max(currentQuantity - 1, 1);
 
-      dispatch(
-        setCartState({
-          selectedProductQuantities: {
-            ...selectedProductQuantities,
-            [id]: newQuantity,
-          },
-        }),
-      );
+      const newQuantities = {
+        ...selectedProductQuantities,
+        [id]: newQuantity,
+      };
+
+      setStorageItem('selectedProductQuantities', newQuantities);
+      dispatch(setCartState({ selectedProductQuantities: newQuantities }));
     },
     [selectedProductQuantities, dispatch],
   );
@@ -109,21 +108,27 @@ const CartItemsList = () => {
                 <Stack direction="horizontal" className={style.cartItem}>
                   <div className={style.productDetailContainer}>
                     <CheckBox
-                      checked={selectedCartProducts.some((selectedItem) => selectedItem.id === item.productMeta[0].id)}
+                      checked={selectedCartProducts.some(
+                        (selectedItem) => selectedItem.productMeta.id === item.productMeta.id,
+                      )}
                       onChange={() => handleSelectItem([item])}
                     />
                     <div className="d-flex align-items-start gap-3">
                       <div>
                         <div className={style.imageContainer}>
-                          <img src={item?.productMeta?.[0]?.image?.[0]} alt="image" />
+                          <img src={item?.productMeta?.image?.[0]} alt="image" />
                         </div>
                       </div>
                       <Stack>
-                        <Typography fontsStyle="base-semi-bold" className={[style.productName, 'mb-2 pb-1'].join(' ')}>
+                        <Typography
+                          fontsStyle="base-semi-bold"
+                          className={[style.productName, 'mb-2 pb-1'].join(' ')}
+                          onClick={() => navigate('/')}
+                        >
                           {item.name}
                         </Typography>
                         <div className="d-flex flex-column gap-2">
-                          {Object.entries(item.productMeta[0].variant).map(([key, val], i) => (
+                          {Object.entries(item.productMeta.variant).map(([key, val], i) => (
                             <Stack key={i} direction="horizontal">
                               <Typography fontsStyle="small-regular" className="me-3">
                                 {key}:{' '}
@@ -138,7 +143,7 @@ const CartItemsList = () => {
                           color="secondary-red"
                           fontsStyle="small-regular"
                           className={style.deleteIcon}
-                          onClick={() => setSelectedCartItem(item.productMeta[0].id)}
+                          onClick={() => setSelectedCartItem(item.productMeta.id)}
                         >
                           Remove <DeleteIcon />
                         </Typography>
@@ -154,28 +159,28 @@ const CartItemsList = () => {
                         size="small"
                         variant="tertiary"
                         disabled={
-                          !selectedProductQuantities[item.productMeta[0].id] ||
-                          (!!selectedProductQuantities[item.productMeta[0].id] &&
-                            selectedProductQuantities[item.productMeta[0].id] <= 1)
+                          !selectedProductQuantities[item.productMeta.id] ||
+                          (!!selectedProductQuantities[item.productMeta.id] &&
+                            selectedProductQuantities[item.productMeta.id] <= 1)
                         }
-                        onClick={() => onQuantityChange(item.productMeta[0].id, 'subtract')}
+                        onClick={() => onQuantityChange(item.productMeta.id, 'subtract')}
                       >
                         -
                       </Button>
                       <Typography className="d-flex justify-content-center" style={{ width: '40px' }}>
-                        {selectedProductQuantities[item.productMeta[0].id] || 1}
+                        {selectedProductQuantities[item.productMeta.id] || 1}
                       </Typography>
                       <Button
                         size="small"
                         variant="tertiary"
-                        disabled={selectedProductQuantities[item.productMeta[0].id] >= item.productMeta[0].stock}
-                        onClick={() => onQuantityChange(item.productMeta[0].id, 'add')}
+                        disabled={selectedProductQuantities[item.productMeta.id] >= item.productMeta.stock}
+                        onClick={() => onQuantityChange(item.productMeta.id, 'add')}
                       >
                         +
                       </Button>
                     </div>
                     <Typography fontsStyle="large-bold" color="primary-purple" className={style.priceContainer}>
-                      Rs. {item.productMeta[0]?.price}
+                      Rs. {item.productMeta?.price}
                     </Typography>
                   </Stack>
                 </Stack>

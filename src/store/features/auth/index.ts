@@ -1,5 +1,5 @@
 import baseApi from '@/store/baseApi';
-import { LoginPayload, UserDetailType } from './types';
+import { LoginPayload } from './types';
 
 export const authApi = baseApi.enhanceEndpoints({ addTagTypes: ['user-detail'] }).injectEndpoints({
   endpoints: (builder) => ({
@@ -16,15 +16,7 @@ export const authApi = baseApi.enhanceEndpoints({ addTagTypes: ['user-detail'] }
         method: 'POST',
       }),
     }),
-    getUserDetail: builder.query<UserDetailType, void>({
-      query: () => ({
-        url: `api/users/whoami`,
-        method: 'GET',
-      }),
-      providesTags: ['user-detail'],
-    }),
   }),
 });
 
-export const { usePostLoginMutation, useGetUserDetailQuery, useLazyGetUserDetailQuery, usePostLogoutMutation } =
-  authApi;
+export const { usePostLoginMutation, usePostLogoutMutation } = authApi;

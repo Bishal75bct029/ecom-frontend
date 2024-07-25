@@ -17,7 +17,7 @@ const ProductView = () => {
   const [quantity, setQuantity] = useState<number>(1);
   const [showModal, setShowModal] = useState<string | false>(false);
 
-  const user = useAppSelector((state) => state.global.user);
+  const user = useAppSelector((state) => state.user.user);
 
   const { data: productData, isLoading } = useGetProductByIdQuery({ id: `${productId}` }, { skip: !productId });
   const { data: similarProducts } = useGetProductByCategoryQuery(

@@ -1,21 +1,24 @@
 import { useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button, Typography } from '@/components/atoms';
 import { useAppSelector } from '@/store/hooks';
 
 const CartSummary = () => {
+  const navigate = useNavigate();
+
   const selectedCartProducts = useAppSelector((state) => state.cart.selectedCartProducts);
   const selectedProductQuantities = useAppSelector((state) => state.cart.selectedProductQuantities);
 
   const totalPrice = useMemo(
     () =>
       selectedCartProducts.reduce((acc, item) => {
-        return acc + Number(item.price) * selectedProductQuantities[item.id];
+        return acc + Number(item.productMeta.price) * selectedProductQuantities[item.productMeta.id];
       }, 0),
     [selectedCartProducts, selectedProductQuantities],
   );
 
   return (
-    <div style={{ width: '20%' }}>
+    <div style={{ width: '25%' }}>
       <Typography fontsStyle="large-semi-bold">Order Summary</Typography>
       <hr className="p-0 mt-0" />
       {!!selectedCartProducts.length && (
@@ -36,7 +39,9 @@ const CartSummary = () => {
         </Typography>
       )}
       <div className="d-flex justify-content-center">
-        <Button disabled={!selectedCartProducts.length}>Proceed to Checkout</Button>
+        <Button disabled={!selectedCartProducts.length} onClick={() => navigate('/checkout')}>
+          Proceed to Checkout
+        </Button>
       </div>
     </div>
   );

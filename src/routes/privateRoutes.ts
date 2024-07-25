@@ -2,10 +2,17 @@ import { RouteObject } from 'react-router-dom';
 
 const privateRoutes: Omit<RouteObject, 'element' | 'index'>[] = [
   {
-    path: 'private',
+    path: 'cart',
     lazy: async () => {
-      const { Homepage } = await import('@/pages');
-      return { Component: Homepage };
+      const { CartPage } = await import('@/pages');
+      return { Component: CartPage };
+    },
+  },
+  {
+    path: 'checkout',
+    lazy: async () => {
+      const { CheckoutPage } = await import('@/pages');
+      return { Component: CheckoutPage };
     },
   },
 ];
