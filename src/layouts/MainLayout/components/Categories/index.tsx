@@ -3,16 +3,21 @@ import { useState } from 'react';
 import { Typography } from '@/components/atoms';
 import style from './style.module.scss';
 import { useGetCategoryQuery } from '@/store/features/category';
-import { Category } from '@/store/features/category/types';
+import { ActiveCategories, AllCategories } from './types';
 
 const Categories = () => {
-  const [subCategory, setSubCategory] = useState<Category[] | undefined | null>();
-  const [nestedSubCategory, setNestedSubCategory] = useState<Category[] | undefined | null>();
-  const [activeCategory, setActiveCategory] = useState<number | null>(null);
-  const [activeSubCategory, setActiveSubCategory] = useState<number | null>(null);
-  const [activeNestedSubCategory, setActiveNestedSubCategory] = useState<number | null>(null);
-
   const { data: categories, isLoading, error } = useGetCategoryQuery();
+
+  const [allCategories, setAllCategories] = useState<AllCategories | null>({
+    subCategory: [],
+    nestedSubCategory: [],
+  });
+
+  const [categoryStatus, setCategoryStatus] = useState<ActiveCategories>({
+    activeCategory: null,
+    activeSubCategory: null,
+    activeNestedSubCategory: null,
+  });
 
   if (isLoading) return <Spinner />;
   if (error) return <>{error}</>;
@@ -21,10 +26,8 @@ const Categories = () => {
     <div
       className={style.categories}
       onMouseLeave={() => {
-        setSubCategory(null);
-        setNestedSubCategory(null);
-        setActiveCategory(null);
-        setActiveSubCategory(null);
+        setAllCategories({ ...allCategories, subCategory: null, nestedSubCategory: null });
+        setCategoryStatus({ ...categoryStatus, activeCategory: null, activeSubCategory: null });
       }}
     >
       <div className={style.singleCategory}>
@@ -33,54 +36,55 @@ const Categories = () => {
             <div
               className={style.topCategory}
               onMouseEnter={() => {
-                setSubCategory(category['children']);
-                setNestedSubCategory(null);
-                setActiveSubCategory(null);
-                setActiveCategory(index);
+                setAllCategories({ ...categories, subCategory: category['children'] ?? null, nestedSubCategory: null });
+                setCategoryStatus({ ...categoryStatus, activeCategory: index, activeSubCategory: null });
               }}
             >
               <Typography
-                className={`${activeCategory == index ? style.activeCategoryText : ''} ${style.categoryText}`}
+                className={`${categoryStatus.activeCategory == index ? style.activeCategoryText : ''} ${style.categoryText}`}
               >
                 {category.name}
               </Typography>
-              {activeCategory == index && <i className={style.arrowRight}></i>}
+              {categoryStatus.activeCategory == index && <i className={style.arrowRight}></i>}
             </div>
           );
         })}
       </div>
 
-      {subCategory && (
+      {allCategories?.subCategory && (
         <div className={style.singleCategory}>
-          {subCategory?.map((category, index) => {
+          {allCategories?.subCategory?.map((category, index) => {
             return (
               <div
                 className={style.subCategory}
                 onMouseEnter={() => {
-                  setNestedSubCategory(category['children']);
-                  setActiveSubCategory(index);
+                  setAllCategories({ ...allCategories, nestedSubCategory: category['children'] || null });
+                  setCategoryStatus({ ...categoryStatus, activeSubCategory: index });
                 }}
               >
                 <Typography
-                  className={`${activeSubCategory == index ? style.activeCategoryText : ''} ${style.categoryText}`}
+                  className={`${categoryStatus.activeSubCategory == index ? style.activeCategoryText : ''} ${style.categoryText}`}
                 >
                   {category.name}
                 </Typography>
-                {activeSubCategory == index && <i className={style.arrowRight}></i>}
+                {categoryStatus.activeSubCategory == index && <i className={style.arrowRight}></i>}
               </div>
             );
           })}
         </div>
       )}
 
-      {nestedSubCategory && (
-        <div className={style.singleNestedCategory} onMouseLeave={() => setNestedSubCategory(null)}>
-          {nestedSubCategory?.map((category, index) => {
+      {allCategories?.nestedSubCategory && (
+        <div
+          className={style.singleNestedCategory}
+          onMouseLeave={() => setAllCategories({ ...allCategories, nestedSubCategory: null })}
+        >
+          {allCategories?.nestedSubCategory?.map((category, index) => {
             return (
               <div
-                onMouseEnter={() => setActiveNestedSubCategory(index)}
-                onMouseLeave={() => setActiveNestedSubCategory(null)}
-                className={`${style.nestedSubCategory} ${activeNestedSubCategory === index ? style.activeNestedCategoryText : ''}`}
+                onMouseEnter={() => setCategoryStatus({ ...categoryStatus, activeNestedSubCategory: index })}
+                onMouseLeave={() => setCategoryStatus({ ...categoryStatus, activeNestedSubCategory: null })}
+                className={`${style.nestedSubCategory} ${categoryStatus.activeNestedSubCategory === index ? style.activeNestedCategoryText : ''}`}
                 key={index}
               >
                 <img src={category.image || 'https://via.placeholder.com/50'} alt="" className={style.image} />
