@@ -25,6 +25,7 @@
 
   &--primary {
     background: partials.theme(primary-purple-default);
+    border: transparent;
     svg {
       fill: partials.theme(white);
       path {
@@ -57,6 +58,7 @@
 
   &--tertiary {
     background: partials.theme(secondary-blue-light);
+    border: transparent;
     color: partials.theme(secondary-blue-default);
     svg {
       fill: partials.theme(secondary-blue-default);

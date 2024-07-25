@@ -5,7 +5,7 @@ import GlobalMstImage from '@/assets/icons/global-mst.svg';
 import style from './style.module.scss';
 import SearchBar from '../../../../components/organisms/SearchBar';
 import { CartIcon, UserIcon } from '@/assets/icons';
-import { useGetUserDetailQuery } from '@/store/features/auth';
+import { useGetUserDetailQuery } from '@/store/features/user';
 
 const Navbar = () => {
   const navigate = useNavigate();

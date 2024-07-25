@@ -5,8 +5,7 @@ import { Navigate, Outlet, RouteObject, useLocation } from 'react-router-dom';
 import style from './style.module.scss';
 import { Navbar } from './components';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { useLazyGetUserDetailQuery } from '@/store/features/auth';
-import { setGlobalState } from '@/store/features/global';
+import { setUserState, useLazyGetUserDetailQuery } from '@/store/features/user';
 
 interface MainLayoutProps extends PropsWithChildren {
   privateRoutes: Omit<RouteObject, 'element' | 'index'>[];
@@ -15,7 +14,7 @@ interface MainLayoutProps extends PropsWithChildren {
 const MainLayout: FC<MainLayoutProps> = ({ children, privateRoutes }) => {
   const { pathname } = useLocation();
   const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.global.user);
+  const user = useAppSelector((state) => state.user.user);
 
   const [getUserDetail, { isLoading, data, isError }] = useLazyGetUserDetailQuery();
 
@@ -23,10 +22,10 @@ const MainLayout: FC<MainLayoutProps> = ({ children, privateRoutes }) => {
     getUserDetail()
       .unwrap()
       .then((payload) => {
-        dispatch(setGlobalState({ user: payload }));
+        dispatch(setUserState({ user: payload }));
       })
       .catch(() => {
-        dispatch(setGlobalState({ user: undefined }));
+        dispatch(setUserState({ user: undefined }));
       });
   }, [dispatch, getUserDetail]);
 

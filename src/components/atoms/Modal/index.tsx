@@ -20,6 +20,7 @@ export interface ModalProps extends BootstrapModalProps {
   fillBody?: boolean;
   isBackdropNonStatic?: boolean;
   allowKeyBoard?: boolean;
+  footer?: ReactNode;
 }
 
 const modalSize: Record<Size, string> = {
@@ -42,6 +43,7 @@ const Modal = ({
   isBackdropNonStatic = false,
   allowKeyBoard = false,
   dialogClassName = '',
+  footer,
   ...rest
 }: ModalProps) => (
   <BootstrapModal
@@ -80,6 +82,7 @@ const Modal = ({
     )}
 
     <BootstrapModal.Body className={style.modalBody}>{children}</BootstrapModal.Body>
+    <BootstrapModal.Footer className={style.modalFooter}>{footer}</BootstrapModal.Footer>
   </BootstrapModal>
 );
 

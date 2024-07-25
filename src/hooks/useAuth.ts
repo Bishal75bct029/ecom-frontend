@@ -1,5 +1,5 @@
-import { useLazyGetUserDetailQuery, usePostLogoutMutation } from '@/store/features/auth';
-import { setGlobalState } from '@/store/features/global';
+import { usePostLogoutMutation } from '@/store/features/auth';
+import { setUserState, useLazyGetUserDetailQuery } from '@/store/features/user';
 import { useAppDispatch } from '@/store/hooks';
 
 const useAuth = () => {
@@ -11,16 +11,16 @@ const useAuth = () => {
     getUserDetail()
       .unwrap()
       .then((payload) => {
-        dispatch(setGlobalState({ user: payload }));
+        dispatch(setUserState({ user: payload }));
       })
       .catch(() => {
-        dispatch(setGlobalState({ user: undefined }));
+        dispatch(setUserState({ user: undefined }));
       });
   };
 
   const logoutHandler = () => {
     postLogout();
-    dispatch(setGlobalState({ user: undefined }));
+    dispatch(setUserState({ user: undefined }));
   };
 
   return {
