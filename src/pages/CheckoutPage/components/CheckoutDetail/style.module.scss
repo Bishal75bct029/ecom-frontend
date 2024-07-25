@@ -62,7 +62,7 @@
     .leftAddressContainer {
       display: flex;
       gap: 16px;
-      width: calc(100% - 136px);
+      width: calc(100% - 247px);
 
       .address {
         width: 100%;
@@ -77,7 +77,8 @@
     .rightAddressContainer {
       display: flex;
       align-items: center;
-      width: 120px;
+      gap: 12px;
+      width: 231px;
     }
   }
 }

@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react';
 import { Stack } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import { differenceBy, uniqBy } from 'lodash';
 import { Button, CheckBox, Typography } from '@/components/atoms';
 import { setCartState, useGetCartItemsQuery, useRemoveProductFromCartMutation } from '@/store/features/cart';
@@ -11,6 +12,7 @@ import style from './style.module.scss';
 import { ConfirmationModal } from '@/components/molecules';
 
 const CartItemsList = () => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const [selectedCartItem, setSelectedCartItem] = useState<string>('');
@@ -118,7 +120,11 @@ const CartItemsList = () => {
                         </div>
                       </div>
                       <Stack>
-                        <Typography fontsStyle="base-semi-bold" className={[style.productName, 'mb-2 pb-1'].join(' ')}>
+                        <Typography
+                          fontsStyle="base-semi-bold"
+                          className={[style.productName, 'mb-2 pb-1'].join(' ')}
+                          onClick={() => navigate('/')}
+                        >
                           {item.name}
                         </Typography>
                         <div className="d-flex flex-column gap-2">

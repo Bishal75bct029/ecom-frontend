@@ -6,7 +6,7 @@ import { getStorageItem } from '@/utils';
 const initialState: CartState = {
   selectedCartProducts: getStorageItem('selectedCartProducts') || [],
   selectedProductQuantities: getStorageItem('selectedProductQuantities') || {},
-  selectedShippingAddress: getStorageItem('selectedShippingAddress') || undefined,
+  selectedShippingAddress: undefined,
 };
 
 export const cartSlice = createSlice({

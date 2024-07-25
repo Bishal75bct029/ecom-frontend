@@ -33,6 +33,11 @@
         -webkit-line-clamp: 2;
         text-overflow: ellipsis;
         overflow: hidden;
+        cursor: pointer;
+
+        &:hover {
+          color: partials.theme(primary-purple-default);
+        }
       }
 
       .variantCard {

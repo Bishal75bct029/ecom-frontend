@@ -4,7 +4,7 @@ import axiosBaseQuery from './axiosBaseQuery';
 
 const baseApi = createApi({
   reducerPath: 'baseApiReducer',
-  baseQuery: axiosBaseQuery(),
+  baseQuery: axiosBaseQuery,
   endpoints: () => ({}),
 });
 

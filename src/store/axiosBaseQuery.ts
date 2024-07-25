@@ -1,10 +1,10 @@
 import type { AxiosRequestConfig } from 'axios';
-import type { BaseQueryFn } from '@reduxjs/toolkit/query/react';
+import { retry, type BaseQueryFn } from '@reduxjs/toolkit/query/react';
 
 import { CustomAxiosError, axiosInstance } from '@/utils/axios';
 import { errorMessageHandler } from '@/utils';
 
-const axiosBaseQuery = (): BaseQueryFn<{
+const baseQuery = (): BaseQueryFn<{
   url: string;
   method: AxiosRequestConfig['method'];
   data?: AxiosRequestConfig['data'];
@@ -24,7 +24,7 @@ const axiosBaseQuery = (): BaseQueryFn<{
     } catch (axiosError) {
       const err = axiosError as CustomAxiosError;
 
-      errorMessageHandler(err);
+      errorMessageHandler(err, url);
       return {
         error: {
           status: err?.statusCode,
@@ -34,5 +34,14 @@ const axiosBaseQuery = (): BaseQueryFn<{
     }
   };
 };
+
+const axiosBaseQuery = retry(baseQuery(), {
+  retryCondition: (_, args, extraOptions) => {
+    const { attempt } = extraOptions;
+    const { method } = args;
+    const condition = method.toLowerCase() === 'get' && attempt < 3;
+    return condition;
+  },
+});
 
 export default axiosBaseQuery;

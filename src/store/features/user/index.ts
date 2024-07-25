@@ -18,6 +18,14 @@ export const userSlice = createSlice({
       };
     },
   },
+  extraReducers: (builder) => {
+    builder.addMatcher(userApi.endpoints.getUserDetail.matchFulfilled, (state, action) => {
+      state.user = action.payload;
+    });
+    builder.addMatcher(userApi.endpoints.getUserDetail.matchRejected, (state) => {
+      state.user = undefined;
+    });
+  },
 });
 
 const userApi = baseApi.enhanceEndpoints({ addTagTypes: ['user-detail', 'user-address'] }).injectEndpoints({
@@ -36,9 +44,31 @@ const userApi = baseApi.enhanceEndpoints({ addTagTypes: ['user-detail', 'user-ad
       }),
       providesTags: ['user-address'],
     }),
+    postUserAddresses: builder.mutation<UserAddress, Omit<UserAddress, 'id'>>({
+      query: (data) => ({
+        url: `api/users/address`,
+        method: 'POST',
+        data,
+      }),
+      invalidatesTags: ['user-address'],
+    }),
+    putUserAddresses: builder.mutation<UserAddress, UserAddress>({
+      query: ({ id, ...data }) => ({
+        url: `api/users/address/${id}`,
+        method: 'PUT',
+        data,
+      }),
+      invalidatesTags: ['user-address'],
+    }),
   }),
 });
 
-export const { useGetUserDetailQuery, useLazyGetUserDetailQuery, useGetUserAddressesQuery } = userApi;
+export const {
+  useGetUserDetailQuery,
+  useLazyGetUserDetailQuery,
+  useGetUserAddressesQuery,
+  usePostUserAddressesMutation,
+  usePutUserAddressesMutation,
+} = userApi;
 
 export const { setUserState } = userSlice.actions;

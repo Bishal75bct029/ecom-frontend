@@ -7,11 +7,12 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import ChangeAddressModal from '../ChangeAddressModal';
 import { setCartState } from '@/store/features/cart';
 import { setStorageItem } from '@/utils';
+import AddAddressModal from '../AddAddressModal';
 
 const CheckoutDetail = () => {
   const dispatch = useAppDispatch();
 
-  const [showModal, setShowModal] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<string>('');
 
   const selectedCartProducts = useAppSelector((state) => state.cart.selectedCartProducts);
   const selectedProductQuantities = useAppSelector((state) => state.cart.selectedProductQuantities);
@@ -29,8 +30,8 @@ const CheckoutDetail = () => {
   }, [userAddresses, selectedShippingAddress, dispatch]);
 
   useEffect(() => {
+    //incase of reload in checkout page the data is saved in local storage
     window.addEventListener('beforeunload', () => {
-      setStorageItem('selectedShippingAddress', selectedShippingAddress);
       setStorageItem('selectedCartProducts', selectedCartProducts);
       setStorageItem('selectedProductQuantities', selectedProductQuantities);
     });
@@ -47,8 +48,8 @@ const CheckoutDetail = () => {
         <hr className="p-0 mt-0" />
         <Stack direction="horizontal" className="align-items-center justify-content-between mb-3">
           <Typography fontsStyle="base-semi-bold">Your Address</Typography>
-          <Button variant="tertiary" size="small">
-            Add a new address
+          <Button variant="tertiary" size="small" onClick={() => setShowModal('addAddress')}>
+            Add new address
           </Button>
         </Stack>
         <Card className={style.addressContainer}>
@@ -73,7 +74,10 @@ const CheckoutDetail = () => {
             </div>
           </div>
           <div className={style.rightAddressContainer}>
-            <Button size="small" onClick={() => setShowModal(true)}>
+            <Button size="small" onClick={() => setShowModal('editAddress')}>
+              Edit address
+            </Button>
+            <Button size="small" onClick={() => setShowModal('changeAddress')}>
               Change address
             </Button>
           </div>
@@ -146,7 +150,16 @@ const CheckoutDetail = () => {
           ))}
         </Stack>
       </Stack>
-      <ChangeAddressModal show={showModal} onHide={() => setShowModal(false)} />
+      {showModal === 'changeAddress' && (
+        <ChangeAddressModal show={showModal === 'changeAddress'} onHide={() => setShowModal('')} />
+      )}
+      {['editAddress', 'addAddress'].includes(showModal) && (
+        <AddAddressModal
+          show={['editAddress', 'addAddress'].includes(showModal)}
+          onHide={() => setShowModal('')}
+          isEditMode={showModal === 'editAddress'}
+        />
+      )}
     </>
   );
 };
