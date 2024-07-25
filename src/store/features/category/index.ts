@@ -1,19 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import baseApi from '@/store/baseApi';
-import { Category, CategoryState } from './types';
-
-const initialState: CategoryState[] = [];
-
-export const categorySlice = createSlice({
-  name: 'category',
-  reducerPath: 'category',
-  initialState,
-  reducers: {
-    setCategoryState: (state, { payload }: PayloadAction<Partial<CategoryState>[]>) => {
-      return [...state, ...payload] as CategoryState[];
-    },
-  },
-});
+import { Category } from './types';
 
 export const categoryApi = baseApi.enhanceEndpoints({ addTagTypes: ['category'] }).injectEndpoints({
   endpoints: (builder) => ({

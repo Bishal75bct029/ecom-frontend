@@ -2,13 +2,11 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import baseApi from './baseApi';
 import { cartSlice } from './features/cart';
 import { userSlice } from './features/user';
-import { categorySlice } from './features/category';
 
 const rootReducer = combineReducers({
   [baseApi.reducerPath]: baseApi.reducer,
   [userSlice.reducerPath]: userSlice.reducer,
   [cartSlice.reducerPath]: cartSlice.reducer,
-  [categorySlice.reducerPath]: categorySlice.reducer,
 });
 
 export const store = configureStore({
