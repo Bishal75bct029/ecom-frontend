@@ -17,11 +17,11 @@ const Navbar = () => {
       <Container fluid className={style.layout}>
         <div className={style.imageContainer} onClick={() => navigate('/')}>
           <img src={GlobalMstImage} alt="logo" />
-        </div>
-        <div className={style.categoriesContainer}>
-          <Typography className={style.categoryText}>Categories</Typography>
-          <div className={style.categories}>
-            <Categories />
+          <div className={style.categoriesContainer}>
+            <Typography className={style.categoryText}>Categories</Typography>
+            <div className={style.categories}>
+              <Categories />
+            </div>
           </div>
         </div>
         <SearchBar />
