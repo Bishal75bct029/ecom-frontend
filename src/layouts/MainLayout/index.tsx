@@ -5,6 +5,7 @@ import { Navigate, Outlet, RouteObject, useLocation } from 'react-router-dom';
 import style from './style.module.scss';
 import { Navbar } from './components';
 import { useAppSelector } from '@/store/hooks';
+import { Footer } from '@/components/organisms';
 
 interface MainLayoutProps extends PropsWithChildren {
   privateRoutes: Omit<RouteObject, 'element' | 'index'>[];
@@ -19,12 +20,15 @@ const MainLayout: FC<MainLayoutProps> = ({ children, privateRoutes }) => {
   }
 
   return (
-    <>
-      <Navbar />
-      <Container fluid className={style.mainLayout}>
-        {children ?? <Outlet />}
-      </Container>
-    </>
+    <div className="d-flex flex-column justify-content-between" style={{ height: '100vh' }}>
+      <div className="h-100">
+        <Navbar />
+        <Container fluid className={style.mainLayout}>
+          {children ?? <Outlet />}
+        </Container>
+      </div>
+      <Footer />
+    </div>
   );
 };
 

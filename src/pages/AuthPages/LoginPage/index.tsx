@@ -22,7 +22,11 @@ const LoginPage = () => {
       });
   };
 
-  return <LoginForm onSubmit={handleLogin} wrapperClass={style.loginWrapper} isLoading={isLoading} />;
+  return (
+    <div className={style.loginContainer}>
+      <LoginForm onSubmit={handleLogin} wrapperClass={style.loginWrapper} isLoading={isLoading} />
+    </div>
+  );
 };
 
 export default LoginPage;
