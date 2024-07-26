@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Spinner, Stack } from 'react-bootstrap';
-import { ImageCarousel, LoginForm, SearchCard } from '@/components/organisms';
+import { ImageCarousel, LoginForm, DiscountedPriceView, SearchCard } from '@/components/organisms';
 import { Button, CheckBox, Modal, Typography } from '@/components/atoms';
 import { useGetProductByCategoryQuery, useGetProductByIdQuery } from '@/store/features/product';
 import { useAuth, useProductVariantSelection } from '@/hooks';
@@ -118,9 +118,11 @@ const ProductView = () => {
               {productData.totalRatings} Ratings
             </Typography>
           </Stack> */}
-          <Typography fontsStyle="large-bold" color="primary-purple" className="mt-3 mb-2">
-            Rs.{(currentMeta?.price || 0) * quantity}
-          </Typography>
+          <DiscountedPriceView
+            discountPrice={currentMeta?.discountPrice || 0}
+            price={currentMeta?.price || 0}
+            className="mt-3 mb-2"
+          />
           <Typography fontsStyle="base-semi-bold">About this Item</Typography>
           <Typography>{productData?.description}</Typography>
 

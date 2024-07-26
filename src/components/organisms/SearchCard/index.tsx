@@ -6,28 +6,11 @@ import style from './style.module.scss';
 import { Typography } from '@/components/atoms';
 // import StarRating from '../StarRating';
 import { ProductType } from '@/store/features/product/types';
+import PriceView from '../DiscountedPriceView';
 
 interface SearchCardProps extends ProductType {
   to: string;
 }
-
-const PriceView: FC<{ discountPrice: number; price: number }> = ({ discountPrice, price }) => {
-  if (!discountPrice || discountPrice === price)
-    return (
-      <Typography fontsStyle="large-bold" color="primary-purple">
-        Rs. {price}
-      </Typography>
-    );
-
-  return (
-    <Typography fontsStyle="large-bold" color="primary-purple">
-      Rs. {discountPrice}
-      <Typography component="span" fontsStyle="caption-normal" className="text-line-through ms-1" color="silver-500">
-        Rs. {price}
-      </Typography>
-    </Typography>
-  );
-};
 
 const SearchCard: FC<SearchCardProps> = ({ to, name, productMeta }) => {
   const navigate = useNavigate();
@@ -42,13 +25,27 @@ const SearchCard: FC<SearchCardProps> = ({ to, name, productMeta }) => {
         <img src={defaultMeta?.image[0]} alt="laptop" />
       </div>
       <Stack className="px-3 mt-2 pb-3">
-        <Typography className={style.searchItemName}>{name}</Typography>
+        <Typography className={style.searchItemName} fontsStyle="base-semi-bold">
+          {name}
+        </Typography>
         {/* <div className="d-flex gap-1">
           <StarRating initialValue={rating} size={18} readonly />
           <Typography color="silver-500" fontsStyle="caption-semi-bold" style={{ marginTop: '9px' }}>
             ({totalRatings})
           </Typography>
         </div> */}
+        <div className="d-flex flex-column gap-2 my-2">
+          {Object.entries(defaultMeta.variant).map(([key, val], i) => (
+            <Stack key={i} direction="horizontal">
+              <Typography fontsStyle="small-regular" className="me-3">
+                {key}:{' '}
+                <Typography component={'span'} className={style.variantCard}>
+                  {val}
+                </Typography>
+              </Typography>
+            </Stack>
+          ))}
+        </div>
         <Stack direction="horizontal" className="justify-content-between">
           <PriceView price={defaultMeta?.price} discountPrice={defaultMeta?.discountPrice} />
           {/* {totalSold > 0 && (

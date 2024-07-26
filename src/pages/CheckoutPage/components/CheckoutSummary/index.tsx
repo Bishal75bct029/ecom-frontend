@@ -10,7 +10,7 @@ const CheckoutSummary = () => {
   const productsTotalPrice = useMemo(
     () =>
       selectedCartProducts.reduce((acc, item) => {
-        return acc + Number(item.productMeta.price) * selectedProductQuantities[item.productMeta.id];
+        return acc + Number(item.productMeta.discountPrice) * selectedProductQuantities[item.productMeta.id];
       }, 0),
     [selectedCartProducts, selectedProductQuantities],
   );

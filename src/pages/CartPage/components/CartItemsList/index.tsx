@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { setStorageItem, toastSuccess } from '@/utils';
 import style from './style.module.scss';
 import { ConfirmationModal } from '@/components/molecules';
+import { DiscountedPriceView } from '@/components/organisms';
 
 const CartItemsList = () => {
   const navigate = useNavigate();
@@ -78,8 +79,9 @@ const CartItemsList = () => {
           toastSuccess('Product removed from cart.');
         });
     },
-    [removeProductFromCart, selectedCartProducts, selectedProductQuantities],
+    [selectedCartProducts, selectedProductQuantities],
   );
+
   return (
     <>
       <Stack className={style.cartItemsContainer}>
@@ -193,9 +195,11 @@ const CartItemsList = () => {
                         +
                       </Button>
                     </div>
-                    <Typography fontsStyle="large-bold" color="primary-purple" className={style.priceContainer}>
-                      Rs. {item.productMeta?.price}
-                    </Typography>
+                    <DiscountedPriceView
+                      discountPrice={item.productMeta?.discountPrice}
+                      price={item.productMeta?.price}
+                      className={style.priceContainer}
+                    />
                   </Stack>
                 </Stack>
                 <hr className={['p-0', i === cartItems.length - 1 ? 'mb-0' : ''].join(' ')} />

@@ -8,6 +8,7 @@ import ChangeAddressModal from '../ChangeAddressModal';
 import { setCartState } from '@/store/features/cart';
 import { setStorageItem } from '@/utils';
 import AddAddressModal from '../AddAddressModal';
+import { DiscountedPriceView } from '@/components/organisms';
 
 const CheckoutDetail = () => {
   const dispatch = useAppDispatch();
@@ -135,13 +136,14 @@ const CheckoutDetail = () => {
                     <Typography fontsStyle="base-semi-bold" className={[style.quantityLabel].join(' ')}>
                       Price
                     </Typography>
-                    <Typography
-                      color="primary-purple"
-                      fontsStyle="base-semi-bold"
-                      className={[style.quantityLabel, 'd-flex justify-content-center mt-2'].join(' ')}
-                    >
-                      Rs. {item.productMeta.price}
-                    </Typography>
+                    <DiscountedPriceView
+                      discountPrice={item.productMeta.discountPrice}
+                      price={item.productMeta.price}
+                      className={[
+                        style.quantityLabel,
+                        'd-flex flex-column align-items-center justify-content-center mt-2',
+                      ].join(' ')}
+                    />
                   </Stack>
                 </Stack>
               </Stack>
