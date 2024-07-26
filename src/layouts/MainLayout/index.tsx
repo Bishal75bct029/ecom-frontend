@@ -12,9 +12,9 @@ interface MainLayoutProps extends PropsWithChildren {
 
 const MainLayout: FC<MainLayoutProps> = ({ children, privateRoutes }) => {
   const { pathname } = useLocation();
-  const user = useAppSelector((state) => state.user.user);
+  const token = useAppSelector((state) => state.user.token);
 
-  if (privateRoutes.some((route) => pathname.includes(route.path as string)) && !user) {
+  if (privateRoutes.some((route) => pathname.includes(route.path as string)) && !token) {
     return <Navigate to="/" />;
   }
 

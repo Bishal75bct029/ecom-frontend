@@ -12,7 +12,7 @@ interface SearchCardProps extends ProductType {
 }
 
 const PriceView: FC<{ discountPrice: number; price: number }> = ({ discountPrice, price }) => {
-  if (discountPrice === price)
+  if (!discountPrice || discountPrice === price)
     return (
       <Typography fontsStyle="large-bold" color="primary-purple">
         Rs. {price}

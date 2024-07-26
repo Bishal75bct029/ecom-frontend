@@ -46,8 +46,8 @@ const Button: FC<ButtonProps> = ({
       style.button,
       style[`button--${size}`],
       style[buttonType[variant]],
-      disabled ? style.disabled : '',
-      disabled ? 'cursor-na' : '',
+      disabled || loading ? style.disabled : '',
+      disabled || loading ? 'cursor-na' : '',
       className,
     ].join(' ')}
     type={type}

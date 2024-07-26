@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import { Stack } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { differenceBy, uniqBy } from 'lodash';
+import { differenceBy, omit, uniqBy } from 'lodash';
 import { Button, CheckBox, Typography } from '@/components/atoms';
 import { setCartState, useGetCartItemsQuery, useRemoveProductFromCartMutation } from '@/store/features/cart';
 import { CartItemTransformedType } from '@/store/features/cart/types';
@@ -69,10 +69,16 @@ const CartItemsList = () => {
       removeProductFromCart({ productMetaId: [id] })
         .unwrap()
         .then(() => {
+          console.log('remove');
+          setStorageItem(
+            'selectedCartProducts',
+            selectedCartProducts.filter((item) => item.productMeta.id !== id),
+          );
+          setStorageItem('selectedProductQuantities', omit(selectedProductQuantities, id));
           toastSuccess('Product removed from cart.');
         });
     },
-    [removeProductFromCart],
+    [removeProductFromCart, selectedCartProducts, selectedProductQuantities],
   );
   return (
     <>

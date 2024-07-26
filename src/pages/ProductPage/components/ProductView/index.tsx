@@ -6,18 +6,21 @@ import { Button, CheckBox, Modal, Typography } from '@/components/atoms';
 import { useGetProductByCategoryQuery, useGetProductByIdQuery } from '@/store/features/product';
 import { useAuth, useProductVariantSelection } from '@/hooks';
 import { usePostLoginMutation } from '@/store/features/auth';
-import { useAppSelector } from '@/store/hooks';
-import { useAddProductToCartMutation } from '@/store/features/cart';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { setCartState, useAddProductToCartMutation } from '@/store/features/cart';
 import style from './style.module.scss';
+import { toastError } from '@/utils';
+import { LoginPayload } from '@/store/features/auth/types';
 
 const ProductView = () => {
   const { productId } = useParams();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const [quantity, setQuantity] = useState<number>(1);
-  const [showModal, setShowModal] = useState<string | false>(false);
+  const [showModal, setShowModal] = useState<string>('');
 
-  const user = useAppSelector((state) => state.user.user);
+  const token = useAppSelector((state) => state.user.token);
 
   const { data: productData, isLoading } = useGetProductByIdQuery({ id: `${productId}` }, { skip: !productId });
   const { data: similarProducts } = useGetProductByCategoryQuery(
@@ -43,15 +46,57 @@ const ProductView = () => {
   const handleAddToCart = useCallback(
     (e: React.MouseEvent) => {
       e.preventDefault();
-      if (!currentMeta) return;
-      if (!user) return setShowModal('login');
+      if (!currentMeta) return toastError('Please select a proper combination!');
+      if (!token) return setShowModal('login-addToCart');
       return addProductToCart({ productMetaId: [currentMeta.id] })
         .unwrap()
         .then(() => {
           setShowModal('addToCart');
         });
     },
-    [addProductToCart, currentMeta, user],
+    [currentMeta, token],
+  );
+
+  const handlePurchaseItem = useCallback(
+    (e: React.MouseEvent) => {
+      e.preventDefault();
+      if (!currentMeta) return toastError('Please select a proper combination!');
+      if (!token) return setShowModal('login-purchase');
+      if (!productData) return;
+      dispatch(
+        setCartState({
+          selectedCartProducts: [{ ...productData, productMeta: currentMeta }],
+          selectedProductQuantities: { [currentMeta.id]: quantity },
+        }),
+      );
+      navigate('/checkout');
+    },
+    [currentMeta, productData, quantity, token],
+  );
+
+  const handleLogin = useCallback(
+    (payload: LoginPayload) => {
+      if (!currentMeta || !productData) return;
+      postLogin(payload)
+        .unwrap()
+        .then((res) => {
+          loginHandler(res);
+          if (showModal.includes('addToCart')) {
+            addProductToCart({ productMetaId: [currentMeta.id] })
+              .unwrap()
+              .then(() => setShowModal('addToCart'));
+          } else {
+            dispatch(
+              setCartState({
+                selectedCartProducts: [{ ...productData, productMeta: currentMeta }],
+                selectedProductQuantities: { [currentMeta.id]: quantity },
+              }),
+            );
+            navigate('/checkout');
+          }
+        });
+    },
+    [currentMeta, productData, quantity, showModal],
   );
 
   if (isLoading)
@@ -128,7 +173,7 @@ const ProductView = () => {
           </Stack>
 
           <Stack direction="horizontal" gap={3}>
-            <Button size="large" style={{ paddingInline: '72px' }} className="mt-4" onClick={() => console.log('hi')}>
+            <Button size="large" style={{ paddingInline: '72px' }} className="mt-4" onClick={handlePurchaseItem}>
               Purchase
             </Button>
             <Button
@@ -144,17 +189,13 @@ const ProductView = () => {
           </Stack>
         </Stack>
       </Stack>
-      {showModal === 'login' && (
-        <Modal onHide={() => setShowModal(false)} show={showModal === 'login'} fillBody>
-          <LoginForm
-            onSubmit={(payload) => postLogin(payload).unwrap().then(loginHandler)}
-            wrapperClass="px-3 py-4"
-            title="Welcome! Please login to continue."
-          />
+      {showModal.includes('login') && (
+        <Modal onHide={() => setShowModal('')} show={showModal.includes('login')} fillBody>
+          <LoginForm onSubmit={handleLogin} wrapperClass="px-3 py-4" title="Welcome! Please login to continue." />
         </Modal>
       )}
       {showModal === 'addToCart' && (
-        <Modal onHide={() => setShowModal(false)} show={showModal === 'addToCart'} fillBody size="lg">
+        <Modal onHide={() => setShowModal('')} show={showModal === 'addToCart'} fillBody size="lg">
           <div className="px-4 py-4 overflow-x-hidden">
             <div className="d-flex justify-content-between align-items-center">
               <Typography fontsStyle="large-semi-bold" color="primary-teal" className="d-flex gap-2">

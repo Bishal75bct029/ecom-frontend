@@ -18,4 +18,5 @@ export type UserAddressGroup = 'BILLING' | 'SHIPPING';
 
 export type UserState = {
   user: UserDetailType | undefined;
+  token: string | null;
 };

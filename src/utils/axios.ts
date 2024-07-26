@@ -1,5 +1,8 @@
 import config from '@/config';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { getStorageItem, setStorageItem } from './storage';
+import { LoginResponse } from '@/store/features/auth/types';
+import { logout } from './logout';
 
 interface AxiosBaseResponse {
   statusCode: number;
@@ -36,6 +39,12 @@ export const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (config) => {
+    const token = getStorageItem('token');
+
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+
     if (config.data instanceof FormData) {
       config.headers['Content-Type'] = 'multipart/form-data';
     }
@@ -70,10 +79,17 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true;
       isRefreshing = true;
 
+      const refreshToken = getStorageItem('refreshToken');
+      if (!refreshToken) return Promise.reject(error.response.data);
+
       return axios
-        .post(`${originalRequest.baseURL}api/users/refresh`, {}, { withCredentials: true })
-        .then((res: AxiosResponse<void, void>) => {
+        .post(`${originalRequest.baseURL}api/users/refresh`, { refreshToken })
+        .then((res: AxiosResponse<LoginResponse, void>) => {
           if (res.status === 200) {
+            setStorageItem('token', res.data.token);
+            setStorageItem('refreshToken', res.data.refreshToken);
+
+            originalRequest.headers.Authorization = 'Bearer ' + res.data.token;
             refreshAndRetryQueue.forEach(({ config, resolve, reject }) => {
               axiosInstance
                 .request(config)
@@ -81,13 +97,11 @@ axiosInstance.interceptors.response.use(
                 .catch((err) => reject(err));
             });
             refreshAndRetryQueue.length = 0;
-            console.log('here');
             return axiosInstance(originalRequest);
           }
         })
-        .catch((error) => {
-          console.log(error);
-          window.location.replace('/');
+        .catch(() => {
+          logout();
           return;
         })
         .finally(() => {
@@ -96,7 +110,7 @@ axiosInstance.interceptors.response.use(
     }
 
     if (error && error.response && error.response.status && error.response.status === 403) {
-      window.location.replace('/');
+      logout();
       return;
     }
 
