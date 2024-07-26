@@ -84,17 +84,19 @@ axiosInstance.interceptors.response.use(
 
       return axios
         .post(`${originalRequest.baseURL}api/users/refresh`, { refreshToken })
-        .then((res: AxiosResponse<LoginResponse, void>) => {
+        .then((res: AxiosResponse<{ data: LoginResponse }, void>) => {
           if (res.status === 200) {
-            setStorageItem('token', res.data.token);
-            setStorageItem('refreshToken', res.data.refreshToken);
+            setStorageItem('token', res.data.data.token);
+            setStorageItem('refreshToken', res.data.data.refreshToken);
 
-            originalRequest.headers.Authorization = 'Bearer ' + res.data.token;
+            originalRequest.headers.Authorization = 'Bearer ' + res.data.data.token;
             refreshAndRetryQueue.forEach(({ config, resolve, reject }) => {
               axiosInstance
                 .request(config)
                 .then((response) => resolve(response))
-                .catch((err) => reject(err));
+                .catch((err) => {
+                  reject(err);
+                });
             });
             refreshAndRetryQueue.length = 0;
             return axiosInstance(originalRequest);

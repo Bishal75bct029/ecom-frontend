@@ -12,7 +12,7 @@ const CartSummary = () => {
   const totalPrice = useMemo(
     () =>
       selectedCartProducts.reduce((acc, item) => {
-        return acc + Number(item.productMeta.price) * selectedProductQuantities[item.productMeta.id];
+        return acc + Number(item.productMeta.price) * 100 * selectedProductQuantities[item.productMeta.id];
       }, 0),
     [selectedCartProducts, selectedProductQuantities],
   );
@@ -28,7 +28,7 @@ const CartSummary = () => {
               Subtotal ({selectedCartProducts.length} item{selectedCartProducts.length > 1 ? 's' : ''})
             </span>
             <Typography fontsStyle="base-bold" color="primary-purple">
-              Rs. {totalPrice}
+              Rs. {totalPrice / 100}
             </Typography>
           </Typography>
         </div>

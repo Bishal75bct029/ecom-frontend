@@ -69,12 +69,12 @@ const CartItemsList = () => {
       removeProductFromCart({ productMetaId: [id] })
         .unwrap()
         .then(() => {
-          console.log('remove');
-          setStorageItem(
-            'selectedCartProducts',
-            selectedCartProducts.filter((item) => item.productMeta.id !== id),
-          );
-          setStorageItem('selectedProductQuantities', omit(selectedProductQuantities, id));
+          const newProducts = selectedCartProducts.filter((item) => item.productMeta.id !== id);
+          const newQuantites = omit(selectedProductQuantities, id);
+
+          setStorageItem('selectedCartProducts', newProducts);
+          setStorageItem('selectedProductQuantities', newQuantites);
+          dispatch(setCartState({ selectedCartProducts: newProducts, selectedProductQuantities: newQuantites }));
           toastSuccess('Product removed from cart.');
         });
     },

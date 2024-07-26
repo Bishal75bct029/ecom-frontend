@@ -6,6 +6,7 @@ import style from './style.module.scss';
 import { Navbar } from './components';
 import { useAppSelector } from '@/store/hooks';
 import { Footer } from '@/components/organisms';
+import { FOOTER_INCLUDE_ROUTES } from '@/constants';
 
 interface MainLayoutProps extends PropsWithChildren {
   privateRoutes: Omit<RouteObject, 'element' | 'index'>[];
@@ -23,11 +24,15 @@ const MainLayout: FC<MainLayoutProps> = ({ children, privateRoutes }) => {
     <div className="d-flex flex-column justify-content-between" style={{ height: '100vh' }}>
       <div className="h-100">
         <Navbar />
-        <Container fluid className={style.mainLayout}>
+        <Container
+          fluid
+          className={style.mainLayout}
+          style={{ height: FOOTER_INCLUDE_ROUTES.includes(pathname) ? '80%' : '100%' }}
+        >
           {children ?? <Outlet />}
         </Container>
       </div>
-      <Footer />
+      {FOOTER_INCLUDE_ROUTES.includes(pathname) && <Footer />}
     </div>
   );
 };
