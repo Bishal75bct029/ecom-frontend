@@ -6,7 +6,7 @@ import { useGetCategoryQuery } from '@/store/features/category';
 import { ActiveCategories, AllCategories } from './types';
 
 const Categories = () => {
-  const { data: categories, isLoading, error } = useGetCategoryQuery();
+  const { data: categories, isLoading } = useGetCategoryQuery();
 
   const [allCategories, setAllCategories] = useState<AllCategories | null>({
     subCategory: [],
@@ -20,7 +20,6 @@ const Categories = () => {
   });
 
   if (isLoading) return <Spinner />;
-  if (error) return <>{error}</>;
 
   return (
     <div
