@@ -21,7 +21,7 @@ const MainLayout: FC<MainLayoutProps> = ({ children, privateRoutes }) => {
   }
 
   return (
-    <div className="d-flex flex-column justify-content-between" style={{ height: '100vh' }}>
+    <div className="d-flex flex-column justify-content-between" style={{ minHeight: '100vh' }}>
       <div className="h-100">
         <Navbar />
         <Container

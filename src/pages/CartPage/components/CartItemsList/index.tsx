@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { Stack } from 'react-bootstrap';
+import { Spinner, Stack } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { differenceBy, omit, uniqBy } from 'lodash';
 import { Button, CheckBox, Typography } from '@/components/atoms';
@@ -20,7 +20,7 @@ const CartItemsList = () => {
   const selectedCartProducts = useAppSelector((state) => state.cart.selectedCartProducts);
   const selectedProductQuantities = useAppSelector((state) => state.cart.selectedProductQuantities);
 
-  const { data: cartItems } = useGetCartItemsQuery();
+  const { data: cartItems, isLoading } = useGetCartItemsQuery();
   const [removeProductFromCart] = useRemoveProductFromCartMutation();
 
   const handleSelectItem = useCallback(
@@ -84,7 +84,15 @@ const CartItemsList = () => {
     <>
       <Stack className={style.cartItemsContainer}>
         <Typography fontsStyle="large-semi-bold">Shopping Cart</Typography>
-        {!cartItems?.length && (
+        {isLoading && (
+          <>
+            <hr className="p-0 mt-0" />
+            <div className="d-flex align-items-center justify-content-center" style={{ height: '200px' }}>
+              <Spinner />
+            </div>
+          </>
+        )}
+        {!isLoading && !cartItems?.length && (
           <>
             <hr className="p-0 mt-0" />
             <div className="d-flex align-items-center justify-content-center h-100">
@@ -94,7 +102,7 @@ const CartItemsList = () => {
             </div>
           </>
         )}
-        {!!cartItems?.length && (
+        {!isLoading && !!cartItems?.length && (
           <>
             <div className="d-flex justify-content-between mt-2">
               <Typography fontsStyle="base-semi-bold">

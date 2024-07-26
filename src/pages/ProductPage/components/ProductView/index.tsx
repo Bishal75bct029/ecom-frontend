@@ -101,7 +101,7 @@ const ProductView = () => {
 
   if (isLoading)
     return (
-      <div className="d-flex align-items-center justify-content-center">
+      <div className="d-flex align-items-center justify-content-center" style={{ height: '200px' }}>
         <Spinner />
       </div>
     );

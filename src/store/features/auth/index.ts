@@ -9,6 +9,7 @@ export const authApi = baseApi.enhanceEndpoints({ addTagTypes: ['user-detail'] }
         method: 'POST',
         data,
       }),
+      invalidatesTags: ['user-detail'],
     }),
     postLogout: builder.mutation<void, void>({
       query: () => ({

@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-
+import { Spinner } from 'react-bootstrap';
 import { Typography } from '@/components/atoms';
 import { SearchCard } from '@/components/organisms';
 import { useGetProductByCategoryQuery, useGetProductByIdQuery } from '@/store/features/product';
@@ -19,7 +19,11 @@ const SimilarProducts = () => {
   );
 
   if (isLoading) {
-    return <Typography>Loading...</Typography>;
+    return (
+      <div className="d-flex align-items-center justify-content-center" style={{ height: '100px' }}>
+        <Spinner />
+      </div>
+    );
   }
 
   return (
