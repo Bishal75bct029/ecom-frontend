@@ -4,9 +4,9 @@ import { Navigate, Outlet, RouteObject, useLocation } from 'react-router-dom';
 
 import style from './style.module.scss';
 import { Navbar } from './components';
-import { useAppSelector } from '@/store/hooks';
 import { Footer } from '@/components/organisms';
 import { FOOTER_INCLUDE_ROUTES } from '@/constants';
+import { getStorageItem } from '@/utils';
 
 interface MainLayoutProps extends PropsWithChildren {
   privateRoutes: Omit<RouteObject, 'element' | 'index'>[];
@@ -14,7 +14,7 @@ interface MainLayoutProps extends PropsWithChildren {
 
 const MainLayout: FC<MainLayoutProps> = ({ children, privateRoutes }) => {
   const { pathname } = useLocation();
-  const token = useAppSelector((state) => state.user.token);
+  const token = getStorageItem<string>('token');
 
   if (privateRoutes.some((route) => pathname.includes(route.path as string)) && !token) {
     return <Navigate to="/" />;

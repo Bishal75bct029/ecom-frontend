@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Card, Stack } from 'react-bootstrap';
+import { useLocation } from 'react-router-dom';
 import { Button, Typography } from '@/components/atoms';
 import { useGetUserAddressesQuery, useGetUserDetailQuery } from '@/store/features/user';
 import style from './style.module.scss';
@@ -11,6 +12,7 @@ import AddAddressModal from '../AddAddressModal';
 import { DiscountedPriceView } from '@/components/organisms';
 
 const CheckoutDetail = () => {
+  const { pathname } = useLocation();
   const dispatch = useAppDispatch();
 
   const [showModal, setShowModal] = useState<string>('');
@@ -31,8 +33,13 @@ const CheckoutDetail = () => {
   }, [userAddresses, selectedShippingAddress, dispatch]);
 
   useEffect(() => {
-    //incase of reload in checkout page the data is saved in local storage
     window.addEventListener('beforeunload', () => {
+      if (
+        !pathname.includes('checkout') ||
+        !selectedCartProducts.length ||
+        !Object.keys(selectedProductQuantities).length
+      )
+        return;
       setStorageItem('selectedCartProducts', selectedCartProducts);
       setStorageItem('selectedProductQuantities', selectedProductQuantities);
     });

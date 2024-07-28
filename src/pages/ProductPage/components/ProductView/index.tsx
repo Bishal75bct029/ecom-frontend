@@ -6,10 +6,10 @@ import { Button, CheckBox, Modal, Typography } from '@/components/atoms';
 import { useGetProductByCategoryQuery, useGetProductByIdQuery } from '@/store/features/product';
 import { useAuth, useProductVariantSelection } from '@/hooks';
 import { usePostLoginMutation } from '@/store/features/auth';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { useAppDispatch } from '@/store/hooks';
 import { setCartState, useAddProductToCartMutation } from '@/store/features/cart';
 import style from './style.module.scss';
-import { toastError } from '@/utils';
+import { getStorageItem, toastError } from '@/utils';
 import { LoginPayload } from '@/store/features/auth/types';
 
 const ProductView = () => {
@@ -20,7 +20,7 @@ const ProductView = () => {
   const [quantity, setQuantity] = useState<number>(1);
   const [showModal, setShowModal] = useState<string>('');
 
-  const token = useAppSelector((state) => state.user.token);
+  const token = getStorageItem<string>('token');
 
   const { data: productData, isLoading } = useGetProductByIdQuery({ id: `${productId}` }, { skip: !productId });
   const { data: similarProducts } = useGetProductByCategoryQuery(

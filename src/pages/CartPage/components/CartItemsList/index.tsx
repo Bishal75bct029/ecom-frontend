@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { Spinner, Stack } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { differenceBy, omit, uniqBy } from 'lodash';
@@ -79,8 +79,16 @@ const CartItemsList = () => {
           toastSuccess('Product removed from cart.');
         });
     },
-    [selectedCartProducts, selectedProductQuantities],
+    [selectedCartProducts, selectedProductQuantities, dispatch, removeProductFromCart],
   );
+
+  const memoizedCartItems = useMemo(() => {
+    if (!cartItems) return [];
+    dispatch(setCartState({ selectedCartProducts: [], selectedProductQuantities: {} }));
+    setStorageItem('selectedCartProducts', []);
+    setStorageItem('selectedProductQuantities', {});
+    return cartItems;
+  }, [cartItems, dispatch]);
 
   return (
     <>
@@ -119,7 +127,7 @@ const CartItemsList = () => {
               </Typography>
             </div>
             <hr className="p-0 mt-0" />
-            {cartItems?.map((item, i) => (
+            {memoizedCartItems?.map((item, i) => (
               <div key={i}>
                 <Stack direction="horizontal" className={style.cartItem}>
                   <div className={style.productDetailContainer}>

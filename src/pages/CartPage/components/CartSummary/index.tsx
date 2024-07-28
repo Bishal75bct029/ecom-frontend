@@ -2,12 +2,16 @@ import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Typography } from '@/components/atoms';
 import { useAppSelector } from '@/store/hooks';
+import { useGetCartItemsQuery } from '@/store/features/cart';
+import { Spinner } from 'react-bootstrap';
 
 const CartSummary = () => {
   const navigate = useNavigate();
 
   const selectedCartProducts = useAppSelector((state) => state.cart.selectedCartProducts);
   const selectedProductQuantities = useAppSelector((state) => state.cart.selectedProductQuantities);
+
+  const { isLoading } = useGetCartItemsQuery();
 
   const totalPrice = useMemo(
     () =>
@@ -21,7 +25,12 @@ const CartSummary = () => {
     <div style={{ width: '25%' }}>
       <Typography fontsStyle="large-semi-bold">Order Summary</Typography>
       <hr className="p-0 mt-0" />
-      {!!selectedCartProducts.length && (
+      {isLoading && (
+        <div className="d-flex align-items-center justify-content-center" style={{ height: '165px' }}>
+          <Spinner />
+        </div>
+      )}
+      {!isLoading && !!selectedCartProducts.length && (
         <div className="mb-3">
           <Typography className="d-flex justify-content-between">
             <span>
@@ -33,7 +42,7 @@ const CartSummary = () => {
           </Typography>
         </div>
       )}
-      {!selectedCartProducts.length && (
+      {!isLoading && !selectedCartProducts.length && (
         <Typography className="d-flex justify-content-center mb-3" color="secondary-red" fontsStyle="base-semi-bold">
           No items selected.
         </Typography>
