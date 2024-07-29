@@ -7,10 +7,13 @@ import { CartIcon, UserIcon } from '@/assets/icons';
 import { useGetUserDetailQuery } from '@/store/features/user';
 import { Typography } from '@/components/atoms';
 import Categories from '../Categories';
+import { DropDown } from '@/components/atoms/Dropdown';
+import { useAuth } from '@/hooks';
 
 const Navbar = () => {
   const navigate = useNavigate();
   const { data: userDetail } = useGetUserDetailQuery();
+  const { logoutHandler } = useAuth();
 
   return (
     <Container fluid className={style.navbar}>
@@ -28,11 +31,20 @@ const Navbar = () => {
         <Stack direction="horizontal" className={style.rightContainer}>
           <Stack direction="horizontal" gap={3} className={style.loginContainer}>
             {userDetail && userDetail?.name ? (
-              <div>{userDetail.name}</div>
+              // <div>{userDetail.name}</div>
+              <DropDown
+                title={userDetail.name}
+                variant="primary"
+                items={[
+                  { value: 'Edit Profile' },
+                  { value: 'My Orders', onClick: () => console.log('Hello') },
+                  { value: 'Log Out', onClick: logoutHandler, className: 'logout' },
+                ]}
+                image="exist"
+              />
             ) : (
               <div className="d-flex align-items-center gap-2 cursor-pointer" onClick={() => navigate('/login')}>
-                <UserIcon width={20} height={20} />
-                Login
+                <UserIcon width={35} height={35} />
               </div>
             )}
             {/* <div className={style.divider}>|</div>

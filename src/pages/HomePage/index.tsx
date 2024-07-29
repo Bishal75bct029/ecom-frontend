@@ -5,6 +5,7 @@ import style from './style.module.scss';
 
 const Homepage = () => {
   const { data, isLoading } = useGetProductsQuery();
+  console.log(data);
 
   return (
     <>
@@ -15,7 +16,7 @@ const Homepage = () => {
       )}
       {!isLoading && (
         <div className={style.cardsContainer}>
-          {data?.map(({ id, ...item }) => <SearchCard key={id} to={`/${id}`} id={id} {...item} />)}
+          {data?.items?.map(({ id, ...item }) => <SearchCard key={id} to={`/${id}`} id={id} {...item} />)}
         </div>
       )}
     </>

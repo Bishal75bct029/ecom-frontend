@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { LoginForm } from '@/components/organisms';
 import { usePostLoginMutation } from '@/store/features/auth';
 import { LoginPayload } from '@/store/features/auth/types';
@@ -27,6 +27,8 @@ const LoginPage = () => {
       <LoginForm onSubmit={handleLogin} wrapperClass={style.loginWrapper} isLoading={isLoading} />
     </div>
   );
+
+  return <Navigate to="/" />;
 };
 
 export default LoginPage;

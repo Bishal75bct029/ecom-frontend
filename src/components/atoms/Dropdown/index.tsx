@@ -1,26 +1,93 @@
 import React from 'react';
+import { Dropdown } from 'react-bootstrap';
+import style from './style.module.scss';
 
 interface DropdownProps {
-  items: { value: string; label: string }[];
-  selectedItem: string;
-  onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-  placeholder: string;
+  title: string;
+  image?: string;
+  variant: string;
+  items: {
+    value: string;
+    onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+    icon?: string;
+    className?: string | '';
+  }[];
+  className?: string | '';
+  id?: string;
 }
 
-export const Dropdown: React.FC<DropdownProps> = ({ items, selectedItem, onChange, placeholder }) => {
+export const DropDown: React.FC<DropdownProps> = (props: DropdownProps) => {
   return (
-    <div>
-      <label htmlFor="dynamic-dropdown">{placeholder}</label>
-      <select id="dynamic-dropdown" value={selectedItem} onChange={onChange}>
-        <option value="" disabled>
-          Select an item
-        </option>
-        {items.map((item, index) => (
-          <option key={index} value={item.value}>
-            {item.label}
-          </option>
-        ))}
-      </select>
-    </div>
+    <Dropdown>
+      <Dropdown.Toggle
+        id={props?.id || ''}
+        className={`${props.className}  ${style.user_profile}`}
+        variant={props.variant}
+      >
+        {props.image ? (
+          <>
+            <img
+              src="https://cdn.dribbble.com/users/183729/avatars/small/769273fda9f25846e3bf0ab4246c5753.jpg?1641371228"
+              className={style.profileImage}
+            />
+            {props.title}
+          </>
+        ) : (
+          <>{props.title}</>
+        )}
+      </Dropdown.Toggle>
+      <Dropdown.Menu className={style.menu}>
+        {props.image && (
+          <div
+            style={{
+              display: 'flex',
+              gap: 10,
+              alignItems: 'center',
+              justifyContent: 'center',
+              margin: '0 20px 10px 10px',
+              cursor: 'text',
+            }}
+          >
+            <img
+              src="https://cdn.dribbble.com/users/183729/avatars/small/769273fda9f25846e3bf0ab4246c5753.jpg?1641371228"
+              width={'50px'}
+              height={'50px'}
+              style={{ borderRadius: '50%' }}
+            />
+            <div>
+              <Dropdown.Item
+                className={style.profileTitle}
+                style={{ fontWeight: 'normal', fontSize: 18, padding: 0, cursor: 'text' }}
+              >
+                {props.title}
+              </Dropdown.Item>
+              <Dropdown.Item
+                className={style.profileTitle}
+                style={{ fontWeight: 'normal', fontSize: 14, padding: 0, color: '#505962', cursor: 'text' }}
+              >
+                user1@gmail.com
+              </Dropdown.Item>
+            </div>
+          </div>
+        )}
+        {props.items.map((item, index) => {
+          return (
+            <Dropdown.Item
+              onClick={item.onClick}
+              key={index}
+              className={`${[style.items]} ${
+                item.className &&
+                item.className
+                  .split(' ')
+                  .map((className) => style[className])
+                  .join(' ')
+              }`}
+            >
+              {item.value}
+            </Dropdown.Item>
+          );
+        })}
+      </Dropdown.Menu>
+    </Dropdown>
   );
 };
