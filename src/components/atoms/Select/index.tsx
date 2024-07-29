@@ -194,6 +194,7 @@ export const Select = forwardRef<any, SingleSelectProps>(
         <ReactSelect
           ref={ref}
           defaultValue={defaultValue}
+          className={className}
           value={value}
           onChange={onChange}
           isDisabled={isDisabled}

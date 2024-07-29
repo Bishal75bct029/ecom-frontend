@@ -4,7 +4,7 @@ import { useGetProductsQuery } from '@/store/features/product';
 import style from './style.module.scss';
 
 const Homepage = () => {
-  const { data, isLoading } = useGetProductsQuery();
+  const { data, isLoading } = useGetProductsQuery({});
 
   return (
     <>
@@ -15,7 +15,7 @@ const Homepage = () => {
       )}
       {!isLoading && (
         <div className={style.cardsContainer}>
-          {data?.map(({ id, ...item }) => <SearchCard key={id} to={`/${id}`} id={id} {...item} />)}
+          {data?.items.map(({ id, ...item }) => <SearchCard key={id} to={`/${id}`} id={id} {...item} />)}
         </div>
       )}
     </>

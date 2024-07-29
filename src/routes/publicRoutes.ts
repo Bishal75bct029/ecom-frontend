@@ -22,6 +22,13 @@ const publicRoutes: Omit<RouteObject, 'element' | 'index'>[] = [
       return { Component: ProductPage };
     },
   },
+  {
+    path: 'search',
+    lazy: async () => {
+      const { SearchPage } = await import('@/pages');
+      return { Component: SearchPage };
+    },
+  },
 ];
 
 export default publicRoutes;
