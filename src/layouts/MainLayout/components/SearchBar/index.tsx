@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import style from './style.module.scss';
-import { SearchIcon } from '@/assets/icons';
+import { RemoveCircleIcon, SearchIcon } from '@/assets/icons';
 import { TextInput, Typography } from '@/components/atoms';
 import { useLazyGetProductsQuery } from '@/store/features/product';
 import { debounce } from 'lodash';
@@ -31,13 +31,7 @@ const SearchBar = () => {
       });
   }, 500);
 
-  const memoizedProducts = useMemo(() => {
-    return products;
-  }, [products]);
-
-  const loading = useMemo(() => {
-    return isLoading || isFetching;
-  }, [isLoading, isFetching]);
+  const loading = useMemo(() => isLoading || isFetching, [isLoading, isFetching]);
 
   useEffect(() => {
     if (searchParams.get('q') && inputRef.current) {
@@ -76,7 +70,7 @@ const SearchBar = () => {
         handleEndIconClick={() => inputRef.current?.focus()}
         onChange={handleChange}
         onKeyDown={(e) => {
-          if (memoizedProducts.length < 3 || e.key !== 'Enter') return;
+          if (products?.length < 3 || e.key !== 'Enter') return;
           navigate(`/search?q=${e.currentTarget.value}`);
           setShowSearchBar(false);
         }}
@@ -93,9 +87,23 @@ const SearchBar = () => {
                 <Spinner />
               </div>
             )}
-            {!loading && (
+            {!loading && !products?.length && (
+              <div className="d-flex align-items-center justify-content-center" style={{ height: '120px' }}>
+                <div className="d-flex flex-column align-items-center">
+                  <Typography
+                    fontsStyle="base-semi-bold"
+                    color="secondary-red"
+                    className="d-flex align-items-center gap-1 mb-1"
+                  >
+                    <RemoveCircleIcon /> No products found.
+                  </Typography>
+                  <Typography fontsStyle="caption-semi-bold">Please, try adjusting your search term.</Typography>
+                </div>
+              </div>
+            )}
+            {!loading && !!products?.length && (
               <div className="d-flex flex-column">
-                {memoizedProducts?.map((item, i) => (
+                {products?.map((item, i) => (
                   <div
                     key={i}
                     onClick={() => {
@@ -130,16 +138,16 @@ const SearchBar = () => {
                         </div>
                       </div>
                     </div>
-                    <hr className={i === memoizedProducts.length - 1 ? 'd-none' : ''} />
+                    <hr className={i === products?.length - 1 ? 'd-none' : ''} />
                   </div>
                 ))}
               </div>
             )}
           </div>
           <div
-            className={[style.viewMoreButton, memoizedProducts.length < 3 ? style.disabled : ''].join(' ')}
+            className={[style.viewMoreButton, products?.length < 3 ? style.disabled : ''].join(' ')}
             onClick={() => {
-              if (memoizedProducts.length < 3) return;
+              if (products?.length < 3) return;
               navigate(`/search?q=${value}`);
               setShowSearchBar(false);
             }}

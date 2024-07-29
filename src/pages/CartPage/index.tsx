@@ -5,9 +5,9 @@ import { useGetCartItemsQuery } from '@/store/features/cart';
 import { CartItemsList, CartSummary } from './components';
 
 const CartPage = () => {
-  const { isLoading } = useGetCartItemsQuery();
+  const { isLoading, isFetching } = useGetCartItemsQuery();
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     <div className="d-flex align-items-center justify-content-center" style={{ height: '100vh' }}>
       <Spinner />
     </div>;

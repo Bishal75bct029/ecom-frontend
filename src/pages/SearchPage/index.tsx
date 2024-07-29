@@ -34,9 +34,7 @@ const SearchPage = () => {
 
   const { data, isLoading, isFetching } = useGetProductsQuery({ ...searchPaginationQuery });
 
-  const loading = useMemo(() => {
-    return isLoading || isFetching;
-  }, [isLoading, isFetching]);
+  const loading = useMemo(() => isLoading || isFetching, [isLoading, isFetching]);
 
   return (
     <Row className="mb-3">

@@ -21,7 +21,7 @@ const CartItemsList = () => {
   const selectedCartProducts = useAppSelector((state) => state.cart.selectedCartProducts);
   const selectedProductQuantities = useAppSelector((state) => state.cart.selectedProductQuantities);
 
-  const { data: cartItems, isLoading } = useGetCartItemsQuery();
+  const { data: cartItems, isLoading, isFetching } = useGetCartItemsQuery();
   const [removeProductFromCart] = useRemoveProductFromCartMutation();
 
   const handleSelectItem = useCallback(
@@ -90,11 +90,13 @@ const CartItemsList = () => {
     return cartItems;
   }, [cartItems, dispatch]);
 
+  const loading = useMemo(() => isLoading || isFetching, [isLoading, isFetching]);
+
   return (
     <>
       <Stack className={style.cartItemsContainer}>
         <Typography fontsStyle="large-semi-bold">Shopping Cart</Typography>
-        {isLoading && (
+        {loading && (
           <>
             <hr className="p-0 mt-0" />
             <div className="d-flex align-items-center justify-content-center" style={{ height: '200px' }}>
@@ -102,7 +104,7 @@ const CartItemsList = () => {
             </div>
           </>
         )}
-        {!isLoading && !cartItems?.length && (
+        {!loading && !cartItems?.length && (
           <>
             <hr className="p-0 mt-0" />
             <div className="d-flex align-items-center justify-content-center h-100">
@@ -112,7 +114,7 @@ const CartItemsList = () => {
             </div>
           </>
         )}
-        {!isLoading && !!cartItems?.length && (
+        {!loading && !!cartItems?.length && (
           <>
             <div className="d-flex justify-content-between mt-2">
               <Typography fontsStyle="base-semi-bold">
