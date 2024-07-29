@@ -109,7 +109,11 @@ const SearchBar = () => {
                       </div>
                       <div style={{ width: 'calc(100% - 100px)' }}>
                         <Typography fontsStyle="small-semi-bold">{item.name}</Typography>
-                        <Typography fontsStyle="caption-normal" className={style.productDescription}>
+                        <Typography
+                          fontsStyle="caption-normal"
+                          className="text-ellipsis-lh-2"
+                          style={{ marginTop: '2px' }}
+                        >
                           {item.description}
                         </Typography>
                         <div className="d-flex flex-column gap-2 mt-2">
@@ -117,7 +121,7 @@ const SearchBar = () => {
                             <Stack key={i} direction="horizontal">
                               <Typography fontsStyle="caption-semi-bold" className="me-3">
                                 {key}:{' '}
-                                <Typography component={'span'} className={style.variantCard}>
+                                <Typography component={'span'} className="variantCard">
                                   {val}
                                 </Typography>
                               </Typography>

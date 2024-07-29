@@ -146,7 +146,7 @@ const CartItemsList = () => {
                       <Stack>
                         <Typography
                           fontsStyle="base-semi-bold"
-                          className={[style.productName, 'mb-2 pb-1'].join(' ')}
+                          className={[style.productName, 'text-ellipsis-lh-2', 'mb-2 pb-1'].join(' ')}
                           onClick={() => navigate('/')}
                         >
                           {item.name}
@@ -156,7 +156,7 @@ const CartItemsList = () => {
                             <Stack key={i} direction="horizontal">
                               <Typography fontsStyle="small-regular" className="me-3">
                                 {key}:{' '}
-                                <Typography component={'span'} className={style.variantCard}>
+                                <Typography component={'span'} className="variantCard">
                                   {val}
                                 </Typography>
                               </Typography>

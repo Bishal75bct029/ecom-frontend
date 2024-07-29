@@ -73,23 +73,6 @@
       }
     }
 
-    .productDescription {
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 2;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      margin-top: 2px;
-    }
-
-    .variantCard {
-      border: 1px solid partials.theme(gray-500);
-      border-radius: 4px;
-      padding-inline: 4px;
-      border: 1px solid partials.theme(primary-purple-default);
-      box-shadow: 0px 4px 0px 0px #f0e7fc;
-    }
-
     .viewMoreButton {
       display: flex;
       justify-content: center;

@@ -31,7 +31,7 @@ const OrderItemList: FC<OrderItemListProps> = ({ items, hideDiscount, priceClass
             <Stack>
               <Typography
                 fontsStyle="base-semi-bold"
-                className={[style.productName, 'mb-2 pb-1', enableProductRedirection && style.nameHover].join(' ')}
+                className={['text-ellipsis-lh-1 mb-2 pb-1', enableProductRedirection && style.nameHover].join(' ')}
                 onClick={() => {
                   enableProductRedirection && navigate(`/product/${item?.id}`);
                 }}
@@ -43,7 +43,7 @@ const OrderItemList: FC<OrderItemListProps> = ({ items, hideDiscount, priceClass
                   <Stack key={i} direction="horizontal">
                     <Typography fontsStyle="small-regular" className="me-3">
                       {key}:{' '}
-                      <Typography component={'span'} className={style.variantCard}>
+                      <Typography component={'span'} className="variantCard">
                         {val}
                       </Typography>
                     </Typography>
