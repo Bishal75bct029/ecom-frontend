@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Col, Row, Stack } from 'react-bootstrap';
+import { Col, Row, Spinner, Stack } from 'react-bootstrap';
 
 import style from './style.module.scss';
 import { Select, Typography } from '@/components/atoms';
@@ -32,7 +32,11 @@ const SearchPage = () => {
     };
   }, [searchParams, paginationQuery]);
 
-  const { data } = useGetProductsQuery({ ...searchPaginationQuery });
+  const { data, isLoading, isFetching } = useGetProductsQuery({ ...searchPaginationQuery });
+
+  const loading = useMemo(() => {
+    return isLoading || isFetching;
+  }, [isLoading, isFetching]);
 
   return (
     <Row className="mb-3">
@@ -55,7 +59,12 @@ const SearchPage = () => {
             }}
           />
         </div>
-        {!data?.items.length && (
+        {loading && (
+          <div className="d-flex justify-content-center align-items-center" style={{ height: '180px' }}>
+            <Spinner />
+          </div>
+        )}
+        {!loading && !data?.items.length && (
           <Stack className={style.noResultFoundContainer}>
             <Typography
               fontsStyle="base-semi-bold"
@@ -68,7 +77,7 @@ const SearchPage = () => {
             <Typography fontsStyle="caption-semi-bold">Please, try adjusting your search term.</Typography>
           </Stack>
         )}
-        {!!data?.items.length && (
+        {!loading && !!data?.items.length && (
           <>
             <div className={style.searchResultContainer}>
               {data?.items.map((product, i) => <SearchCard key={i} {...product} to={`/product/${product.id}`} />)}

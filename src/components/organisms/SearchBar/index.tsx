@@ -19,13 +19,7 @@ const SearchBar = () => {
   const [products, setProducts] = useState<ProductType[]>([]);
   const [showSearchBar, setShowSearchBar] = useState<boolean>(false);
 
-  const [getProducts, { isLoading }] = useLazyGetProductsQuery();
-
-  useEffect(() => {
-    if (searchParams.get('q') && inputRef.current) {
-      inputRef.current.value = searchParams.get('q') || '';
-    }
-  }, [searchParams]);
+  const [getProducts, { isLoading, isFetching }] = useLazyGetProductsQuery();
 
   const handleChange = debounce((e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
@@ -41,6 +35,35 @@ const SearchBar = () => {
     return products;
   }, [products]);
 
+  const loading = useMemo(() => {
+    return isLoading || isFetching;
+  }, [isLoading, isFetching]);
+
+  useEffect(() => {
+    if (searchParams.get('q') && inputRef.current) {
+      inputRef.current.value = searchParams.get('q') || '';
+    }
+  }, [searchParams]);
+
+  useEffect(() => {
+    const handleMouseDown = (e: MouseEvent) => {
+      if (
+        searchContainerRef.current &&
+        !searchContainerRef.current.contains(e.target as Node) &&
+        inputRef.current &&
+        !inputRef.current.contains(e.target as Node)
+      ) {
+        setShowSearchBar(false);
+      }
+    };
+
+    window.addEventListener('mousedown', handleMouseDown);
+
+    return () => {
+      window.removeEventListener('mousedown', handleMouseDown);
+    };
+  }, []);
+
   return (
     <div className={style.searchBarWrapper}>
       <TextInput
@@ -52,26 +75,35 @@ const SearchBar = () => {
         endIconClassName={style.endIcon}
         handleEndIconClick={() => inputRef.current?.focus()}
         onChange={handleChange}
-        onKeyDown={(e) => e.key === 'Enter' && navigate(`/search?q=${e.currentTarget.value}`)}
+        onKeyDown={(e) => {
+          if (memoizedProducts.length < 3 || e.key !== 'Enter') return;
+          navigate(`/search?q=${e.currentTarget.value}`);
+          setShowSearchBar(false);
+        }}
         onFocus={() => setShowSearchBar(true)}
-        onBlur={() => setShowSearchBar(false)}
       />
-      {value && !pathname.includes('search') && showSearchBar && (
+      {!!value && !pathname.includes('search') && showSearchBar && (
         <div className={style.searchBarOutput} ref={searchContainerRef}>
           <div className="px-3 py-2">
             <Typography fontsStyle="base-semi-bold" className="mb-2">
               Products
             </Typography>
-            {isLoading && (
+            {loading && (
               <div className="d-flex align-items-center justify-content-center" style={{ height: '120px' }}>
                 <Spinner />
               </div>
             )}
-            {!isLoading && (
+            {!loading && (
               <div className="d-flex flex-column">
                 {memoizedProducts?.map((item, i) => (
-                  <div key={i}>
-                    <div className={style.searchItem} onClick={() => navigate(`/product/${item.id}`)}>
+                  <div
+                    key={i}
+                    onClick={() => {
+                      navigate(`${item.id}`);
+                      setShowSearchBar(false);
+                    }}
+                  >
+                    <div className={style.searchItem}>
                       <div className={style.imgContainer}>
                         <img src={item.productMeta[0]?.image[0]} alt={item.name} />
                       </div>
@@ -94,13 +126,20 @@ const SearchBar = () => {
                         </div>
                       </div>
                     </div>
-                    <hr className={i === products.length - 1 ? 'd-none' : ''} />
+                    <hr className={i === memoizedProducts.length - 1 ? 'd-none' : ''} />
                   </div>
                 ))}
               </div>
             )}
           </div>
-          <div className={style.viewMoreButton} onClick={() => navigate(`/search?q=${value}`)}>
+          <div
+            className={[style.viewMoreButton, memoizedProducts.length < 3 ? style.disabled : ''].join(' ')}
+            onClick={() => {
+              if (memoizedProducts.length < 3) return;
+              navigate(`/search?q=${value}`);
+              setShowSearchBar(false);
+            }}
+          >
             View more products
           </div>
         </div>

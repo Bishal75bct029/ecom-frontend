@@ -33,7 +33,7 @@ const CheckoutDetail = () => {
   }, [userAddresses, selectedShippingAddress, dispatch]);
 
   useEffect(() => {
-    window.addEventListener('beforeunload', () => {
+    const handleBeforeUnload = () => {
       if (
         !pathname.includes('checkout') ||
         !selectedCartProducts.length ||
@@ -42,10 +42,11 @@ const CheckoutDetail = () => {
         return;
       setStorageItem('selectedCartProducts', selectedCartProducts);
       setStorageItem('selectedProductQuantities', selectedProductQuantities);
-    });
+    };
 
+    window.addEventListener('beforeunload', handleBeforeUnload);
     return () => {
-      window.removeEventListener('beforeunload', () => {});
+      window.removeEventListener('beforeunload', handleBeforeUnload);
     };
   }, []);
 
