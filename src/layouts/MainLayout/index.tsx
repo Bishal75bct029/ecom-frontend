@@ -4,7 +4,9 @@ import { Navigate, Outlet, RouteObject, useLocation } from 'react-router-dom';
 
 import style from './style.module.scss';
 import { Navbar } from './components';
-import { useAppSelector } from '@/store/hooks';
+import { Footer } from '@/components/organisms';
+import { FOOTER_INCLUDE_ROUTES } from '@/constants';
+import { getStorageItem } from '@/utils';
 
 interface MainLayoutProps extends PropsWithChildren {
   privateRoutes: Omit<RouteObject, 'element' | 'index'>[];
@@ -12,19 +14,26 @@ interface MainLayoutProps extends PropsWithChildren {
 
 const MainLayout: FC<MainLayoutProps> = ({ children, privateRoutes }) => {
   const { pathname } = useLocation();
-  const user = useAppSelector((state) => state.user.user);
+  const token = getStorageItem<string>('token');
 
-  if (privateRoutes.some((route) => pathname.includes(route.path as string)) && !user) {
+  if (privateRoutes.some((route) => pathname.includes(route.path as string)) && !token) {
     return <Navigate to="/" />;
   }
 
   return (
-    <>
-      <Navbar />
-      <Container fluid className={style.mainLayout}>
-        {children ?? <Outlet />}
-      </Container>
-    </>
+    <div className="d-flex flex-column justify-content-between" style={{ minHeight: '100vh' }}>
+      <div className="h-100">
+        <Navbar />
+        <Container
+          fluid
+          className={style.mainLayout}
+          style={{ height: FOOTER_INCLUDE_ROUTES.includes(pathname) ? '80%' : '100%' }}
+        >
+          {children ?? <Outlet />}
+        </Container>
+      </div>
+      {FOOTER_INCLUDE_ROUTES.includes(pathname) && <Footer />}
+    </div>
   );
 };
 

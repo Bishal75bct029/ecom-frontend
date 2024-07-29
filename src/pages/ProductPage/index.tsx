@@ -1,4 +1,4 @@
-import { ProductView, SimilarProducts, CustomerReview } from './components';
+import { ProductView, SimilarProducts } from './components';
 
 const ProductPage = () => {
   return (
@@ -9,9 +9,9 @@ const ProductPage = () => {
 
       <SimilarProducts />
 
-      <hr className="mt-4 p-0" />
+      {/* <hr className="mt-4 p-0" /> */}
 
-      <CustomerReview />
+      {/* <CustomerReview /> */}
     </>
   );
 };

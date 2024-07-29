@@ -1,7 +1,7 @@
-import { useCallback, useState } from 'react';
-import { Stack } from 'react-bootstrap';
+import { useCallback, useMemo, useState } from 'react';
+import { Spinner, Stack } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { differenceBy, uniqBy } from 'lodash';
+import { differenceBy, omit, uniqBy } from 'lodash';
 import { Button, CheckBox, Typography } from '@/components/atoms';
 import { setCartState, useGetCartItemsQuery, useRemoveProductFromCartMutation } from '@/store/features/cart';
 import { CartItemTransformedType } from '@/store/features/cart/types';
@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { setStorageItem, toastSuccess } from '@/utils';
 import style from './style.module.scss';
 import { ConfirmationModal } from '@/components/molecules';
+import { DiscountedPriceView } from '@/components/organisms';
 
 const CartItemsList = () => {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ const CartItemsList = () => {
   const selectedCartProducts = useAppSelector((state) => state.cart.selectedCartProducts);
   const selectedProductQuantities = useAppSelector((state) => state.cart.selectedProductQuantities);
 
-  const { data: cartItems } = useGetCartItemsQuery();
+  const { data: cartItems, isLoading } = useGetCartItemsQuery();
   const [removeProductFromCart] = useRemoveProductFromCartMutation();
 
   const handleSelectItem = useCallback(
@@ -69,16 +70,39 @@ const CartItemsList = () => {
       removeProductFromCart({ productMetaId: [id] })
         .unwrap()
         .then(() => {
+          const newProducts = selectedCartProducts.filter((item) => item.productMeta.id !== id);
+          const newQuantites = omit(selectedProductQuantities, id);
+
+          setStorageItem('selectedCartProducts', newProducts);
+          setStorageItem('selectedProductQuantities', newQuantites);
+          dispatch(setCartState({ selectedCartProducts: newProducts, selectedProductQuantities: newQuantites }));
           toastSuccess('Product removed from cart.');
         });
     },
-    [removeProductFromCart],
+    [selectedCartProducts, selectedProductQuantities, dispatch, removeProductFromCart],
   );
+
+  const memoizedCartItems = useMemo(() => {
+    if (!cartItems) return [];
+    dispatch(setCartState({ selectedCartProducts: [], selectedProductQuantities: {} }));
+    setStorageItem('selectedCartProducts', []);
+    setStorageItem('selectedProductQuantities', {});
+    return cartItems;
+  }, [cartItems, dispatch]);
+
   return (
     <>
       <Stack className={style.cartItemsContainer}>
         <Typography fontsStyle="large-semi-bold">Shopping Cart</Typography>
-        {!cartItems?.length && (
+        {isLoading && (
+          <>
+            <hr className="p-0 mt-0" />
+            <div className="d-flex align-items-center justify-content-center" style={{ height: '200px' }}>
+              <Spinner />
+            </div>
+          </>
+        )}
+        {!isLoading && !cartItems?.length && (
           <>
             <hr className="p-0 mt-0" />
             <div className="d-flex align-items-center justify-content-center h-100">
@@ -88,7 +112,7 @@ const CartItemsList = () => {
             </div>
           </>
         )}
-        {!!cartItems?.length && (
+        {!isLoading && !!cartItems?.length && (
           <>
             <div className="d-flex justify-content-between mt-2">
               <Typography fontsStyle="base-semi-bold">
@@ -103,7 +127,7 @@ const CartItemsList = () => {
               </Typography>
             </div>
             <hr className="p-0 mt-0" />
-            {cartItems?.map((item, i) => (
+            {memoizedCartItems?.map((item, i) => (
               <div key={i}>
                 <Stack direction="horizontal" className={style.cartItem}>
                   <div className={style.productDetailContainer}>
@@ -179,9 +203,11 @@ const CartItemsList = () => {
                         +
                       </Button>
                     </div>
-                    <Typography fontsStyle="large-bold" color="primary-purple" className={style.priceContainer}>
-                      Rs. {item.productMeta?.price}
-                    </Typography>
+                    <DiscountedPriceView
+                      discountPrice={item.productMeta?.discountPrice}
+                      price={item.productMeta?.price}
+                      className={style.priceContainer}
+                    />
                   </Stack>
                 </Stack>
                 <hr className={['p-0', i === cartItems.length - 1 ? 'mb-0' : ''].join(' ')} />

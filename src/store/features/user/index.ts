@@ -1,9 +1,11 @@
 import baseApi from '@/store/baseApi';
 import { UserAddress, UserDetailType, UserState } from './types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { getStorageItem } from '@/utils';
 
 const initialState: UserState = {
   user: undefined,
+  token: getStorageItem('token'),
 };
 
 export const userSlice = createSlice({
@@ -21,9 +23,6 @@ export const userSlice = createSlice({
   extraReducers: (builder) => {
     builder.addMatcher(userApi.endpoints.getUserDetail.matchFulfilled, (state, action) => {
       state.user = action.payload;
-    });
-    builder.addMatcher(userApi.endpoints.getUserDetail.matchRejected, (state) => {
-      state.user = undefined;
     });
   },
 });

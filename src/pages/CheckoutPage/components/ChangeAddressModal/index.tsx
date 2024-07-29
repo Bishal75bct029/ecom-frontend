@@ -29,7 +29,7 @@ const ChangeAddressModal: FC<Pick<ModalProps, 'show' | 'onHide'>> = ({ show, onH
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const add = useMemo(() => setAddress(selectedShippingAddress), [selectedShippingAddress]);
+  useMemo(() => setAddress(selectedShippingAddress), [selectedShippingAddress]);
 
   return (
     <Modal

@@ -16,6 +16,7 @@
 
 #root {
   min-height: 100vh;
+  height: 100%;
   width: 100%;
   background-color: partials.theme(app-background);
   color: partials.theme(black);
@@ -55,4 +56,9 @@ body {
 
 .whitespace-nowrap {
   white-space: nowrap;
+}
+
+.spinner-border {
+  border: 0.25em solid partials.theme(primary-purple-default);
+  border-right-color: transparent;
 }

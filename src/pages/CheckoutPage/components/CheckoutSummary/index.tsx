@@ -1,19 +1,39 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { Stack } from 'react-bootstrap';
-import { Button, Typography } from '@/components/atoms';
+import { Typography } from '@/components/atoms';
 import { useAppSelector } from '@/store/hooks';
+import { PaypalIcon } from '@/assets/icons';
+import style from './style.module.scss';
+import { useGetAllPaymentMethodsQuery, usePostOrderMutation } from '@/store/features/payment';
 
 const CheckoutSummary = () => {
   const selectedCartProducts = useAppSelector((state) => state.cart.selectedCartProducts);
   const selectedProductQuantities = useAppSelector((state) => state.cart.selectedProductQuantities);
 
+  const { data: paymentMethods } = useGetAllPaymentMethodsQuery();
+  const [postOrder, { isLoading }] = usePostOrderMutation();
+
   const productsTotalPrice = useMemo(
     () =>
       selectedCartProducts.reduce((acc, item) => {
-        return acc + Number(item.productMeta.price) * selectedProductQuantities[item.productMeta.id];
+        return acc + Number(item.productMeta.discountPrice) * selectedProductQuantities[item.productMeta.id];
       }, 0),
     [selectedCartProducts, selectedProductQuantities],
   );
+
+  const onPaywithPaypal = useCallback(() => {
+    const selectedPaymentMethod = paymentMethods?.find((method) => method.name === 'PAYPAL');
+    if (!selectedPaymentMethod || !selectedCartProducts || !selectedProductQuantities) return;
+    const productMetaIds = selectedCartProducts.map((item) => ({
+      id: item.productMeta.id,
+      quantity: selectedProductQuantities[item.productMeta.id],
+    }));
+    postOrder({ paymentMethodId: selectedPaymentMethod.id, productMetaIds })
+      .unwrap()
+      .then((res) => {
+        window.location.href = res.approvalUrl;
+      });
+  }, [paymentMethods, selectedCartProducts, selectedProductQuantities]);
 
   return (
     <Stack style={{ width: '25%', height: 'fit-content' }}>
@@ -39,8 +59,22 @@ const CheckoutSummary = () => {
           </Typography>
         </Typography> */}
       </div>
-      <div className="d-flex justify-content-center">
-        <Button>Place Order</Button>
+      <div className="d-flex justify-content-center mt-2">
+        <div
+          className={[isLoading ? style.disabled : '', style.customButton].join(' ')}
+          onClick={() => {
+            if (isLoading) return;
+            onPaywithPaypal();
+          }}
+        >
+          {isLoading ? (
+            'Loading...'
+          ) : (
+            <>
+              <span>Pay with</span> <PaypalIcon />
+            </>
+          )}
+        </div>
       </div>
     </Stack>
   );

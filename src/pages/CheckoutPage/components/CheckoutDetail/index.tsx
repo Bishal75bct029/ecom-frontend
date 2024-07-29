@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Card, Stack } from 'react-bootstrap';
+import { useLocation } from 'react-router-dom';
 import { Button, Typography } from '@/components/atoms';
 import { useGetUserAddressesQuery, useGetUserDetailQuery } from '@/store/features/user';
 import style from './style.module.scss';
@@ -8,8 +9,10 @@ import ChangeAddressModal from '../ChangeAddressModal';
 import { setCartState } from '@/store/features/cart';
 import { setStorageItem } from '@/utils';
 import AddAddressModal from '../AddAddressModal';
+import { DiscountedPriceView } from '@/components/organisms';
 
 const CheckoutDetail = () => {
+  const { pathname } = useLocation();
   const dispatch = useAppDispatch();
 
   const [showModal, setShowModal] = useState<string>('');
@@ -30,8 +33,13 @@ const CheckoutDetail = () => {
   }, [userAddresses, selectedShippingAddress, dispatch]);
 
   useEffect(() => {
-    //incase of reload in checkout page the data is saved in local storage
     window.addEventListener('beforeunload', () => {
+      if (
+        !pathname.includes('checkout') ||
+        !selectedCartProducts.length ||
+        !Object.keys(selectedProductQuantities).length
+      )
+        return;
       setStorageItem('selectedCartProducts', selectedCartProducts);
       setStorageItem('selectedProductQuantities', selectedProductQuantities);
     });
@@ -135,13 +143,14 @@ const CheckoutDetail = () => {
                     <Typography fontsStyle="base-semi-bold" className={[style.quantityLabel].join(' ')}>
                       Price
                     </Typography>
-                    <Typography
-                      color="primary-purple"
-                      fontsStyle="base-semi-bold"
-                      className={[style.quantityLabel, 'd-flex justify-content-center mt-2'].join(' ')}
-                    >
-                      Rs. {item.productMeta.price}
-                    </Typography>
+                    <DiscountedPriceView
+                      discountPrice={item.productMeta.discountPrice}
+                      price={item.productMeta.price}
+                      className={[
+                        style.quantityLabel,
+                        'd-flex flex-column align-items-center justify-content-center mt-2',
+                      ].join(' ')}
+                    />
                   </Stack>
                 </Stack>
               </Stack>

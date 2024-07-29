@@ -10,9 +10,10 @@ interface LoginFormProps {
   onSubmit: (payload: LoginPayload) => void;
   title?: React.ReactNode;
   wrapperClass?: string;
+  isLoading?: boolean;
 }
 
-const LoginFormView: FC<LoginFormProps> = ({ title, wrapperClass, onSubmit }) => {
+const LoginFormView: FC<LoginFormProps> = ({ title, wrapperClass, onSubmit, isLoading }) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const { watch, handleSubmit } = useFormContext<LoginPayload>();
@@ -47,7 +48,7 @@ const LoginFormView: FC<LoginFormProps> = ({ title, wrapperClass, onSubmit }) =>
             autoComplete="new-password"
             required
           />
-          <Button variant="primary" type="submit" className="px-5" disabled={isButtonDisabled}>
+          <Button variant="primary" type="submit" className="px-5" disabled={isButtonDisabled} loading={isLoading}>
             Log In
           </Button>
         </Stack>

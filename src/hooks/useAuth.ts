@@ -1,26 +1,22 @@
-import { usePostLogoutMutation } from '@/store/features/auth';
-import { setUserState, useLazyGetUserDetailQuery } from '@/store/features/user';
+import { LoginResponse } from '@/store/features/auth/types';
 import { useAppDispatch } from '@/store/hooks';
+import { clearLocalStorage, setStorageItem } from '@/utils';
+import baseApi from '@/store/baseApi';
+import { setUserState } from '@/store/features/user';
 
 const useAuth = () => {
   const dispatch = useAppDispatch();
-  const [postLogout] = usePostLogoutMutation();
-  const [getUserDetail] = useLazyGetUserDetailQuery();
 
-  const loginHandler = () => {
-    getUserDetail()
-      .unwrap()
-      .then((payload) => {
-        dispatch(setUserState({ user: payload }));
-      })
-      .catch(() => {
-        dispatch(setUserState({ user: undefined }));
-      });
+  const loginHandler = (response: LoginResponse) => {
+    setStorageItem('token', response.token);
+    setStorageItem('refreshToken', response.refreshToken);
+    dispatch(setUserState({ token: response.token }));
   };
 
   const logoutHandler = () => {
-    postLogout();
-    dispatch(setUserState({ user: undefined }));
+    clearLocalStorage();
+    dispatch(baseApi.util.resetApiState());
+    window.location.href = '/';
   };
 
   return {

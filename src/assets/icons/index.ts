@@ -8,6 +8,7 @@ import { ReactComponent as EyeOpenIcon } from './eyeOpen.svg';
 import { ReactComponent as EyeCloseIcon } from './eyeClosed.svg';
 import { ReactComponent as CloseIcon } from './close.svg';
 import { ReactComponent as DeleteIcon } from './delete.svg';
+import { ReactComponent as PaypalIcon } from './paypal.svg';
 
 export {
   SearchIcon,
@@ -20,4 +21,5 @@ export {
   EyeCloseIcon,
   CloseIcon,
   DeleteIcon,
+  PaypalIcon,
 };
