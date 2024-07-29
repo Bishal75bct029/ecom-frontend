@@ -2,7 +2,7 @@ import { Container, Stack } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import GlobalMstImage from '@/assets/icons/global-mst.svg';
 import style from './style.module.scss';
-import SearchBar from '../../../../components/organisms/SearchBar';
+import SearchBar from '../SearchBar';
 import { CartIcon, UserIcon } from '@/assets/icons';
 import { useGetUserDetailQuery } from '@/store/features/user';
 import { Typography } from '@/components/atoms';
