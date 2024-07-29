@@ -9,7 +9,7 @@ import ChangeAddressModal from '../ChangeAddressModal';
 import { setCartState } from '@/store/features/cart';
 import { setStorageItem } from '@/utils';
 import AddAddressModal from '../AddAddressModal';
-import { DiscountedPriceView } from '@/components/organisms';
+import { OrderItemList } from '@/components/organisms';
 
 const CheckoutDetail = () => {
   const { pathname } = useLocation();
@@ -101,62 +101,13 @@ const CheckoutDetail = () => {
           <Typography fontsStyle="base-semi-bold" className="mb-3">
             Checkout Items
           </Typography>
-          {selectedCartProducts.map((item, i) => (
-            <div key={i}>
-              <Stack direction="horizontal" className={style.cartItem}>
-                <div className={style.productDetailContainer}>
-                  <div className="d-flex align-items-start gap-3">
-                    <div>
-                      <div className={style.imageContainer}>
-                        <img src={item.productMeta.image[0]} alt="image" />
-                      </div>
-                    </div>
-                    <Stack>
-                      <Typography fontsStyle="base-semi-bold" className={[style.productName, 'mb-2 pb-1'].join(' ')}>
-                        {item.name}
-                      </Typography>
-                      <div className="d-flex flex-column gap-2">
-                        {Object.entries(item.productMeta.variant).map(([key, val], i) => (
-                          <Stack key={i} direction="horizontal">
-                            <Typography fontsStyle="small-regular" className="me-3">
-                              {key}:{' '}
-                              <Typography component={'span'} className={style.variantCard}>
-                                {val}
-                              </Typography>
-                            </Typography>
-                          </Stack>
-                        ))}
-                      </div>
-                    </Stack>
-                  </div>
-                </div>
-                <Stack direction="horizontal" className="align-items-start" style={{ width: 'fit-content' }}>
-                  <Stack className="me-5">
-                    <Typography fontsStyle="base-semi-bold" className={[style.quantityLabel].join(' ')}>
-                      Quantity
-                    </Typography>
-                    <Typography fontsStyle="base-semi-bold" className="d-flex justify-content-center mt-2">
-                      {selectedProductQuantities[item.productMeta.id]}
-                    </Typography>
-                  </Stack>
-                  <Stack>
-                    <Typography fontsStyle="base-semi-bold" className={[style.quantityLabel].join(' ')}>
-                      Price
-                    </Typography>
-                    <DiscountedPriceView
-                      discountPrice={item.productMeta.discountPrice}
-                      price={item.productMeta.price}
-                      className={[
-                        style.quantityLabel,
-                        'd-flex flex-column align-items-center justify-content-center mt-2',
-                      ].join(' ')}
-                    />
-                  </Stack>
-                </Stack>
-              </Stack>
-              <hr className={['p-0', i === selectedCartProducts.length - 1 ? 'mb-0' : ''].join(' ')} />
-            </div>
-          ))}
+          <OrderItemList
+            items={selectedCartProducts}
+            priceClass={[style.quantityLabel, 'd-flex flex-column align-items-center justify-content-center mt-2'].join(
+              ' ',
+            )}
+            enableProductRedirection
+          />
         </Stack>
       </Stack>
       {showModal === 'changeAddress' && (

@@ -21,9 +21,9 @@ export const paymentApi = baseApi
         }),
         invalidatesTags: ['cart-items', 'user-detail'],
       }),
-      confirmPayment: builder.query<void, { token: string }>({
+      confirmOrderPayment: builder.query<void, { token: string }>({
         query: (params) => ({
-          url: `api/transactions/capturePayment`,
+          url: `api/orders/confirm`,
           method: 'GET',
           params,
         }),
@@ -32,4 +32,4 @@ export const paymentApi = baseApi
     }),
   });
 
-export const { usePostOrderMutation, useGetAllPaymentMethodsQuery, useConfirmPaymentQuery } = paymentApi;
+export const { usePostOrderMutation, useGetAllPaymentMethodsQuery, useLazyConfirmOrderPaymentQuery } = paymentApi;

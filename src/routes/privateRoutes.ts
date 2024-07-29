@@ -15,6 +15,13 @@ const privateRoutes: Omit<RouteObject, 'element' | 'index'>[] = [
       return { Component: CheckoutPage };
     },
   },
+  {
+    path: 'complete-order',
+    lazy: async () => {
+      const { CompleteOrderPage } = await import('@/pages');
+      return { Component: CompleteOrderPage };
+    },
+  },
 ];
 
 export default privateRoutes;
