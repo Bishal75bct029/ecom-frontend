@@ -1,6 +1,6 @@
-@use '@assets/styles/vendors/bootstrap' as *;
-@use '@assets/styles/vendors/toastify' as *;
-@use '@assets/styles/main' as partials;
+@use 'assets/styles/vendors/bootstrap' as *;
+@use 'assets/styles/vendors/toastify' as *;
+@use 'assets/styles/main' as partials;
 
 * {
   font-family: 'MST Font';

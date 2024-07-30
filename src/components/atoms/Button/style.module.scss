@@ -1,4 +1,4 @@
-@use '@assets/styles/main' as partials;
+@use 'assets/styles/main' as partials;
 
 .btnDisabled {
   color: partials.theme(silver-500);
