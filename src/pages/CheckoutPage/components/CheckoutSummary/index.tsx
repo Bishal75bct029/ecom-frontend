@@ -4,7 +4,7 @@ import { Typography } from '@/components/atoms';
 import { useAppSelector } from '@/store/hooks';
 import { PaypalIcon } from '@/assets/icons';
 import style from './style.module.scss';
-import { useGetAllPaymentMethodsQuery, usePostOrderMutation } from '@/store/features/payment';
+import { useGetAllPaymentMethodsQuery, usePostOrderMutation } from '@/store/features/order';
 
 const CheckoutSummary = () => {
   const selectedCartProducts = useAppSelector((state) => state.cart.selectedCartProducts);
@@ -41,7 +41,7 @@ const CheckoutSummary = () => {
       <hr className="p-0 mt-0" />
       <div className="d-flex flex-column gap-1 mb-3">
         <Typography className="d-flex justify-content-between">
-          <span>Subtotal (items)</span>
+          <span>Subtotal (item{selectedCartProducts.length > 1 ? 's' : ''})</span>
           <Typography fontsStyle="base-bold" color="primary-purple">
             Rs. {productsTotalPrice}
           </Typography>
