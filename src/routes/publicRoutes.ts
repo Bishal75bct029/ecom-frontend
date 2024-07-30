@@ -16,7 +16,7 @@ const publicRoutes: Omit<RouteObject, 'element' | 'index'>[] = [
     },
   },
   {
-    path: ':productId',
+    path: 'product/:productId',
     lazy: async () => {
       const { ProductPage } = await import('@/pages');
       return { Component: ProductPage };

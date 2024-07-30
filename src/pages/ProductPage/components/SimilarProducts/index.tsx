@@ -33,7 +33,7 @@ const SimilarProducts = () => {
       </Typography>
 
       <div className={style.cardsContainer}>
-        {similarProducts?.map(({ id, ...item }) => <SearchCard key={id} to={`/${id}`} id={id} {...item} />)}
+        {similarProducts?.map(({ id, ...item }) => <SearchCard key={id} to={`/product/${id}`} id={id} {...item} />)}
       </div>
     </>
   );
