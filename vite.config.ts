@@ -17,6 +17,7 @@ export default defineConfig({
   server: {
     port: 4200,
   },
+  assetsInclude: ['**/*.ttf'],
   css: {
     preprocessorOptions: {
       scss: { implementation: sass },

@@ -149,7 +149,7 @@ const CartItemsList = () => {
                         <Typography
                           fontsStyle="base-semi-bold"
                           className={[style.productName, 'text-ellipsis-lh-2', 'mb-2 pb-1'].join(' ')}
-                          onClick={() => navigate('/')}
+                          onClick={() => navigate(`/product/${item.id}`)}
                         >
                           {item.name}
                         </Typography>

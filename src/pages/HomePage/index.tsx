@@ -18,7 +18,7 @@ const Homepage = () => {
       )}
       {!loading && (
         <div className={style.cardsContainer}>
-          {data?.items.map(({ id, ...item }) => <SearchCard key={id} to={`/${id}`} id={id} {...item} />)}
+          {data?.items.map(({ id, ...item }) => <SearchCard key={id} to={`/product/${id}`} id={id} {...item} />)}
         </div>
       )}
     </>
