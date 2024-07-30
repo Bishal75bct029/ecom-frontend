@@ -1,0 +1,84 @@
+@use '@assets/styles/main' as partials;
+
+.modalContent {
+  border-radius: 16px;
+  padding: 32px;
+  // gap: partials.toRem(24);
+}
+
+.modal {
+  display: flex;
+  justify-content: center;
+}
+
+.modalDialog {
+  height: 80%;
+  .modalHeader {
+    border-bottom: none !important;
+    --bs-modal-header-padding: 0px;
+  }
+
+  .modalBody {
+    max-height: 80vh;
+    overflow: auto;
+    --bs-modal-padding: 0px;
+  }
+}
+
+.dialogContent {
+  padding: 32px;
+  min-height: fit-content !important;
+}
+
+.dialogHeader {
+  justify-content: flex-start !important;
+  margin-bottom: 16px;
+
+  & :first-child {
+    align-items: center;
+    gap: 12px;
+    display: flex;
+  }
+}
+
+.modalSizeSm {
+  --bs-modal-width: 592px;
+  width: 592px;
+  min-height: 284px;
+  max-width: none;
+}
+
+.modalSizeLg {
+  --bs-modal-width: 794px;
+  width: 794px;
+  max-height: 680px;
+  max-width: none;
+}
+
+.closeIcon {
+  position: absolute;
+  top: -2px;
+  right: -40px;
+  cursor: pointer;
+
+  svg {
+    fill: #fff;
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.fillDialogBody {
+  padding: 0 !important;
+  --bs-modal-border-radius: 1rem !important;
+}
+
+.fillBodyCloseButtton {
+  position: absolute;
+  bottom: calc(100% + 8px);
+}
+
+.modalFooter {
+  border: none;
+  padding: 0;
+}

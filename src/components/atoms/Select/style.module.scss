@@ -1,0 +1,122 @@
+@use '@assets/styles/main' as partials;
+
+.select {
+  width: 100%;
+  flex: 1;
+
+  &.selectDisabled {
+    cursor: not-allowed;
+  }
+
+  .label {
+    @include partials.SmallRegular;
+    margin-bottom: 0.25rem;
+  }
+
+  .control {
+    background: partials.theme(white);
+    border: 1px solid partials.theme(gray-300);
+    border-radius: 4px;
+    box-shadow: none;
+    padding: 12px 16px;
+    gap: 8px;
+    cursor: pointer;
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    &.error {
+      border-color: partials.theme(secondary-red-default) !important;
+    }
+
+    &.focused {
+      border: 1px solid partials.theme(primary-purple-default);
+    }
+
+    &.disabled {
+      background: partials.theme(silver-100);
+    }
+  }
+
+  .menuList {
+    padding: 0px !important;
+  }
+
+  .menu {
+    background-color: partials.theme(white);
+    border: 1px solid partials.theme(gray-300);
+    border-radius: 4px;
+    gap: 4px;
+    margin-block: 4px;
+    min-width: 140px;
+    right: 0;
+
+    & > div {
+      padding: 8px;
+    }
+  }
+
+  .option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 16px;
+    background-color: transparent;
+    margin-block: 4px;
+
+    &--focused {
+      background-color: partials.theme(primary-purple-light);
+    }
+
+    &--selected {
+      background-color: partials.theme(primary-purple-light);
+    }
+
+    &--disabled {
+      background-color: partials.theme(silver-500);
+    }
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .singleValueLabel {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: fit-content;
+    @include partials.BaseRegular;
+  }
+
+  .multiValue {
+    background: partials.theme(primary-purple-light);
+    border-radius: 4px;
+    border: 1px solid partials.theme(primary-purple-light);
+    @include partials.CaptionNormal;
+    svg {
+      width: 14px;
+      height: 14px;
+    }
+  }
+
+  .placeholder {
+    color: partials.theme(silver-500);
+    & > svg {
+      width: 20px;
+      height: 20px;
+      fill: partials.theme(silver-500);
+      & > path {
+        fill: partials.theme(silver-500);
+      }
+    }
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+}

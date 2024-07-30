@@ -1,0 +1,19 @@
+@use '@assets/styles/main' as partials;
+
+.changeAddressCardsContainer {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+
+  .addressCard {
+    cursor: pointer;
+
+    &:hover {
+      border: 1px solid partials.theme(primary-purple-default);
+    }
+
+    &.selected {
+      background-color: partials.theme(primary-purple-light);
+    }
+  }
+}

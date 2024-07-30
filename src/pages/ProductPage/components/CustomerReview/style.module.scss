@@ -1,0 +1,41 @@
+.ratingsContainer {
+  width: 400px;
+  align-items: center;
+
+  .progressBar {
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid #ffbc0b;
+    background-color: transparent;
+    margin-right: 16px;
+
+    div {
+      background-color: #ffbc0b;
+    }
+  }
+
+  .percentage {
+    word-break: normal;
+    width: 20px;
+  }
+
+  .rating {
+    width: 30px;
+  }
+}
+
+.reviewContainer {
+  .customerDetail {
+    gap: 8px;
+    img {
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      border: 1px solid #dddddd;
+    }
+  }
+}
+
+.select {
+  width: 150px;
+}

@@ -36,7 +36,7 @@ $weight-700: 700;
   @include EcomFontSemiBoldDefault(12px, 16px);
 }
 
-@mixin SmallReglar {
+@mixin SmallRegular {
   @include EcomFontRegularDefault(14px, 20px);
 }
 
@@ -48,7 +48,7 @@ $weight-700: 700;
   @include EcomFontBoldDefault(14px, 20px);
 }
 
-@mixin BaseReglar {
+@mixin BaseRegular {
   @include EcomFontRegularDefault(16px, 24px);
 }
 
@@ -60,7 +60,7 @@ $weight-700: 700;
   @include EcomFontBoldDefault(16px, 24px);
 }
 
-@mixin LargeReglar {
+@mixin LargeRegular {
   @include EcomFontRegularDefault(20px, 32px);
 }
 

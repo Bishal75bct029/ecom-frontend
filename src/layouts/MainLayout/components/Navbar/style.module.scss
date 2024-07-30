@@ -1,0 +1,129 @@
+@use '@assets/styles/main' as partials;
+
+.navbar {
+  width: 100%;
+  padding-block: 12px;
+  background: partials.theme(primary-purple-default);
+  color: #fff;
+
+  .layout {
+    width: 1440px;
+    margin: 0 auto;
+    position: relative;
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+    align-items: center;
+
+    .imageContainer {
+      width: 120px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      white-space: nowrap;
+      cursor: pointer;
+
+      & > img {
+        width: 90px;
+        height: 100%;
+        object-fit: contain;
+      }
+    }
+
+    .categoriesContainer {
+      .categories {
+        opacity: 0;
+        display: none;
+        cursor: pointer;
+        position: relative;
+        z-index: 10;
+        top: 0;
+        max-height: 0;
+      }
+
+      &:hover {
+        .categories {
+          display: block;
+          max-height: 100vh;
+          box-shadow: 0px 4px 2px -2px rgba(0, 0, 0.3, 0.2);
+          width: 100%;
+          z-index: 100;
+          overflow-y: scroll;
+          left: 0%;
+          position: absolute;
+          top: 0;
+          opacity: 1;
+          padding-top: 80px;
+          transition: opacity 0.25s ease-in-out;
+        }
+      }
+
+      .categories::-webkit-scrollbar {
+        display: none;
+      }
+
+      .categories {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      &:hover .categoryText {
+        text-decoration: underline;
+      }
+
+      .categories > div {
+        background-color: #fff;
+        height: 100%;
+      }
+    }
+  }
+
+  .rightContainer {
+    gap: 20px;
+
+    .divider {
+      color: #fff;
+      transform: scaleY(1.8);
+      font-weight: bolder;
+    }
+
+    .loginContainer {
+      svg path {
+        fill: #fff;
+      }
+    }
+
+    .cartIconContainer {
+      position: relative;
+      svg {
+        width: 40px;
+        height: 35px;
+        polyline,
+        circle,
+        path {
+          stroke: #fff;
+        }
+        circle {
+          fill: #fff;
+        }
+      }
+
+      .cartCount {
+        position: absolute;
+        border-radius: 50%;
+        top: 0;
+        right: -8px;
+        background-color: partials.theme(secondary-red-default);
+        border-color: transparent;
+        width: 16px;
+        height: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        padding: 9px;
+      }
+    }
+  }
+}

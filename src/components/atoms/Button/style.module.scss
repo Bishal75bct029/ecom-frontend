@@ -1,0 +1,137 @@
+@use '@assets/styles/main' as partials;
+
+.btnDisabled {
+  color: partials.theme(silver-500);
+  svg {
+    fill: partials.theme(silver-500);
+    path {
+      fill: partials.theme(silver-500);
+    }
+  }
+}
+
+.button {
+  cursor: pointer;
+  display: flex;
+  border-radius: 24px;
+  border: 1px solid transparent;
+  color: partials.theme(white);
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  max-width: auto;
+  width: fit-content;
+  white-space: nowrap;
+
+  &--primary {
+    background: partials.theme(primary-purple-default);
+    border: transparent;
+    svg {
+      fill: partials.theme(white);
+      path {
+        fill: partials.theme(white);
+      }
+    }
+
+    &.disabled {
+      background: partials.theme(silver-100);
+      @extend .btnDisabled;
+    }
+  }
+
+  &--secondary {
+    background: transparent;
+    border: 1px solid partials.theme(primary-purple-default);
+    color: partials.theme(primary-purple-default);
+    svg {
+      fill: partials.theme(primary-purple-default);
+      path {
+        fill: partials.theme(primary-purple-default);
+      }
+    }
+
+    &.disabled {
+      border: 1px solid partials.theme(silver-500);
+      @extend .btnDisabled;
+    }
+  }
+
+  &--tertiary {
+    background: partials.theme(secondary-blue-light);
+    border: transparent;
+    color: partials.theme(secondary-blue-default);
+    svg {
+      fill: partials.theme(secondary-blue-default);
+      path {
+        fill: partials.theme(secondary-blue-default);
+      }
+    }
+
+    &.disabled {
+      background: partials.theme(silver-100);
+      @extend .btnDisabled;
+    }
+  }
+
+  &--dashed {
+    border-radius: 4px;
+    background: transparent;
+    border: 1px dashed partials.theme(secondary-blue-default);
+    color: partials.theme(secondary-blue-default);
+    svg {
+      fill: partials.theme(secondary-blue-default);
+      path {
+        fill: partials.theme(secondary-blue-default);
+      }
+    }
+
+    &.disabled {
+      border: 1px dashed partials.theme(silver-500);
+      @extend .btnDisabled;
+    }
+  }
+
+  &--secondary-red {
+    background: partials.theme(secondary-red-default);
+    color: partials.theme(white);
+    svg {
+      fill: partials.theme(white);
+      path {
+        fill: partials.theme(white);
+      }
+    }
+
+    &.disabled {
+      background: partials.theme(silver-100);
+      @extend .btnDisabled;
+    }
+  }
+
+  &--plain {
+    background: transparent;
+    border: none !important;
+    box-shadow: none !important;
+    color: partials.theme(black);
+    svg {
+      fill: partials.theme(black);
+      path {
+        fill: partials.theme(black);
+      }
+    }
+  }
+
+  &--small {
+    @include partials.CaptionSemiBold;
+    padding: 4px 16px;
+  }
+
+  &--medium {
+    @include partials.SmallSemiBold;
+    padding: 8px 20px;
+  }
+
+  &--large {
+    @include partials.BaseSemiBold;
+    padding: 12px 32px;
+  }
+}
