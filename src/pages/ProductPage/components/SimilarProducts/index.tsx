@@ -1,7 +1,7 @@
+import { useMemo } from 'react';
 import { useParams } from 'react-router-dom';
-import { Spinner } from 'react-bootstrap';
 import { Typography } from '@/components/atoms';
-import { SearchCard } from '@/components/organisms';
+import { SearchCard, SearchCardSkeleton } from '@/components/organisms';
 import { useGetProductByCategoryQuery, useGetProductByIdQuery } from '@/store/features/product';
 import style from './style.module.scss';
 
@@ -10,7 +10,11 @@ const SimilarProducts = () => {
 
   const { data: product } = useGetProductByIdQuery({ id: productId as string });
 
-  const { data: similarProducts, isLoading } = useGetProductByCategoryQuery(
+  const {
+    data: similarProducts,
+    isLoading,
+    isFetching,
+  } = useGetProductByCategoryQuery(
     {
       categoryId: `${product?.categories[product.categories.length - 1].id}`,
       productId: `${productId}`,
@@ -18,13 +22,7 @@ const SimilarProducts = () => {
     { skip: !product },
   );
 
-  if (isLoading) {
-    return (
-      <div className="d-flex align-items-center justify-content-center" style={{ height: '100px' }}>
-        <Spinner />
-      </div>
-    );
-  }
+  const loading = useMemo(() => isLoading || isFetching, [isLoading, isFetching]);
 
   return (
     <>
@@ -32,9 +30,13 @@ const SimilarProducts = () => {
         Discover Similar Products
       </Typography>
 
-      <div className={style.cardsContainer}>
-        {similarProducts?.map(({ id, ...item }) => <SearchCard key={id} to={`/product/${id}`} id={id} {...item} />)}
-      </div>
+      {loading && <SearchCardSkeleton count={5} />}
+
+      {!loading && (
+        <div className={style.cardsContainer}>
+          {similarProducts?.map(({ id, ...item }) => <SearchCard key={id} to={`/product/${id}`} id={id} {...item} />)}
+        </div>
+      )}
     </>
   );
 };
