@@ -70,7 +70,7 @@ const SearchBar = () => {
         handleEndIconClick={() => inputRef.current?.focus()}
         onChange={handleChange}
         onKeyDown={(e) => {
-          if ((!pathname.includes('search') && products?.length < 3) || e.key !== 'Enter') return;
+          if (e.key !== 'Enter') return;
           navigate(`/search?q=${e.currentTarget.value}`);
           setShowSearchBar(false);
         }}

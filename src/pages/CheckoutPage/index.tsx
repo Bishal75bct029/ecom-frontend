@@ -12,7 +12,6 @@ const CheckoutPage = () => {
 
   useEffect(() => {
     if (!selectedCartProducts.length) {
-      console.log('hello');
       toastError('Please, select a product first.');
       navigate('/');
     }

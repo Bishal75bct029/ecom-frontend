@@ -5,7 +5,7 @@ export const categoryApi = baseApi.enhanceEndpoints({ addTagTypes: ['category'] 
   endpoints: (builder) => ({
     getCategory: builder.query<Category[], void>({
       query: () => ({
-        url: `/api/categories/`,
+        url: `api/categories`,
         method: 'GET',
       }),
       providesTags: ['category'],
