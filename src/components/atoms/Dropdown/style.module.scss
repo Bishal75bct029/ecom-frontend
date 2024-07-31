@@ -1,4 +1,23 @@
-@use '@assets/styles/main' as partials;
+@use 'assets/styles/main' as partials;
+
+.dropdown {
+  button {
+    border: none;
+    background: none;
+    &::after {
+      display: none;
+    }
+
+    &:focus-visible {
+      box-shadow: none !important;
+    }
+
+    &:active {
+      background-color: none;
+      border: none;
+    }
+  }
+}
 
 .user_profile {
   height: 40px;
@@ -10,10 +29,20 @@
   &:hover {
     background-color: white;
   }
+}
+.fallbackIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: partials.theme(white);
+
+  svg {
+    path {
+      fill: partials.theme(primary-purple-default) !important;
+    }
+  }
 
   .profileImage {
-    width: 100%;
-    height: 100%;
     border-radius: 50%;
   }
   .title {
@@ -22,17 +51,41 @@
 }
 
 .items {
+  display: flex;
+  gap: 4px;
+
+  &--purple {
+    &:hover {
+      background-color: partials.theme(primary-purple-light);
+      color: partials.theme(primary-purple-default);
+      svg {
+        path {
+          fill: partials.theme(primary-purple-default) !important;
+        }
+      }
+    }
+  }
+
+  &--red {
+    &:hover {
+      background-color: partials.theme(secondary-red-light);
+      color: partials.theme(secondary-red-default);
+      svg {
+        path {
+          fill: partials.theme(secondary-red-default) !important;
+        }
+      }
+    }
+  }
+
   &:active {
     background-color: white;
     color: #505962;
   }
-
-  &:hover {
-    background-color: 'red';
-  }
 }
 
 .profileTitle {
+  margin-bottom: -4px;
   &:hover {
     background-color: unset;
   }
@@ -45,4 +98,74 @@
   margin-top: 10px;
   color: #505962;
   border-top: 1px solid #ebebeb;
+  .icons {
+    svg {
+      height: 30px;
+      path {
+        fill: partials.theme(silver-700) !important;
+      }
+    }
+  }
+
+  &:hover {
+    svg {
+      path {
+        fill: partials.theme(secondary-red-default) !important;
+      }
+    }
+  }
+}
+
+.innerIcon svg {
+  background-color: partials.theme(silver-500);
+  padding: 5px;
+  margin-right: 10px;
+  path {
+    fill: partials.theme(white) !important;
+  }
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+}
+
+.profile {
+  display: flex;
+  gap: 10;
+  align-items: center;
+  justify-content: center;
+  margin: 0 20px 10px 10px;
+  cursor: text;
+
+  .image {
+    border-radius: 50%;
+    margin-right: 10px;
+    height: 50px;
+    width: 50px;
+  }
+
+  .profileTitle {
+    font-weight: normal;
+    font-size: 18;
+    padding: 0;
+    cursor: text;
+  }
+
+  .profileInfo {
+    font-weight: normal;
+    font-size: 14;
+    padding: 0;
+    color: #505962;
+    cursor: text;
+    background-color: white;
+  }
+}
+.icons {
+  margin-right: 5px;
+  svg {
+    height: 25px;
+    width: 25px;
+    path {
+      fill: partials.theme(silver-900) !important;
+    }
+  }
 }

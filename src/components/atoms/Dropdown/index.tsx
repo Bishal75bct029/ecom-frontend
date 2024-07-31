@@ -1,88 +1,77 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { Dropdown } from 'react-bootstrap';
 import style from './style.module.scss';
 
+type DropdownItemVariant = 'red' | 'purple';
+
+const varaints: Record<DropdownItemVariant, string> = {
+  purple: style['items--purple'],
+  red: style['items--red'],
+};
+
 interface DropdownProps {
-  title: string;
-  image?: string;
-  variant: string;
+  title?: string;
+  profile?: { image: string; username: string; email: string; fallBackImage?: ReactNode };
   items: {
     value: string;
     onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-    icon?: string;
-    className?: string | '';
+    icon?: ReactNode;
+    className?: string;
+    variant?: DropdownItemVariant;
   }[];
-  className?: string | '';
+  className?: string;
   id?: string;
 }
 
 export const DropDown: React.FC<DropdownProps> = (props: DropdownProps) => {
   return (
-    <Dropdown>
-      <Dropdown.Toggle
-        id={props?.id || ''}
-        className={`${props.className}  ${style.user_profile}`}
-        variant={props.variant}
-      >
-        {props.image ? (
-          <>
-            <img
-              src="https://cdn.dribbble.com/users/183729/avatars/small/769273fda9f25846e3bf0ab4246c5753.jpg?1641371228"
-              className={style.profileImage}
-            />
-            {props.title}
-          </>
+    <Dropdown className={style.dropdown}>
+      <Dropdown.Toggle id={props?.id || ''} className={[props.className, style.user_profile].join(' ')}>
+        {props.profile ? (
+          <div
+            className={[
+              !props.profile?.image && props.profile.fallBackImage ? style.fallbackIcon : '',
+              'w-100',
+              'h-100',
+            ].join(' ')}
+          >
+            {props.profile?.image && (
+              <img src={props.profile?.image} className={style.profileImage} width={50} height={50} />
+            )}
+            {!props.profile?.image && props.profile.fallBackImage}
+          </div>
         ) : (
           <>{props.title}</>
         )}
       </Dropdown.Toggle>
-      <Dropdown.Menu className={style.menu}>
-        {props.image && (
-          <div
-            style={{
-              display: 'flex',
-              gap: 10,
-              alignItems: 'center',
-              justifyContent: 'center',
-              margin: '0 20px 10px 10px',
-              cursor: 'text',
-            }}
-          >
-            <img
-              src="https://cdn.dribbble.com/users/183729/avatars/small/769273fda9f25846e3bf0ab4246c5753.jpg?1641371228"
-              width={'50px'}
-              height={'50px'}
-              style={{ borderRadius: '50%' }}
-            />
+      <Dropdown.Menu className={[style.menu, 'pb-0'].join(' ')}>
+        {props.profile && (
+          <div className={style.profile}>
+            <div
+              style={{ width: 80 }}
+              className={[
+                !props.profile?.image && props.profile.fallBackImage ? style.innerIcon : '',
+                'w-100',
+                'h-100',
+              ].join(' ')}
+            >
+              {props.profile?.image && <img src={props.profile?.image} className={style.image} />}
+              {!props.profile?.image && props.profile.fallBackImage && props.profile.fallBackImage}
+            </div>
             <div>
-              <Dropdown.Item
-                className={style.profileTitle}
-                style={{ fontWeight: 'normal', fontSize: 18, padding: 0, cursor: 'text' }}
-              >
-                {props.title}
-              </Dropdown.Item>
-              <Dropdown.Item
-                className={style.profileTitle}
-                style={{ fontWeight: 'normal', fontSize: 14, padding: 0, color: '#505962', cursor: 'text' }}
-              >
-                user1@gmail.com
-              </Dropdown.Item>
+              <Dropdown.Item className={style.profileTitle}>{props.profile.username}</Dropdown.Item>
+              <Dropdown.Item className={style.profileInfo}>{props.profile.email}</Dropdown.Item>
             </div>
           </div>
         )}
-        {props.items.map((item, index) => {
+        {props.items.map(({ variant = 'purple', ...item }, index) => {
           return (
             <Dropdown.Item
               onClick={item.onClick}
               key={index}
-              className={`${[style.items]} ${
-                item.className &&
-                item.className
-                  .split(' ')
-                  .map((className) => style[className])
-                  .join(' ')
-              }`}
+              className={[style.items, varaints[variant], style[item.className || 'className']].join(' ')}
             >
+              <div className={style.icons}>{item.icon}</div>
               {item.value}
             </Dropdown.Item>
           );

@@ -11,6 +11,10 @@ import { ReactComponent as DeleteIcon } from './delete.svg';
 import { ReactComponent as PaypalIcon } from './paypal.svg';
 import { ReactComponent as TickLargeIcon } from './tick-large.svg';
 import { ReactComponent as RemoveCircleIcon } from './remove-circle.svg';
+import { ReactComponent as ProfileIcon } from './profile.svg';
+import { ReactComponent as LogoutIcon } from './logout.svg';
+import { ReactComponent as EditIcon } from './edit.svg';
+import { ReactComponent as OrderIcon } from './icon.svg';
 
 export {
   SearchIcon,
@@ -26,4 +30,8 @@ export {
   PaypalIcon,
   TickLargeIcon,
   RemoveCircleIcon,
+  ProfileIcon,
+  LogoutIcon,
+  OrderIcon,
+  EditIcon,
 };

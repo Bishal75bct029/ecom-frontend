@@ -23,6 +23,7 @@ export interface ProductMeta {
   discountPrice: number;
   discountPercentage: number;
   isDefault: boolean;
+  product?: ProductType;
 }
 
 export interface GetProductsListQuery extends PaginatedQuery {
