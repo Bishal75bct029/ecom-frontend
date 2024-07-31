@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
-import { Spinner } from 'react-bootstrap';
-import { SearchCard } from '@/components/organisms';
+import { SearchCard, SearchCardSkeleton } from '@/components/organisms';
 import { useGetProductsQuery } from '@/store/features/product';
+import 'react-loading-skeleton/dist/skeleton.css';
 import style from './style.module.scss';
 
 const Homepage = () => {
@@ -11,11 +11,7 @@ const Homepage = () => {
 
   return (
     <>
-      {loading && (
-        <div className="d-flex align-items-center justify-content-center" style={{ height: '75vh' }}>
-          <Spinner />
-        </div>
-      )}
+      {loading && <SearchCardSkeleton count={15} />}
       {!loading && (
         <div className={style.cardsContainer}>
           {data?.items.map(({ id, ...item }) => <SearchCard key={id} to={`/product/${id}`} id={id} {...item} />)}

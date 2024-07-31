@@ -23,7 +23,7 @@ const SearchBar = () => {
 
   const handleChange = debounce((e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
-    if (e.target.value.trim().length < 3) return;
+    if (e.target.value.trim().length < 2) return;
     getProducts({ search: e.target.value, page: 1, limit: 3 })
       .unwrap()
       .then((res) => {
@@ -76,7 +76,7 @@ const SearchBar = () => {
         }}
         onFocus={() => setShowSearchBar(true)}
       />
-      {!!value && !pathname.includes('search') && showSearchBar && (
+      {!!value && value.trim().length > 2 && !pathname.includes('search') && showSearchBar && (
         <div className={style.searchBarOutput} ref={searchContainerRef}>
           <div className="px-3 py-2">
             <Typography fontsStyle="base-semi-bold" className="mb-2">
