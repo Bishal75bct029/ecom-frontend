@@ -5,6 +5,7 @@ import { LoginPayload } from '@/store/features/auth/types';
 import style from './style.module.scss';
 import { useAuth } from '@/hooks';
 import { toastSuccess } from '@/utils';
+import { Breadcrumb } from '@/components/atoms';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -23,9 +24,14 @@ const LoginPage = () => {
   };
 
   return (
-    <div className={style.loginContainer}>
-      <LoginForm onSubmit={handleLogin} wrapperClass={style.loginWrapper} isLoading={isLoading} />
-    </div>
+    <>
+      <div style={{ marginLeft: '470px' }}>
+        <Breadcrumb active="Login" items={[{ label: 'Home', link: '/' }]} />
+      </div>
+      <div className={style.loginContainer}>
+        <LoginForm onSubmit={handleLogin} wrapperClass={style.loginWrapper} isLoading={isLoading} />
+      </div>
+    </>
   );
 };
 
