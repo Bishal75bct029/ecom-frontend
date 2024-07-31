@@ -1,7 +1,7 @@
 import { useAuth } from '@/hooks';
 import { useGetUserDetailQuery } from '@/store/features/user';
 import { useNavigate } from 'react-router-dom';
-import { ProfileIcon, LogoutIcon, EditIcon, OrderIcon, UserIcon } from '@/assets/icons';
+import { ProfileIcon, LogoutIcon, OrderIcon, UserIcon } from '@/assets/icons';
 import { Typography } from '@/components/atoms';
 import { DropDown } from '@/components/atoms/Dropdown';
 
@@ -16,7 +16,6 @@ const UserDropDown = () => {
         <DropDown
           title={userDetail.name}
           items={[
-            { value: 'Edit Profile', icon: <EditIcon /> },
             { value: 'My Orders', onClick: () => navigate('/orders'), icon: <OrderIcon /> },
             {
               value: 'Log Out',
