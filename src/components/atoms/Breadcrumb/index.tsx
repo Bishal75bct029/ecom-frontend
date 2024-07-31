@@ -18,7 +18,7 @@ const Breadcrumb: FC<BreadcrumbProps> = ({ active, items }) => {
   return (
     <BootstrapBreadcrumb className={style.breadCrumbWrapper}>
       {items.map(({ label, link }, index) => [
-        <BootstrapBreadcrumb.Item linkAs={Link} linkProps={{ to: link }} key={`${index}item`}>
+        <BootstrapBreadcrumb.Item linkAs={Link} linkProps={{ to: link }} key={`${index}-item`}>
           {label}
         </BootstrapBreadcrumb.Item>,
         <PlayIcon />,

@@ -1,5 +1,5 @@
-import { Spinner } from 'react-bootstrap';
 import { useState } from 'react';
+import { Spinner } from 'react-bootstrap';
 import { Typography } from '@/components/atoms';
 import style from './style.module.scss';
 import { useGetCategoryQuery } from '@/store/features/category';
@@ -34,11 +34,13 @@ const Categories = () => {
         {categories?.map((category, index) => {
           return (
             <div
+              key={index}
               className={style.topCategory}
               onMouseEnter={() => {
                 setAllCategories({ ...categories, subCategory: category['children'] ?? null, nestedSubCategory: null });
                 setCategoryStatus({ ...categoryStatus, activeCategory: index, activeSubCategory: null });
               }}
+              onClick={() => (window.location.href = `/search?cId=${category.id}`)}
             >
               <Typography
                 className={`${categoryStatus.activeCategory == index ? style.activeCategoryText : ''} ${style.categoryText}`}
@@ -56,11 +58,13 @@ const Categories = () => {
           {allCategories?.subCategory?.map((category, index) => {
             return (
               <div
+                key={index}
                 className={style.subCategory}
                 onMouseEnter={() => {
                   setAllCategories({ ...allCategories, nestedSubCategory: category['children'] || null });
                   setCategoryStatus({ ...categoryStatus, activeSubCategory: index });
                 }}
+                onClick={() => (window.location.href = `/search?cId=${category.id}`)}
               >
                 <Typography
                   className={`${categoryStatus.activeSubCategory == index ? style.activeCategoryText : ''} ${style.categoryText}`}
@@ -86,6 +90,7 @@ const Categories = () => {
                 onMouseLeave={() => setCategoryStatus({ ...categoryStatus, activeNestedSubCategory: null })}
                 className={`${style.nestedSubCategory} ${categoryStatus.activeNestedSubCategory === index ? style.activeNestedCategoryText : ''}`}
                 key={index}
+                onClick={() => (window.location.href = `/search?cId=${category.id}`)}
               >
                 <img src={category.image || 'https://via.placeholder.com/50'} alt="" className={style.image} />
                 <Typography className={style.text}>{category.name}</Typography>

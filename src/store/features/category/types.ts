@@ -5,7 +5,3 @@ export interface Category {
   parent?: Category | null;
   children?: Category[] | null;
 }
-
-export interface CategoryState {
-  category: Category;
-}
