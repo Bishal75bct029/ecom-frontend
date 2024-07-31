@@ -3,6 +3,7 @@ import { Spinner, Stack } from 'react-bootstrap';
 import style from './style.module.scss';
 import { useGetCartItemsQuery } from '@/store/features/cart';
 import { CartItemsList, CartSummary } from './components';
+import { Breadcrumb } from '@/components/atoms';
 
 const CartPage = () => {
   const { isLoading, isFetching } = useGetCartItemsQuery();
@@ -14,10 +15,13 @@ const CartPage = () => {
   }
 
   return (
-    <Stack direction="horizontal" className={style.cartContainer}>
-      <CartItemsList />
-      <CartSummary />
-    </Stack>
+    <>
+      <Breadcrumb active="Cart" items={[{ label: 'Home', link: '/' }]} />
+      <Stack direction="horizontal" className={style.cartContainer}>
+        <CartItemsList />
+        <CartSummary />
+      </Stack>
+    </>
   );
 };
 

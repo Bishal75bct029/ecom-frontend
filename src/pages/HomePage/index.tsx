@@ -3,6 +3,7 @@ import { SearchCard, SearchCardSkeleton } from '@/components/organisms';
 import { useGetProductsQuery } from '@/store/features/product';
 import 'react-loading-skeleton/dist/skeleton.css';
 import style from './style.module.scss';
+import { Breadcrumb } from '@/components/atoms';
 
 const Homepage = () => {
   const { data, isLoading, isFetching } = useGetProductsQuery({ page: 1, limit: Number.MAX_SAFE_INTEGER });
@@ -11,6 +12,7 @@ const Homepage = () => {
 
   return (
     <>
+      <Breadcrumb active="Products" items={[{ label: 'Home', link: '/' }]} />
       {loading && <SearchCardSkeleton count={15} />}
       {!loading && (
         <div className={style.cardsContainer}>
