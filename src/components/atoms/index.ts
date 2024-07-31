@@ -8,6 +8,8 @@ import HookFormProvider from './HookFormProvider';
 import Modal from './Modal';
 import { CheckBox, HookCheckBox } from './Checkbox';
 import { Select, HookSelect } from './Select';
+import Skeleton from './Skeleton';
+import Breadcrumb from './Breadcrumb';
 
 export {
   Typography,
@@ -23,4 +25,6 @@ export {
   HookCheckBox,
   Select,
   HookSelect,
+  Skeleton,
+  Breadcrumb,
 };

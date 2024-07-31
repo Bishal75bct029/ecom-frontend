@@ -4,3 +4,4 @@ export * from './toast';
 export * from './errorMessageHandler';
 export * from './storage';
 export * from './logout';
+export * from './getUrlQueyParams';

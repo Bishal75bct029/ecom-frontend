@@ -1,9 +1,4 @@
-export interface Category {
-  name: string;
-  image: string;
-  parent?: Category | null;
-  children?: Category[] | null;
-}
+import { Category } from '@/store/features/category/types';
 
 export interface ActiveCategories {
   activeCategory: number | null;

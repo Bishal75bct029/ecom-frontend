@@ -5,12 +5,7 @@ export interface ProductType {
   tags: string[];
   attributes: string[];
   productMeta: ProductMeta[];
-  categories: Category[];
-}
-
-export interface Category {
-  id: string;
-  name: string;
+  categories: { id: string; name: string }[];
 }
 
 export interface ProductMeta {
@@ -30,4 +25,6 @@ export interface GetProductsListQuery extends PaginatedQuery {
   search?: string;
   categoryId?: string;
   sortBy?: string;
+  minPrice?: number;
+  maxPrice?: number;
 }
