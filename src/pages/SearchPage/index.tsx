@@ -11,6 +11,7 @@ import { SelectOptionItem } from '@/components/atoms/Select';
 import { RemoveCircleIcon } from '@/assets/icons';
 import { useFormContext } from 'react-hook-form';
 import { CategoryFilter } from './components';
+import { getUrlQueryParams } from '@/utils';
 
 interface PriceFormProps {
   minPrice: number;
@@ -35,18 +36,19 @@ const SearchPageView = () => {
     limit: 8,
   });
 
-  const searchPaginationQuery = useMemo(() => {
-    return {
-      ...paginationQuery,
-      search: searchParams.get('q') || '',
-      sortBy: searchParams.get('sBy') || '',
-      categoryId: searchParams.get('cId') || '',
-    };
-  }, [searchParams, paginationQuery]);
-
-  const { data, isLoading, isFetching } = useGetProductsQuery({ ...searchPaginationQuery });
+  const { data, isLoading, isFetching } = useGetProductsQuery({
+    ...paginationQuery,
+    search: searchParams.get('q') || undefined,
+    sortBy: searchParams.get('sBy') || undefined,
+    categoryId: searchParams.get('cId') || undefined,
+  });
 
   const loading = useMemo(() => isLoading || isFetching, [isLoading, isFetching]);
+
+  const isButtonDisabled = useMemo(
+    () => minPrice === undefined || maxPrice === undefined || minPrice >= maxPrice,
+    [minPrice, maxPrice],
+  );
 
   const onSubmit = (payload: PriceFormProps) => {
     setPaginationQuery((prev) => ({ ...prev, ...payload }));
@@ -79,7 +81,7 @@ const SearchPageView = () => {
                 min={0}
                 inputClassName={style.inputPadding}
               />
-              <Button type="submit" disabled={!minPrice || !maxPrice || minPrice > maxPrice}>
+              <Button type="submit" disabled={isButtonDisabled}>
                 APPLY
               </Button>
             </div>
@@ -99,10 +101,15 @@ const SearchPageView = () => {
               placeholder="Sort by"
               options={sortByOptions}
               isClearable
-              value={sortByOptions.find((option) => option.value === searchPaginationQuery.sortBy)}
+              value={sortByOptions.find((option) => option.value === searchParams.get('sBy'))}
               onChange={(val) => {
                 const sortBy = val ? (val as SelectOptionItem).value : '';
-                setSearchParams({ q: searchPaginationQuery.search, sBy: sortBy });
+                const params = getUrlQueryParams({
+                  q: searchParams.get('q') || '',
+                  sBy: sortBy,
+                  cId: searchParams.get('cId') || '',
+                });
+                setSearchParams(params);
               }}
             />
           </div>
@@ -146,7 +153,7 @@ const SearchPageView = () => {
 };
 
 const SearchPage = () => (
-  <HookFormProvider>
+  <HookFormProvider mode="all" defaultValues={{ minPrice: undefined, maxPrice: undefined }}>
     <SearchPageView />
   </HookFormProvider>
 );
