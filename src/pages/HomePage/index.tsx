@@ -5,7 +5,7 @@ import { useGetProductsQuery } from '@/store/features/product';
 import style from './style.module.scss';
 
 const Homepage = () => {
-  const { data, isLoading, isFetching } = useGetProductsQuery({});
+  const { data, isLoading, isFetching } = useGetProductsQuery({ page: 1, limit: Number.MAX_SAFE_INTEGER });
 
   const loading = useMemo(() => isLoading || isFetching, [isLoading, isFetching]);
 

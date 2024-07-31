@@ -1,0 +1,44 @@
+@use 'assets/styles/main' as partials;
+
+.accordion {
+  .accordianItem {
+    --bs-accordion-border-color: none;
+    --bs-accordion-active-color: none;
+    --bs-accordion-active-bg: none;
+    --bs-accordion-active-bg: none !important;
+    --bs-accordion-btn-focus-box-shadow: none;
+    --bs-accordion-active-color: #985dec;
+    --bs-accordion-btn-bg: #f5f7f9;
+
+    button {
+      padding-bottom: 8px;
+      --bs-accordion-active-color: #985dec;
+      --bs-accordion-active-bg: #f5f7f9;
+    }
+
+    &.headerLevel1 {
+      button {
+        padding-left: 45px;
+        padding-block: 6px;
+      }
+      &.lastItem {
+        button {
+          padding-bottom: 16px;
+        }
+      }
+    }
+  }
+
+  .accordionBody {
+    padding: 0;
+    background: #f5f7f9 !important;
+  }
+}
+
+.endLevelCategory {
+  cursor: pointer;
+  &:hover,
+  &.selectedCategory {
+    color: partials.theme(primary-purple-default);
+  }
+}
