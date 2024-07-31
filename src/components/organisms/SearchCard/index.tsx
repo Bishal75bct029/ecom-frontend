@@ -23,7 +23,7 @@ const SearchCard: FC<SearchCardProps> = ({ to, name, productMeta }) => {
         <img src={defaultMeta?.image[0]} alt="laptop" />
       </div>
       <Stack className="px-3 mt-2 pb-3">
-        <Typography className={style.searchItemName} fontsStyle="base-semi-bold">
+        <Typography className="text-ellipsis-lh-2" fontsStyle="base-semi-bold">
           {name}
         </Typography>
         {/* <div className="d-flex gap-1">
@@ -37,7 +37,7 @@ const SearchCard: FC<SearchCardProps> = ({ to, name, productMeta }) => {
             <Stack key={i} direction="horizontal">
               <Typography fontsStyle="small-regular" className="me-3">
                 {key}:{' '}
-                <Typography component={'span'} className={style.variantCard}>
+                <Typography component={'span'} className="variantCard">
                   {val}
                 </Typography>
               </Typography>

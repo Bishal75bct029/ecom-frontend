@@ -65,7 +65,7 @@ const ChangeAddressModal: FC<Pick<ModalProps, 'show' | 'onHide'>> = ({ show, onH
               <Typography component={'span'} fontsStyle="base-semi-bold" className="whitespace-nowrap">
                 Address:
               </Typography>
-              <Typography component={'span'} className={style.addressText}>
+              <Typography component={'span'} className="text-ellipsis-lh-2">
                 {item.name}
               </Typography>
             </div>

@@ -3,8 +3,7 @@ import { Container } from 'react-bootstrap';
 import { Navigate, Outlet, RouteObject, useLocation } from 'react-router-dom';
 
 import style from './style.module.scss';
-import { Navbar } from './components';
-import { Footer } from '@/components/organisms';
+import { Navbar, Footer } from './components';
 import { FOOTER_INCLUDE_ROUTES } from '@/constants';
 import { getStorageItem } from '@/utils';
 

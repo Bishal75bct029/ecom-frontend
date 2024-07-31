@@ -9,6 +9,8 @@ import { ReactComponent as EyeCloseIcon } from './eyeClosed.svg';
 import { ReactComponent as CloseIcon } from './close.svg';
 import { ReactComponent as DeleteIcon } from './delete.svg';
 import { ReactComponent as PaypalIcon } from './paypal.svg';
+import { ReactComponent as TickLargeIcon } from './tick-large.svg';
+import { ReactComponent as RemoveCircleIcon } from './remove-circle.svg';
 
 export {
   SearchIcon,
@@ -22,4 +24,6 @@ export {
   CloseIcon,
   DeleteIcon,
   PaypalIcon,
+  TickLargeIcon,
+  RemoveCircleIcon,
 };

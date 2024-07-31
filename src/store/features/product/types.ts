@@ -24,3 +24,9 @@ export interface ProductMeta {
   discountPercentage: number;
   isDefault: boolean;
 }
+
+export interface GetProductsListQuery extends PaginatedQuery {
+  search?: string;
+  categoryId?: string;
+  sortBy?: string;
+}

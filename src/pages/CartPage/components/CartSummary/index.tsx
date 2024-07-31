@@ -11,7 +11,7 @@ const CartSummary = () => {
   const selectedCartProducts = useAppSelector((state) => state.cart.selectedCartProducts);
   const selectedProductQuantities = useAppSelector((state) => state.cart.selectedProductQuantities);
 
-  const { isLoading } = useGetCartItemsQuery();
+  const { isLoading, isFetching } = useGetCartItemsQuery();
 
   const totalPrice = useMemo(
     () =>
@@ -21,16 +21,18 @@ const CartSummary = () => {
     [selectedCartProducts, selectedProductQuantities],
   );
 
+  const loading = useMemo(() => isLoading || isFetching, [isLoading, isFetching]);
+
   return (
     <div style={{ width: '25%' }}>
       <Typography fontsStyle="large-semi-bold">Order Summary</Typography>
       <hr className="p-0 mt-0" />
-      {isLoading && (
+      {loading && (
         <div className="d-flex align-items-center justify-content-center" style={{ height: '165px' }}>
           <Spinner />
         </div>
       )}
-      {!isLoading && !!selectedCartProducts.length && (
+      {!loading && !!selectedCartProducts.length && (
         <div className="mb-3">
           <Typography className="d-flex justify-content-between">
             <span>
@@ -42,7 +44,7 @@ const CartSummary = () => {
           </Typography>
         </div>
       )}
-      {!isLoading && !selectedCartProducts.length && (
+      {!loading && !selectedCartProducts.length && (
         <Typography className="d-flex justify-content-center mb-3" color="secondary-red" fontsStyle="base-semi-bold">
           No items selected.
         </Typography>

@@ -1,18 +1,54 @@
 import baseApi from '@/store/baseApi';
-import { OrderDetailsType } from './types';
+import { OrderType, PaymentMethodType, PostOrderPayload } from './types';
 
-export const paymentApi = baseApi
-  .enhanceEndpoints({ addTagTypes: ['order-status', 'order-detail', 'cart-items'] })
+export const orderApi = baseApi
+  .enhanceEndpoints({ addTagTypes: ['payment-methods', 'user-detail', 'cart-items', 'orders'] })
   .injectEndpoints({
     endpoints: (builder) => ({
-      getAllOrders: builder.query<OrderDetailsType[], void>({
+      getAllPaymentMethods: builder.query<PaymentMethodType[], void>({
+        query: () => ({
+          url: `api/payment-methods`,
+          method: 'GET',
+        }),
+        providesTags: ['payment-methods'],
+      }),
+      getOrderList: builder.query<OrderType[], void>({
         query: () => ({
           url: `api/orders`,
           method: 'GET',
         }),
-        providesTags: ['order-detail'],
+        providesTags: ['orders'],
+      }),
+      getOrderById: builder.query<OrderType, { id: string }>({
+        query: ({ id }) => ({
+          url: `api/orders/${id}`,
+          method: 'GET',
+        }),
+        providesTags: (_, __, args) => [{ type: 'orders', id: args.id }],
+      }),
+      postOrder: builder.mutation<{ approvalUrl: string }, PostOrderPayload>({
+        query: (data) => ({
+          url: `api/orders`,
+          method: 'POST',
+          data,
+        }),
+        invalidatesTags: ['cart-items', 'user-detail'],
+      }),
+      confirmOrderPayment: builder.query<{ orderId: string }, { token: string }>({
+        query: (params) => ({
+          url: `api/orders/confirm`,
+          method: 'GET',
+          params,
+        }),
+        keepUnusedDataFor: 0,
       }),
     }),
   });
 
-export const { useGetAllOrdersQuery } = paymentApi;
+export const {
+  usePostOrderMutation,
+  useGetAllPaymentMethodsQuery,
+  useLazyConfirmOrderPaymentQuery,
+  useGetOrderByIdQuery,
+  useLazyGetOrderByIdQuery,
+} = orderApi;

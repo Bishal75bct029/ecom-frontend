@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Card, Stack } from 'react-bootstrap';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, Typography } from '@/components/atoms';
 import { useGetUserAddressesQuery, useGetUserDetailQuery } from '@/store/features/user';
 import style from './style.module.scss';
@@ -12,6 +12,7 @@ import AddAddressModal from '../AddAddressModal';
 import { DiscountedPriceView } from '@/components/organisms';
 
 const CheckoutDetail = () => {
+  const navigate = useNavigate();
   const { pathname } = useLocation();
   const dispatch = useAppDispatch();
 
@@ -33,7 +34,7 @@ const CheckoutDetail = () => {
   }, [userAddresses, selectedShippingAddress, dispatch]);
 
   useEffect(() => {
-    window.addEventListener('beforeunload', () => {
+    const handleBeforeUnload = () => {
       if (
         !pathname.includes('checkout') ||
         !selectedCartProducts.length ||
@@ -42,10 +43,11 @@ const CheckoutDetail = () => {
         return;
       setStorageItem('selectedCartProducts', selectedCartProducts);
       setStorageItem('selectedProductQuantities', selectedProductQuantities);
-    });
+    };
 
+    window.addEventListener('beforeunload', handleBeforeUnload);
     return () => {
-      window.removeEventListener('beforeunload', () => {});
+      window.removeEventListener('beforeunload', handleBeforeUnload);
     };
   }, []);
 
@@ -103,24 +105,28 @@ const CheckoutDetail = () => {
           </Typography>
           {selectedCartProducts.map((item, i) => (
             <div key={i}>
-              <Stack direction="horizontal" className={style.cartItem}>
+              <Stack direction="horizontal" className={style.orderItem}>
                 <div className={style.productDetailContainer}>
                   <div className="d-flex align-items-start gap-3">
                     <div>
                       <div className={style.imageContainer}>
-                        <img src={item.productMeta.image[0]} alt="image" />
+                        <img src={item?.productMeta?.image[0]} alt="image" />
                       </div>
                     </div>
                     <Stack>
-                      <Typography fontsStyle="base-semi-bold" className={[style.productName, 'mb-2 pb-1'].join(' ')}>
-                        {item.name}
+                      <Typography
+                        fontsStyle="base-semi-bold"
+                        className={['text-ellipsis-lh-1 mb-2 pb-1', style.nameHover].join(' ')}
+                        onClick={() => navigate(`/product/${item?.id}`)}
+                      >
+                        {item?.name}
                       </Typography>
                       <div className="d-flex flex-column gap-2">
-                        {Object.entries(item.productMeta.variant).map(([key, val], i) => (
+                        {Object.entries(item.productMeta?.variant || {}).map(([key, val], i) => (
                           <Stack key={i} direction="horizontal">
                             <Typography fontsStyle="small-regular" className="me-3">
                               {key}:{' '}
-                              <Typography component={'span'} className={style.variantCard}>
+                              <Typography component={'span'} className="variantCard">
                                 {val}
                               </Typography>
                             </Typography>
@@ -145,7 +151,7 @@ const CheckoutDetail = () => {
                     </Typography>
                     <DiscountedPriceView
                       discountPrice={item.productMeta.discountPrice}
-                      price={item.productMeta.price}
+                      price={item?.productMeta.price}
                       className={[
                         style.quantityLabel,
                         'd-flex flex-column align-items-center justify-content-center mt-2',

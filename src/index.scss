@@ -1,6 +1,6 @@
-@use '@assets/styles/vendors/bootstrap' as *;
-@use '@assets/styles/vendors/toastify' as *;
-@use '@assets/styles/main' as partials;
+@use 'assets/styles/vendors/bootstrap' as *;
+@use 'assets/styles/vendors/toastify' as *;
+@use 'assets/styles/main' as partials;
 
 * {
   font-family: 'MST Font';
@@ -61,4 +61,25 @@ body {
 .spinner-border {
   border: 0.25em solid partials.theme(primary-purple-default);
   border-right-color: transparent;
+}
+
+.text-ellipsis-lh-2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.text-ellipsis-lh-1 {
+  @extend .text-ellipsis-lh-2;
+  -webkit-line-clamp: 1;
+}
+
+.variantCard {
+  border: 1px solid partials.theme(gray-500);
+  border-radius: 4px;
+  padding-inline: 4px;
+  border: 1px solid partials.theme(primary-purple-default);
+  box-shadow: 0px 4px 0px 0px partials.theme(primary-purple-light);
 }

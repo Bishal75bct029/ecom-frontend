@@ -1,12 +1,13 @@
-import { ProductType } from './types';
+import { GetProductsListQuery, ProductType } from './types';
 import baseApi from '@/store/baseApi';
 
 const productApi = baseApi.enhanceEndpoints({ addTagTypes: ['products', 'products-by-category'] }).injectEndpoints({
   endpoints: (builder) => ({
-    getProducts: builder.query<ProductType[], void>({
-      query: () => ({
+    getProducts: builder.query<PaginatedResponse<ProductType>, GetProductsListQuery>({
+      query: (params) => ({
         url: `api/products`,
         method: 'GET',
+        params,
       }),
       providesTags: ['products'],
     }),
@@ -28,4 +29,5 @@ const productApi = baseApi.enhanceEndpoints({ addTagTypes: ['products', 'product
   }),
 });
 
-export const { useGetProductsQuery, useGetProductByIdQuery, useGetProductByCategoryQuery } = productApi;
+export const { useGetProductsQuery, useLazyGetProductsQuery, useGetProductByIdQuery, useGetProductByCategoryQuery } =
+  productApi;

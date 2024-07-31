@@ -1,4 +1,4 @@
-@use '@assets/styles/main' as partials;
+@use 'assets/styles/main' as partials;
 
 .changeAddressCardsContainer {
   display: grid;
@@ -14,14 +14,6 @@
 
     &.selected {
       background-color: partials.theme(primary-purple-light);
-    }
-
-    .addressText {
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 2;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
   }
 }

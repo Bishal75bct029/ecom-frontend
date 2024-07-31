@@ -72,6 +72,7 @@ const AddAddressModalView: FC<AddAddressModalProps> = ({ show, onHide, isEditMod
           label="Contact"
           placeholder="Enter contact"
           validate={validatePhoneNumber}
+          maxLength={10}
           required
         />
         <div className="d-flex justify-content-end mt-4 gap-2">
