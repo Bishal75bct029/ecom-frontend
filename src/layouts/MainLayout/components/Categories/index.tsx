@@ -35,7 +35,6 @@ const Categories = () => {
             <div
               key={index}
               className={style.topCategory}
-              key={index}
               onMouseEnter={() => {
                 setAllCategories({ ...categories, subCategory: category['children'] ?? null, nestedSubCategory: null });
                 setCategoryStatus({ ...categoryStatus, activeCategory: index, activeSubCategory: null });
@@ -60,7 +59,6 @@ const Categories = () => {
               <div
                 key={index}
                 className={style.subCategory}
-                key={index}
                 onMouseEnter={() => {
                   setAllCategories({ ...allCategories, nestedSubCategory: category['children'] || null });
                   setCategoryStatus({ ...categoryStatus, activeSubCategory: index });
