@@ -16,6 +16,7 @@ export interface OrderType {
   createdAt: string;
   updatedAt: string;
   orderItems: OrderItemType[];
+  transaction: { transactionId: string };
 }
 
 export interface OrderItemType {

@@ -12,11 +12,12 @@ type BreadcrumbItem = {
 export interface BreadcrumbProps {
   active: string;
   items: BreadcrumbItem[];
+  className?: string;
 }
 
-const Breadcrumb: FC<BreadcrumbProps> = ({ active, items }) => {
+const Breadcrumb: FC<BreadcrumbProps> = ({ active, items, className }) => {
   return (
-    <BootstrapBreadcrumb className={style.breadCrumbWrapper}>
+    <BootstrapBreadcrumb className={[style.breadCrumbWrapper, className].join(' ')}>
       {items.map(({ label, link }, index) => [
         <BootstrapBreadcrumb.Item linkAs={Link} linkProps={{ to: link }} key={`${index}-item`}>
           {label}
