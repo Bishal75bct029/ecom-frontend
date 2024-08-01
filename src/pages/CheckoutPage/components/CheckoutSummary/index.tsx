@@ -5,6 +5,7 @@ import { useAppSelector } from '@/store/hooks';
 import { PaypalIcon } from '@/assets/icons';
 import style from './style.module.scss';
 import { useGetAllPaymentMethodsQuery, usePostOrderMutation } from '@/store/features/order';
+import config from '@/config';
 
 const CheckoutSummary = () => {
   const selectedCartProducts = useAppSelector((state) => state.cart.selectedCartProducts);
@@ -43,19 +44,19 @@ const CheckoutSummary = () => {
         <Typography className="d-flex justify-content-between">
           <span>Subtotal (item{selectedCartProducts.length > 1 ? 's' : ''})</span>
           <Typography fontsStyle="base-bold" color="primary-purple">
-            Rs. {productsTotalPrice}
+            {config.ecomCurrency} {productsTotalPrice.toLocaleString()}
           </Typography>
         </Typography>
         {/* <Typography className="d-flex justify-content-between">
           <span>Shipping Fee</span>
           <Typography fontsStyle="base-bold" color="primary-purple">
-            Rs. 50
+            {config.ecomCurrency} 50
           </Typography>
         </Typography>
         <Typography className="d-flex justify-content-between">
           <span>Total Fee</span>
           <Typography fontsStyle="base-bold" color="primary-purple">
-            Rs. 5050
+            {config.ecomCurrency} 5050
           </Typography>
         </Typography> */}
       </div>

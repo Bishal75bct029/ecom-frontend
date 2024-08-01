@@ -4,6 +4,7 @@ import { OrderType } from '@/store/features/order/types';
 import { formatDate } from '@/utils/date';
 import style from './style.module.scss';
 import { Stack } from 'react-bootstrap';
+import config from '@/config';
 
 const OrderHistoryCard: FC<{ orders: OrderType[] }> = ({ orders }) => {
   return (
@@ -66,7 +67,7 @@ const OrderHistoryCard: FC<{ orders: OrderType[] }> = ({ orders }) => {
                     <Stack direction="horizontal" className={style.quantityPriceWrapper}>
                       <Typography className="whitespace-nowrap">Qty: {orderItem.quantity}</Typography>
                       <Typography fontsStyle="base-bold" color="primary-purple" className="whitespace-nowrap">
-                        Rs {orderItem.pricePerUnit}
+                        {config.ecomCurrency} {orderItem.pricePerUnit.toLocaleString()}
                       </Typography>
                     </Stack>
                   </Stack>
@@ -79,7 +80,7 @@ const OrderHistoryCard: FC<{ orders: OrderType[] }> = ({ orders }) => {
                   Total ({order.orderItems.length} item{order.orderItems.length > 1 ? 's' : ''})
                 </Typography>
                 <Typography fontsStyle="base-bold" color="primary-purple">
-                  Rs. {order.totalPrice / 100}
+                  {config.ecomCurrency} {(order.totalPrice / 100).toLocaleString()}
                 </Typography>
               </Typography>
             </div>

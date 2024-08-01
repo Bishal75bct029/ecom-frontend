@@ -4,6 +4,7 @@ import { Button, Typography } from '@/components/atoms';
 import { useAppSelector } from '@/store/hooks';
 import { useGetCartItemsQuery } from '@/store/features/cart';
 import { Spinner } from 'react-bootstrap';
+import config from '@/config';
 
 const CartSummary = () => {
   const navigate = useNavigate();
@@ -39,7 +40,7 @@ const CartSummary = () => {
               Subtotal ({selectedCartProducts.length} item{selectedCartProducts.length > 1 ? 's' : ''})
             </span>
             <Typography fontsStyle="base-bold" color="primary-purple">
-              Rs. {totalPrice / 100}
+              {config.ecomCurrency} {(totalPrice / 100).toLocaleString()}
             </Typography>
           </Typography>
         </div>

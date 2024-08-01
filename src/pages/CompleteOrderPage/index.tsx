@@ -9,6 +9,7 @@ import { useLazyConfirmOrderPaymentQuery } from '@/store/features/order';
 import { toastSuccess } from '@/utils';
 import { DiscountedPriceView } from '@/components/organisms';
 import { OrderType } from '@/store/features/order/types';
+import config from '@/config';
 
 const CompleteOrderPage = () => {
   const navigate = useNavigate();
@@ -116,7 +117,7 @@ const CompleteOrderPage = () => {
         <Typography className="d-flex align-items-center justify-content-between">
           <span>Subtotal (item{orderDetails?.orderItems.length > 1 ? 's' : ''})</span>
           <Typography fontsStyle="large-bold" color="primary-purple">
-            Rs. {orderDetails?.totalPrice / 100}
+            {config.ecomCurrency} {orderDetails?.totalPrice / 100}
           </Typography>
         </Typography>
       </Card>
