@@ -7,7 +7,7 @@ import { OrderHistoryCard } from './components';
 import style from './style.module.scss';
 import { RemoveCircleIcon } from '@/assets/icons';
 
-export const OrderStatus = () => {
+const OrderStatus = () => {
   const navigate = useNavigate();
   const [status, setStatus] = useState('all');
   const { data: orders, isLoading, isFetching } = useGetOrderListQuery({ status });
@@ -58,3 +58,5 @@ export const OrderStatus = () => {
     </div>
   );
 };
+
+export default OrderStatus;

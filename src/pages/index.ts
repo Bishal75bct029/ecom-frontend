@@ -4,6 +4,6 @@ import CartPage from './CartPage';
 import CheckoutPage from './CheckoutPage';
 import CompleteOrderPage from './CompleteOrderPage';
 import SearchPage from './SearchPage';
-import { OrderStatus } from './UserPages/OrderStatusPage';
+import { OrderStatusPage } from './UserPages';
 
-export { Homepage, ProductPage, CartPage, CheckoutPage, CompleteOrderPage, SearchPage, OrderStatus };
+export { Homepage, ProductPage, CartPage, CheckoutPage, CompleteOrderPage, SearchPage, OrderStatusPage };

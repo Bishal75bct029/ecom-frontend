@@ -25,8 +25,8 @@ const privateRoutes: Omit<RouteObject, 'element' | 'index'>[] = [
   {
     path: 'orders',
     lazy: async () => {
-      const { OrderStatus } = await import('@/pages');
-      return { Component: OrderStatus };
+      const { OrderStatusPage } = await import('@/pages');
+      return { Component: OrderStatusPage };
     },
   },
 ];

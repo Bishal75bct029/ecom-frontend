@@ -47,15 +47,7 @@ const OrderHistoryCard: FC<{ orders: OrderType[] }> = ({ orders }) => {
                       <img src={orderItem.productMeta.image[0]} alt="" height={70} width={70} />
                       <div>
                         <Typography fontsStyle="base-bold" className="text-ellipsis-lh-2">
-                          {orderItem.productMeta.product?.name} Lorem ipsum, dolor sit amet consectetur adipisicing
-                          elit. Nemo minus dicta totam earum. Nam doloremque earum a temporibus consectetur distinctio
-                          eveniet atque id velit commodi quisquam odio eius aperiam, similique veritatis mollitia
-                          laboriosam dolores repellendus maiores quidem cumque deleniti! Voluptatum qui quasi minima
-                          pariatur vitae consequuntur saepe in! Omnis expedita eaque eos numquam neque nihil laborum.
-                          Molestiae totam aliquid optio vel cum atque voluptatibus, nam repudiandae perspiciatis ipsam
-                          itaque commodi aspernatur cumque labore unde quisquam consequuntur deleniti quaerat aut
-                          veritatis, amet omnis harum. Numquam velit accusamus error, facere asperiores iusto excepturi
-                          dignissimos, delectus blanditiis nihil, veniam vero? Iste, dolorem illum!
+                          {orderItem.productMeta.product?.name}
                         </Typography>
                         <div className="d-flex flex-column gap-2 mt-2">
                           {Object.entries(orderItem.productMeta.variant).map(([key, val], i) => (
@@ -81,12 +73,9 @@ const OrderHistoryCard: FC<{ orders: OrderType[] }> = ({ orders }) => {
                 );
               })}
             </Stack>
-            <Typography className={style.orderSummary} fontsStyle="base-semi-bold">
-              Order Summary
-            </Typography>
             <div>
-              <Typography className="d-flex justify-content-between">
-                <Typography>
+              <Typography className={['d-flex justify-content-between', style.orderSummary].join(' ')}>
+                <Typography fontsStyle="base-semi-bold">
                   Total ({order.orderItems.length} item{order.orderItems.length > 1 ? 's' : ''})
                 </Typography>
                 <Typography fontsStyle="base-bold" color="primary-purple">
