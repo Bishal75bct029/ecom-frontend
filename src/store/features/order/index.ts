@@ -35,7 +35,7 @@ export const orderApi = baseApi
         }),
         invalidatesTags: ['cart-items', 'user-detail'],
       }),
-      confirmOrderPayment: builder.query<{ orderId: string }, { token: string }>({
+      confirmOrderPayment: builder.query<OrderType, { token: string }>({
         query: (params) => ({
           url: `api/orders/confirm`,
           method: 'GET',
