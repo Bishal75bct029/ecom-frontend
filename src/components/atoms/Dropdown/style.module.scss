@@ -91,30 +91,8 @@
   }
 }
 
-.logout {
-  margin-top: 10px;
-  color: #505962;
-  border-top: 1px solid #ebebeb;
-  .icons {
-    svg {
-      height: 30px;
-      path {
-        fill: partials.theme(silver-700) !important;
-      }
-    }
-  }
-
-  &:hover {
-    svg {
-      path {
-        fill: partials.theme(secondary-red-default) !important;
-      }
-    }
-  }
-}
-
 .innerIcon svg {
-  background-color: partials.theme(silver-500);
+  background-color: partials.theme(silver-300);
   padding: 5px;
   margin-right: 10px;
   path {

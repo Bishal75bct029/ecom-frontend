@@ -5,6 +5,8 @@ import { ProfileIcon, LogoutIcon, OrderIcon, UserIcon } from '@/assets/icons';
 import { Typography } from '@/components/atoms';
 import { DropDown } from '@/components/atoms/Dropdown';
 
+import style from './style.module.scss';
+
 const UserDropDown = () => {
   const { data: userDetail } = useGetUserDetailQuery();
   const { logoutHandler } = useAuth();
@@ -20,7 +22,7 @@ const UserDropDown = () => {
             {
               value: 'Log Out',
               onClick: logoutHandler,
-              className: 'logout',
+              className: style.logout,
               icon: <LogoutIcon />,
               variant: 'red',
             },
@@ -31,6 +33,7 @@ const UserDropDown = () => {
             username: userDetail.name,
             fallBackImage: <ProfileIcon />,
           }}
+          align="end"
         />
       )}
 

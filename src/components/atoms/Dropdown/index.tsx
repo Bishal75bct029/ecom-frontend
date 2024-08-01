@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { Dropdown } from 'react-bootstrap';
+import { Dropdown, DropdownProps as BSDropdownProps } from 'react-bootstrap';
 import style from './style.module.scss';
 
 type DropdownItemVariant = 'red' | 'purple';
@@ -9,7 +9,7 @@ const varaints: Record<DropdownItemVariant, string> = {
   red: style['items--red'],
 };
 
-interface DropdownProps {
+interface DropdownProps extends Omit<BSDropdownProps, 'children'> {
   title?: string;
   profile?: { image: string; username: string; email: string; fallBackImage?: ReactNode };
   items: {
@@ -23,53 +23,43 @@ interface DropdownProps {
   id?: string;
 }
 
-export const DropDown: React.FC<DropdownProps> = (props: DropdownProps) => {
+export const DropDown: React.FC<DropdownProps> = ({ title, profile, items, className, id, ...rest }) => {
   return (
-    <Dropdown className={style.dropdown}>
-      <Dropdown.Toggle id={props?.id || ''} className={[props.className, style.user_profile].join(' ')}>
-        {props.profile ? (
+    <Dropdown className={style.dropdown} {...rest}>
+      <Dropdown.Toggle id={id || ''} className={[className, style.user_profile].join(' ')}>
+        {profile ? (
           <div
-            className={[
-              !props.profile?.image && props.profile.fallBackImage ? style.fallbackIcon : '',
-              'w-100',
-              'h-100',
-            ].join(' ')}
+            className={[!profile?.image && profile.fallBackImage ? style.fallbackIcon : '', 'w-100', 'h-100'].join(' ')}
           >
-            {props.profile?.image && (
-              <img src={props.profile?.image} className={style.profileImage} width={50} height={50} />
-            )}
-            {!props.profile?.image && props.profile.fallBackImage}
+            {profile?.image && <img src={profile?.image} className={style.profileImage} width={50} height={50} />}
+            {!profile?.image && profile.fallBackImage}
           </div>
         ) : (
-          <>{props.title}</>
+          <>{title}</>
         )}
       </Dropdown.Toggle>
       <Dropdown.Menu className={[style.menu, 'pb-0'].join(' ')}>
-        {props.profile && (
+        {profile && (
           <div className={style.profile}>
             <div
               style={{ width: 80 }}
-              className={[
-                !props.profile?.image && props.profile.fallBackImage ? style.innerIcon : '',
-                'w-100',
-                'h-100',
-              ].join(' ')}
+              className={[!profile?.image && profile.fallBackImage ? style.innerIcon : '', 'w-100', 'h-100'].join(' ')}
             >
-              {props.profile?.image && <img src={props.profile?.image} className={style.image} />}
-              {!props.profile?.image && props.profile.fallBackImage && props.profile.fallBackImage}
+              {profile?.image && <img src={profile?.image} className={style.image} />}
+              {!profile?.image && profile.fallBackImage && profile.fallBackImage}
             </div>
             <div>
-              <Dropdown.Item className={style.profileTitle}>{props.profile.username}</Dropdown.Item>
-              <Dropdown.Item className={style.profileInfo}>{props.profile.email}</Dropdown.Item>
+              <Dropdown.Item className={style.profileTitle}>{profile.username}</Dropdown.Item>
+              <Dropdown.Item className={style.profileInfo}>{profile.email}</Dropdown.Item>
             </div>
           </div>
         )}
-        {props.items.map(({ variant = 'purple', ...item }, index) => {
+        {items.map(({ variant = 'purple', ...item }, index) => {
           return (
             <Dropdown.Item
               onClick={item.onClick}
               key={index}
-              className={[style.items, varaints[variant], style[item.className || 'className']].join(' ')}
+              className={[style.items, varaints[variant], item.className].join(' ')}
             >
               <div className={style.icons}>{item.icon}</div>
               {item.value}

@@ -1,9 +1,14 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Spinner, Stack } from 'react-bootstrap';
 import { ImageCarousel, LoginForm, DiscountedPriceView, SearchCard } from '@/components/organisms';
 import { Button, CheckBox, Modal, Typography } from '@/components/atoms';
-import { useGetProductByCategoryQuery, useGetProductByIdQuery } from '@/store/features/product';
+import {
+  useGetProductByCategoryQuery,
+  useGetProductByIdQuery,
+  useLazyGetProductByMetaIdQuery,
+} from '@/store/features/product';
 import { useAuth, useProductVariantSelection } from '@/hooks';
 import { usePostLoginMutation } from '@/store/features/auth';
 import { useAppDispatch } from '@/store/hooks';
@@ -30,8 +35,9 @@ const ProductView = () => {
     },
     { skip: !productData },
   );
-  const [postLogin] = usePostLoginMutation();
+  const [postLogin, { isLoading: postLoginLoading }] = usePostLoginMutation();
   const [addProductToCart, { isLoading: addToCartLoading }] = useAddProductToCartMutation();
+  const [getProductByMetaId, { isLoading: getProductByMetaIdLoading }] = useLazyGetProductByMetaIdQuery();
 
   const { loginHandler } = useAuth();
   const {
@@ -86,13 +92,17 @@ const ProductView = () => {
               .unwrap()
               .then(() => setShowModal('addToCart'));
           } else {
-            dispatch(
-              setCartState({
-                selectedCartProducts: [{ ...productData, productMeta: currentMeta }],
-                selectedProductQuantities: { [currentMeta.id]: quantity },
-              }),
-            );
-            navigate('/checkout');
+            getProductByMetaId({ productMetaId: currentMeta.id })
+              .unwrap()
+              .then((res) => {
+                dispatch(
+                  setCartState({
+                    selectedCartProducts: [{ ...res, productMeta: res.productMeta[0] }],
+                    selectedProductQuantities: { [currentMeta.id]: quantity },
+                  }),
+                );
+                navigate('/checkout');
+              });
           }
         });
     },
@@ -193,7 +203,12 @@ const ProductView = () => {
       </Stack>
       {showModal.includes('login') && (
         <Modal onHide={() => setShowModal('')} show={showModal.includes('login')} fillBody>
-          <LoginForm onSubmit={handleLogin} wrapperClass="px-3 py-4" title="Welcome! Please login to continue." />
+          <LoginForm
+            onSubmit={handleLogin}
+            wrapperClass="px-3 py-4"
+            title="Welcome! Please login to continue."
+            isLoading={postLoginLoading || addToCartLoading || getProductByMetaIdLoading}
+          />
         </Modal>
       )}
       {showModal === 'addToCart' && (

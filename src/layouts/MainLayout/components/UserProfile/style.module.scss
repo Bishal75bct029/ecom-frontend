@@ -1,0 +1,21 @@
+@use 'assets/styles/main' as partials;
+
+.logout {
+  padding-left: 20px;
+  border-top: 1px solid #ebebeb;
+  gap: 2px;
+  .icons {
+    svg {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  &:hover {
+    svg {
+      path {
+        fill: partials.theme(secondary-red-default) !important;
+      }
+    }
+  }
+}
