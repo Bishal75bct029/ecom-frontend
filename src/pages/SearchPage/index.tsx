@@ -36,12 +36,17 @@ const SearchPageView = () => {
     limit: 8,
   });
 
-  const { data, isLoading, isFetching } = useGetProductsQuery({
-    ...paginationQuery,
-    search: searchParams.get('q') || undefined,
-    sortBy: searchParams.get('sBy') || undefined,
-    categoryId: searchParams.get('cId') || undefined,
-  });
+  const memoizedQuery = useMemo(
+    () => ({
+      ...paginationQuery,
+      search: searchParams.get('q') || undefined,
+      sortBy: searchParams.get('sBy') || undefined,
+      categoryId: searchParams.get('cId') || undefined,
+    }),
+    [searchParams, paginationQuery],
+  );
+
+  const { data, isLoading, isFetching } = useGetProductsQuery(memoizedQuery);
 
   const loading = useMemo(() => isLoading || isFetching, [isLoading, isFetching]);
 

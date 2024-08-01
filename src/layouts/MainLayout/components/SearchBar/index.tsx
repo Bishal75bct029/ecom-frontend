@@ -22,6 +22,7 @@ const SearchBar = () => {
   const [getProducts, { isLoading, isFetching }] = useLazyGetProductsQuery();
 
   const handleChange = debounce((e: React.ChangeEvent<HTMLInputElement>) => {
+    if (pathname.includes('search')) return;
     setValue(e.target.value);
     if (e.target.value.trim().length < 2) return;
     getProducts({ search: e.target.value, page: 1, limit: 3 })
