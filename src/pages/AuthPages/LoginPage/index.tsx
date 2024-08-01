@@ -1,4 +1,4 @@
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { LoginForm } from '@/components/organisms';
 import { usePostLoginMutation } from '@/store/features/auth';
 import { LoginPayload } from '@/store/features/auth/types';
@@ -25,7 +25,7 @@ const LoginPage = () => {
 
   return (
     <>
-      <div style={{ marginLeft: '470px' }}>
+      <div className={style.breadcrumbContainer}>
         <Breadcrumb active="Login" items={[{ label: 'Home', link: '/' }]} />
       </div>
       <div className={style.loginContainer}>
@@ -33,8 +33,6 @@ const LoginPage = () => {
       </div>
     </>
   );
-
-  return <Navigate to="/" />;
 };
 
 export default LoginPage;

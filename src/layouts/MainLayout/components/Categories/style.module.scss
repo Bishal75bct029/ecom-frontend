@@ -32,7 +32,7 @@
     }
 
     .activeCategoryText {
-      color: #985dec;
+      color: partials.theme(primary-purple-default);
       border-radius: 2px;
     }
 
@@ -41,7 +41,7 @@
     }
 
     .arrowRight {
-      border: solid #985dec;
+      border: solid partials.theme(primary-purple-default);
       margin-left: 4px;
       border-width: 0 3px 3px 0;
       display: inline-block;
@@ -52,7 +52,7 @@
     }
   }
   .activeNestedCategoryText {
-    color: #985dec;
+    color: partials.theme(primary-purple-default);
     border-radius: 2px;
   }
 

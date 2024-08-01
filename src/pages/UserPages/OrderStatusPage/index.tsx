@@ -13,14 +13,22 @@ export const OrderStatus = () => {
 
   return (
     <div>
-      <Typography className={style.header}>My Orders</Typography>
+      <Typography fontsStyle="large-bold">My Orders</Typography>
       <div className={style.filters}>
-        <p className={`${style.filterItem} ${status == 'all' && style.selected}`} onClick={() => setStatus('all')}>
+        <Typography
+          fontsStyle="base-semi-bold"
+          className={`${style.filterItem} ${status == 'all' && style.selected}`}
+          onClick={() => setStatus('all')}
+        >
           All
-        </p>
-        <p className={`${style.filterItem} ${status !== 'all' && style.selected}`} onClick={() => setStatus('pending')}>
+        </Typography>
+        <Typography
+          fontsStyle="base-semi-bold"
+          className={`${style.filterItem} ${status !== 'all' && style.selected}`}
+          onClick={() => setStatus('pending')}
+        >
           Pending
-        </p>
+        </Typography>
       </div>
 
       {loading && (

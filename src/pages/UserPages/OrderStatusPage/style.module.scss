@@ -1,18 +1,14 @@
-.header {
-  font-size: 20px;
-  font-weight: bold;
-}
+@use 'assets/styles/main' as partials;
 
 .filters {
   display: flex;
   gap: 20px;
   font-size: 16px;
-  margin: 10px 0 0 0;
+  margin: 10px 0;
 }
 
 .filterItem {
   cursor: pointer;
-  font-weight: 500;
 }
 
 .emptyOrder {
@@ -22,8 +18,8 @@
 }
 
 .selected {
-  color: #985dec;
-  border-bottom: 3px solid #985dec;
+  color: partials.theme(primary-purple-default);
+  border-bottom: 3px solid partials.theme(primary-purple-default);
 }
 .spinner {
   display: flex;

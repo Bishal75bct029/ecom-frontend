@@ -1,6 +1,5 @@
 export const formatDate = (date: Date, includeTime: boolean = false, dayOffset: number = 0) => {
   const localdate = new Date(date);
-  console.log(localdate);
   localdate.setDate(localdate.getDate() + dayOffset);
 
   if (!includeTime) {
