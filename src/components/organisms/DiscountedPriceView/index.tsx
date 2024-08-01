@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { Typography } from '@/components/atoms';
+import config from '@/config';
 
 interface DiscountedPriceViewProps {
   discountPrice: number;
@@ -11,15 +12,15 @@ const DiscountedPriceView: FC<DiscountedPriceViewProps> = ({ discountPrice, pric
   if (!discountPrice || discountPrice === price)
     return (
       <Typography fontsStyle="large-bold" color="primary-purple" className={className}>
-        Rs. {price}
+        {config.ecomCurrency} {price.toLocaleString()}
       </Typography>
     );
 
   return (
     <Typography fontsStyle="large-bold" color="primary-purple" className={className}>
-      Rs. {discountPrice}
+      {config.ecomCurrency} {discountPrice.toLocaleString()}
       <Typography component="span" fontsStyle="caption-normal" className="text-line-through ms-1" color="silver-500">
-        Rs. {price}
+        {config.ecomCurrency} {price.toLocaleString()}
       </Typography>
     </Typography>
   );

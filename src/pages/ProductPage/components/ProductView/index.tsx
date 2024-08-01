@@ -229,7 +229,7 @@ const ProductView = () => {
             <div className={style.similarProductsContainer}>
               {similarProducts
                 ?.slice(0, 3)
-                .map(({ id, ...item }) => <SearchCard key={id} to={`/${id}`} id={id} {...item} />)}
+                .map(({ id, ...item }) => <SearchCard key={id} to={`/product/${id}`} id={id} {...item} />)}
             </div>
           </div>
         </Modal>
