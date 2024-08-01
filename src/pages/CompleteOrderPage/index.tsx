@@ -5,7 +5,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import style from './style.module.scss';
 import { Button, Typography } from '@/components/atoms';
 import { TickLargeIcon } from '@/assets/icons';
-import { useLazyConfirmOrderPaymentQuery, useLazyGetOrderByIdQuery } from '@/store/features/order';
+import { useLazyConfirmOrderPaymentQuery } from '@/store/features/order';
 import { toastSuccess } from '@/utils';
 import { DiscountedPriceView } from '@/components/organisms';
 import { OrderType } from '@/store/features/order/types';
@@ -16,8 +16,7 @@ const CompleteOrderPage = () => {
 
   const [orderDetails, setOrderDetails] = useState<OrderType>();
 
-  const [getOrderDetails, { isLoading }] = useLazyGetOrderByIdQuery();
-  const [confirmOrderPayment] = useLazyConfirmOrderPaymentQuery();
+  const [confirmOrderPayment, { isLoading }] = useLazyConfirmOrderPaymentQuery();
 
   useEffect(() => {
     const token = searchParams.get('token');
@@ -26,12 +25,8 @@ const CompleteOrderPage = () => {
     } else {
       confirmOrderPayment({ token })
         .unwrap()
-        .then(({ orderId }) => {
-          getOrderDetails({ id: orderId })
-            .unwrap()
-            .then((data) => {
-              setOrderDetails(data);
-            });
+        .then((data) => {
+          setOrderDetails(data);
           setSearchParams({});
           toastSuccess('Payment Successful. Thank you!');
         });

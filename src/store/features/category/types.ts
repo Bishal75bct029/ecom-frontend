@@ -3,5 +3,6 @@ export interface Category {
   name: string;
   image: string;
   parent?: Category | null;
+  parentId?: string | null;
   children?: Category[] | null;
 }
