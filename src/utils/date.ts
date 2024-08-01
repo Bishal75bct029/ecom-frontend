@@ -1,15 +1,14 @@
 export const formatDate = (date: Date, includeTime: boolean = false, dayOffset: number = 0) => {
-  const localdate = new Date(date);
-  localdate.setDate(localdate.getDate() + dayOffset);
+  date.setDate(date.getDate() + dayOffset);
 
   if (!includeTime) {
-    let hour: number | string = localdate.getHours();
+    let hour: number | string = date.getHours();
     hour = hour < 10 ? '0' + hour : String(hour);
-    let minutes: number | string = localdate.getMinutes();
+    let minutes: number | string = date.getMinutes();
     minutes = minutes < 10 ? '0' + minutes : String(minutes);
 
     return date.toString().split(`${hour}:${minutes}`)[0];
   }
 
-  return localdate.toString().split('GMT')[0];
+  return date.toString().split('GMT')[0];
 };
