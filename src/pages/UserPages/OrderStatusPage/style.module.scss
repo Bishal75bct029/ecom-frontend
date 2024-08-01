@@ -1,0 +1,29 @@
+@use 'assets/styles/main' as partials;
+
+.filters {
+  display: flex;
+  gap: 20px;
+  font-size: 16px;
+  margin: 10px 0;
+}
+
+.filterItem {
+  cursor: pointer;
+}
+
+.emptyOrder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.selected {
+  color: partials.theme(primary-purple-default);
+  border-bottom: 3px solid partials.theme(primary-purple-default);
+}
+.spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}

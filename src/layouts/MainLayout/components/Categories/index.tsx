@@ -6,7 +6,7 @@ import { useGetCategoryQuery } from '@/store/features/category';
 import { ActiveCategories, AllCategories } from './types';
 
 const Categories = () => {
-  const { data: categories, isLoading, error } = useGetCategoryQuery();
+  const { data: categories, isLoading } = useGetCategoryQuery();
 
   const [allCategories, setAllCategories] = useState<AllCategories | null>({
     subCategory: [],
@@ -20,7 +20,6 @@ const Categories = () => {
   });
 
   if (isLoading) return <Spinner />;
-  if (error) return <>{error}</>;
 
   return (
     <div
@@ -36,6 +35,7 @@ const Categories = () => {
             <div
               key={index}
               className={style.topCategory}
+              key={index}
               onMouseEnter={() => {
                 setAllCategories({ ...categories, subCategory: category['children'] ?? null, nestedSubCategory: null });
                 setCategoryStatus({ ...categoryStatus, activeCategory: index, activeSubCategory: null });
@@ -60,6 +60,7 @@ const Categories = () => {
               <div
                 key={index}
                 className={style.subCategory}
+                key={index}
                 onMouseEnter={() => {
                   setAllCategories({ ...allCategories, nestedSubCategory: category['children'] || null });
                   setCategoryStatus({ ...categoryStatus, activeSubCategory: index });

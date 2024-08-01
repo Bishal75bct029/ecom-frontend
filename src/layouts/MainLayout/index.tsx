@@ -19,6 +19,7 @@ const MainLayout: FC<MainLayoutProps> = ({ children, privateRoutes }) => {
     return <Navigate to="/" />;
   }
 
+  if (token && pathname.includes('login')) return <Navigate to="/" />;
   return (
     <div className="d-flex flex-column justify-content-between" style={{ minHeight: '100vh' }}>
       <div className="h-100">

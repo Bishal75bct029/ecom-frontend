@@ -25,7 +25,7 @@ const LoginPage = () => {
 
   return (
     <>
-      <div style={{ marginLeft: '470px' }}>
+      <div className={style.breadcrumbContainer}>
         <Breadcrumb active="Login" items={[{ label: 'Home', link: '/' }]} />
       </div>
       <div className={style.loginContainer}>

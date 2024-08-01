@@ -12,10 +12,11 @@ export const orderApi = baseApi
         }),
         providesTags: ['payment-methods'],
       }),
-      getOrderList: builder.query<OrderType[], void>({
-        query: () => ({
+      getOrderList: builder.query<OrderType[], { status: string }>({
+        query: (params) => ({
           url: `api/orders`,
           method: 'GET',
+          params,
         }),
         providesTags: ['orders'],
       }),
@@ -51,4 +52,5 @@ export const {
   useLazyConfirmOrderPaymentQuery,
   useGetOrderByIdQuery,
   useLazyGetOrderByIdQuery,
+  useGetOrderListQuery,
 } = orderApi;

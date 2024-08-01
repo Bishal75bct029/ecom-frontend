@@ -23,7 +23,7 @@ const LoginFormView: FC<LoginFormProps> = ({ title, wrapperClass, onSubmit, isLo
 
   return (
     <div className={wrapperClass}>
-      <Typography fontsStyle="large-semi-bold" className="mb-3" color="primary-purple">
+      <Typography fontsStyle="large-bold" className="mb-3" color="primary-purple">
         {title || 'Welcome to Ecom! Please Login.'}
       </Typography>
       <HookForm onSubmit={handleSubmit(onSubmit)}>
@@ -48,8 +48,16 @@ const LoginFormView: FC<LoginFormProps> = ({ title, wrapperClass, onSubmit, isLo
             autoComplete="new-password"
             required
           />
-          <Button variant="primary" type="submit" className="px-5" disabled={isButtonDisabled} loading={isLoading}>
-            Log In
+          <Button
+            variant="primary"
+            type="submit"
+            className="px-5"
+            disabled={isButtonDisabled}
+            loading={isLoading}
+            size="large"
+            style={{ width: '100%', margin: '10px 0 0 0' }}
+          >
+            <Typography fontsStyle="base-bold">Login</Typography>
           </Button>
         </Stack>
       </HookForm>

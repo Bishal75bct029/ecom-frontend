@@ -11,15 +11,14 @@ export interface PostOrderPayload {
 
 export interface OrderType {
   id: string;
-  deletedAt: null;
-  createdAt: Date;
-  updatedAt: Date;
   totalPrice: number;
   status: string;
-  orderItems: OrderItem[];
+  createdAt: string;
+  updatedAt: string;
+  orderItems: OrderItemType[];
 }
 
-export interface OrderItem {
+export interface OrderItemType {
   id: string;
   quantity: string;
   pricePerUnit: number;

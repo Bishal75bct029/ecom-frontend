@@ -14,9 +14,7 @@ interface SearchCardProps extends ProductType {
 
 const SearchCard: FC<SearchCardProps> = ({ to, name, productMeta }) => {
   const navigate = useNavigate();
-
   const defaultMeta = productMeta?.[0];
-
   if (!defaultMeta) return null;
 
   return (
@@ -35,7 +33,7 @@ const SearchCard: FC<SearchCardProps> = ({ to, name, productMeta }) => {
           </Typography>
         </div> */}
         <div className="d-flex flex-column gap-2 my-2">
-          {Object.entries(defaultMeta.variant).map(([key, val], i) => (
+          {Object.entries(defaultMeta?.variant).map(([key, val], i) => (
             <Stack key={i} direction="horizontal">
               <Typography fontsStyle="small-regular" className="me-3">
                 {key}:{' '}

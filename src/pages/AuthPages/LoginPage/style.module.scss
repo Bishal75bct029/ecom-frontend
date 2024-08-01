@@ -1,15 +1,18 @@
 .loginContainer {
   display: flex;
   align-items: center;
+  flex-direction: column;
   justify-content: center;
-  height: 80%;
 
   .loginWrapper {
-    width: 500px;
-    margin-inline: auto;
+    width: 600px;
     padding: 24px 16px;
     border-radius: 4px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     background: #fff;
   }
+}
+
+.breadcrumbContainer {
+  margin-left: 420px;
 }
