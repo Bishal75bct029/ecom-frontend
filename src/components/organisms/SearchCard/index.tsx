@@ -10,15 +10,22 @@ import PriceView from '../DiscountedPriceView';
 
 interface SearchCardProps extends ProductType {
   to: string;
+  onCardClick?: () => void;
 }
 
-const SearchCard: FC<SearchCardProps> = ({ to, name, productMeta }) => {
+const SearchCard: FC<SearchCardProps> = ({ to, onCardClick, name, productMeta }) => {
   const navigate = useNavigate();
   const defaultMeta = productMeta?.[0];
   if (!defaultMeta) return null;
 
   return (
-    <Card onClick={() => navigate(to)} className={style.searchCard}>
+    <Card
+      onClick={() => {
+        navigate(to);
+        onCardClick?.();
+      }}
+      className={style.searchCard}
+    >
       <div className={style.imgContainer}>
         <img src={defaultMeta?.image[0]} alt="laptop" />
       </div>

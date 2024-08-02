@@ -117,7 +117,7 @@ const CompleteOrderPage = () => {
         <Typography className="d-flex align-items-center justify-content-between">
           <span>Subtotal (item{orderDetails?.orderItems.length > 1 ? 's' : ''})</span>
           <Typography fontsStyle="large-bold" color="primary-purple">
-            {config.ecomCurrency} {orderDetails?.totalPrice / 100}
+            {config.ecomCurrency} {(orderDetails?.totalPrice / 100).toLocaleString()}
           </Typography>
         </Typography>
       </Card>
