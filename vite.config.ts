@@ -24,10 +24,28 @@ export default defineConfig({
   server: {
     port: 4200,
   },
-  assetsInclude: ['**/*.ttf'],
+
+  assetsInclude: ['**/*.ttf', '**/*.svg', '**/*.jpg', '**/*.png', '**/*.webp', '**/*.jpeg'],
   css: {
     preprocessorOptions: {
       scss: { implementation: sass },
+    },
+  },
+  build: {
+    outDir: 'dist',
+    sourcemap: true,
+    cssMinify: true,
+    cssCodeSplit: true,
+    assetsDir: 'assets',
+    minify: 'esbuild',
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('src/components/atoms')) {
+            return 'components';
+          }
+        },
+      },
     },
   },
   envPrefix: 'ECOM_',

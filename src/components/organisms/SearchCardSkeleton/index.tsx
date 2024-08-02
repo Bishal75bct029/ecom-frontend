@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { Stack } from 'react-bootstrap';
 import { Skeleton } from '@/components/atoms';
+import style from './style.module.scss';
 
 const SearchCardSkeleton: FC<{ count: number }> = ({ count }) => {
   return (
@@ -8,7 +9,7 @@ const SearchCardSkeleton: FC<{ count: number }> = ({ count }) => {
       {[...Array(count)].map((_, i) => (
         <Stack key={i}>
           <Skeleton width={275} height={206} baseColor="#fff" />
-          <Stack className="mt-1" style={{ paddingInline: '10px' }}>
+          <Stack className={style.searchCardStack}>
             <Skeleton height={20} />
             <Skeleton height={20} />
             <div className="d-flex gap-2 my-2">
