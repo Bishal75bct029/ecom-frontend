@@ -17,126 +17,123 @@
       border: none;
     }
   }
-}
 
-.user_profile {
-  height: 40px;
-  width: 40px;
-  border-radius: 50%;
-  overflow: hidden;
-  padding: 0;
-
-  &:hover {
-    background-color: white;
-  }
-}
-.fallbackIcon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: partials.theme(white);
-
-  svg {
-    path {
-      fill: partials.theme(primary-purple-default) !important;
-    }
-  }
-
-  .profileImage {
+  .dropdownToggle {
+    height: 40px;
+    width: 40px;
     border-radius: 50%;
-  }
-}
+    overflow: hidden;
+    padding: 0;
 
-.items {
-  display: flex;
-  gap: 4px;
-
-  &--purple {
     &:hover {
-      background-color: partials.theme(primary-purple-light);
-      color: partials.theme(primary-purple-default);
+      background-color: white;
+    }
+
+    .fallbackIcon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: partials.theme(white);
+
       svg {
         path {
           fill: partials.theme(primary-purple-default) !important;
         }
       }
     }
+
+    .profileImage {
+      border-radius: 50%;
+    }
   }
 
-  &--red {
-    &:hover {
-      background-color: partials.theme(secondary-red-light);
-      color: partials.theme(secondary-red-default);
-      svg {
-        path {
-          fill: partials.theme(secondary-red-default) !important;
+  .dropdownMenu {
+    .profile {
+      display: flex;
+      gap: 10;
+      align-items: center;
+      justify-content: center;
+      margin: 0 20px 10px 10px;
+      cursor: text;
+
+      .image {
+        border-radius: 50%;
+        margin-right: 10px;
+        height: 50px;
+        width: 50px;
+      }
+
+      .profileTitle {
+        padding: 0;
+        margin-bottom: -4px;
+        &:hover {
+          background-color: unset;
         }
+        &:active {
+          all: unset;
+        }
+      }
+
+      .profileInfo {
+        padding: 0;
+        color: #505962;
+        cursor: text;
+        background-color: white;
+      }
+
+      .innerIcon svg {
+        background-color: partials.theme(silver-300);
+        padding: 5px;
+        margin-right: 10px;
+        path {
+          fill: partials.theme(white) !important;
+        }
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
       }
     }
   }
 
-  &:active {
-    background-color: white;
-    color: #505962;
-  }
-}
+  .dropdownItems {
+    display: flex;
+    gap: 10px;
 
-.profileTitle {
-  margin-bottom: -4px;
-  &:hover {
-    background-color: unset;
-  }
-  &:active {
-    all: unset;
-  }
-}
+    svg {
+      height: 25px;
+      width: 25px;
+      path {
+        fill: partials.theme(silver-900) !important;
+      }
+    }
 
-.innerIcon svg {
-  background-color: partials.theme(silver-300);
-  padding: 5px;
-  margin-right: 10px;
-  path {
-    fill: partials.theme(white) !important;
-  }
-  height: 40px;
-  width: 40px;
-  border-radius: 50%;
-}
+    &--purple {
+      &:hover {
+        background-color: partials.theme(primary-purple-light);
+        color: partials.theme(primary-purple-default);
+        svg {
+          path {
+            fill: partials.theme(primary-purple-default) !important;
+          }
+        }
+      }
+    }
 
-.profile {
-  display: flex;
-  gap: 10;
-  align-items: center;
-  justify-content: center;
-  margin: 0 20px 10px 10px;
-  cursor: text;
+    &--red {
+      &:hover {
+        background-color: partials.theme(secondary-red-light);
+        color: partials.theme(secondary-red-default);
+        svg {
+          path {
+            fill: partials.theme(secondary-red-default) !important;
+          }
+        }
+      }
+    }
 
-  .image {
-    border-radius: 50%;
-    margin-right: 10px;
-    height: 50px;
-    width: 50px;
-  }
-
-  .profileTitle {
-    padding: 0;
-    cursor: text;
-  }
-
-  .profileInfo {
-    padding: 0;
-    color: #505962;
-    cursor: text;
-    background-color: white;
-  }
-}
-.icons {
-  margin-right: 5px;
-  svg {
-    height: 25px;
-    width: 25px;
-    path {
-      fill: partials.theme(silver-900) !important;
+    &:active {
+      background-color: white;
+      color: #505962;
     }
   }
 }

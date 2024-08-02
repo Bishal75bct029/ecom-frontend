@@ -5,8 +5,8 @@ import style from './style.module.scss';
 type DropdownItemVariant = 'red' | 'purple';
 
 const varaints: Record<DropdownItemVariant, string> = {
-  purple: style['items--purple'],
-  red: style['items--red'],
+  purple: style['dropdownItems--purple'],
+  red: style['dropdownItems--red'],
 };
 
 interface DropdownProps extends Omit<BSDropdownProps, 'children'> {
@@ -26,7 +26,7 @@ interface DropdownProps extends Omit<BSDropdownProps, 'children'> {
 export const DropDown: React.FC<DropdownProps> = ({ title, profile, items, className, id, ...rest }) => {
   return (
     <Dropdown className={style.dropdown} {...rest}>
-      <Dropdown.Toggle id={id || ''} className={[className, style.user_profile].join(' ')}>
+      <Dropdown.Toggle id={id || ''} className={[className, style.dropdownToggle].join(' ')}>
         {profile ? (
           <div
             className={[!profile?.image && profile.fallBackImage ? style.fallbackIcon : '', 'w-100', 'h-100'].join(' ')}
@@ -38,7 +38,7 @@ export const DropDown: React.FC<DropdownProps> = ({ title, profile, items, class
           <>{title}</>
         )}
       </Dropdown.Toggle>
-      <Dropdown.Menu className={[style.menu, 'pb-0'].join(' ')}>
+      <Dropdown.Menu className={[style.dropdownMenu, 'pb-0'].join(' ')}>
         {profile && (
           <div className={style.profile}>
             <div
@@ -59,7 +59,7 @@ export const DropDown: React.FC<DropdownProps> = ({ title, profile, items, class
             <Dropdown.Item
               onClick={item.onClick}
               key={index}
-              className={[style.items, varaints[variant], item.className].join(' ')}
+              className={[style.dropdownItems, varaints[variant], item.className].join(' ')}
             >
               <div className={style.icons}>{item.icon}</div>
               {item.value}
