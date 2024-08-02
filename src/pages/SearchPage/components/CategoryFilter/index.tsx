@@ -26,7 +26,7 @@ const EndLevelCategories: FC<{ data: Category[] }> = ({ data }) => {
             const params = getUrlQueryParams({
               q: searchParams.get('q') || '',
               sBy: searchParams.get('sBy') || '',
-              cId: searchParams.get('cId') === item.id ? '' : item.id,
+              cId: searchParams.get('cId') === item.id ? `${item.parentId}` : item.id,
             });
             setSearchParams(params);
           }}
@@ -80,7 +80,7 @@ const RecursiveAccordion: FC<RecursiveAccordionProps> = ({ data, level = 0, setP
               const params = getUrlQueryParams({
                 q: searchParams.get('q') || '',
                 sBy: searchParams.get('sBy') || '',
-                cId: activeKey === `${level}-${item.id}` ? '' : item.id,
+                cId: activeKey === `${level}-${item.id}` ? (level === 1 ? `${item.parentId}` : '') : item.id,
               });
               setActiveKey(activeKey === `${level}-${item.id}` ? undefined : `${level}-${item.id}`);
               setSearchParams(params);
