@@ -1,0 +1,7 @@
+.cardsContainer {
+  display: grid;
+  // grid-template-columns: repeat(auto-fit, minmax(calc(20% - 3rem), 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  column-gap: 1rem;
+  row-gap: 1.8rem;
+}

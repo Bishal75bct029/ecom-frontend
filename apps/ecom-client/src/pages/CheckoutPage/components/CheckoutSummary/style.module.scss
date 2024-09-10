@@ -1,0 +1,29 @@
+@use 'assets/styles/main' as partials;
+
+.customButton {
+  padding: 8px 20px;
+  border: 1px solid partials.theme(primary-purple-default);
+  border-radius: 24px;
+  color: partials.theme(primary-purple-default);
+  @include partials.SmallSemiBold;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+
+  svg {
+    width: 90px;
+    height: 100%;
+    color: none;
+    fill: currentColor;
+  }
+
+  &.disabled {
+    cursor: not-allowed;
+    background-color: transparent !important;
+  }
+
+  &:hover {
+    background-color: partials.theme(primary-purple-light);
+  }
+}

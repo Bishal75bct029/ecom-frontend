@@ -1,0 +1,93 @@
+@use 'assets/styles/main' as partials;
+
+.searchBarWrapper {
+  width: 900px;
+  position: relative;
+
+  .searchBarContainer {
+    position: relative;
+    max-width: 900px;
+    width: 100%;
+    border-radius: 16px;
+
+    &:focus-within {
+      box-shadow:
+        0 0 0 2px #f90,
+        0 0 0 1px rgba(255, 153, 0, 0.5) !important;
+
+      svg {
+        path {
+          fill: partials.theme(primary-purple-default);
+        }
+      }
+    }
+  }
+
+  .searchBarInput {
+    border-radius: 16px;
+    padding: 10px 16px;
+    border: none;
+  }
+
+  .searchBarOutput {
+    background-color: #fff;
+    border-radius: 4px 4px 8px 8px;
+    color: partials.theme(black);
+    border: 1px solid partials.theme(silver-300);
+    height: fit-content;
+    position: absolute;
+    top: 48px;
+    left: 0;
+    width: 100%;
+    z-index: 3;
+    overflow: hidden;
+
+    .searchItem {
+      display: flex;
+      gap: 8px;
+      padding-block: 8px;
+      border-radius: 8px;
+      padding-inline: 4px;
+      cursor: pointer;
+
+      &:hover {
+        background: partials.theme(primary-purple-light);
+      }
+
+      .imgContainer {
+        background: none;
+      }
+    }
+
+    .imgContainer {
+      width: 100px;
+      height: 80px;
+      border-radius: 4px;
+      background: #fff;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    }
+
+    .viewMoreButton {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      padding-block: 8px;
+      background: partials.theme(primary-purple-default);
+      color: #fff;
+      cursor: pointer;
+      margin-top: 8px;
+
+      &.disabled {
+        background: partials.theme(silver-100);
+        cursor: not-allowed;
+        color: partials.theme(silver-500);
+      }
+    }
+  }
+}

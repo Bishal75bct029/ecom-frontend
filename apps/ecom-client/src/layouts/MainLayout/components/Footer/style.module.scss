@@ -1,0 +1,24 @@
+@use 'assets/styles/main' as partials;
+
+.footerContainer {
+  background-color: partials.theme(primary-purple-default);
+  width: 100%;
+  color: #fff;
+
+  .footerBody {
+    padding: 24px 0 0 0;
+    width: 1000px;
+    margin: 0 auto;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .paymentMethodContainer {
+      svg {
+        height: 100%;
+        width: 120px;
+      }
+    }
+  }
+}

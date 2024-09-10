@@ -1,0 +1,13 @@
+.checkoutContainer {
+  display: flex;
+  width: 100%;
+  gap: 24px;
+  align-items: start;
+
+  & > div {
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-color: transparent;
+    padding: 16px 16px;
+  }
+}

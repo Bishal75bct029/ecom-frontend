@@ -1,0 +1,27 @@
+@use 'assets/styles/main' as partials;
+
+.searchCard {
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: box-shadow 0.4s ease;
+
+  &:hover {
+    background-color: partials.theme(gray-100);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
+
+  .imgContainer {
+    overflow: hidden;
+    border-radius: 4px 4px 0 0;
+    background-color: #fff;
+    max-width: 275px;
+    height: 206px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+}

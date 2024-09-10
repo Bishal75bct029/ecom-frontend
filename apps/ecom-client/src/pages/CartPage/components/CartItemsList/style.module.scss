@@ -1,0 +1,78 @@
+@use 'assets/styles/main' as partials;
+
+.cartItemsContainer {
+  width: 75%;
+
+  .cartItem {
+    display: flex;
+    justify-content: space-between;
+
+    .productDetailContainer {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      width: 65%;
+
+      .imageContainer {
+        overflow: hidden;
+        border-radius: 4px;
+        background-color: #fff;
+        width: 170px;
+        height: 130px;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+
+      .productName {
+        cursor: pointer;
+        &:hover {
+          color: partials.theme(primary-purple-default);
+        }
+      }
+    }
+
+    .quantityLabel {
+      white-space: nowrap;
+    }
+
+    .priceContainer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: end;
+      white-space: nowrap;
+    }
+
+    .deleteIcon {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 12px;
+      cursor: pointer;
+      svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      &:hover {
+        color: partials.theme(secondary-red-dark);
+        svg path {
+          fill: partials.theme(secondary-red-dark);
+        }
+      }
+    }
+  }
+}
+
+.confirmationModalTitle {
+  svg {
+    fill: partials.theme(secondary-red-default);
+    path {
+      fill: partials.theme(secondary-red-default);
+    }
+  }
+}

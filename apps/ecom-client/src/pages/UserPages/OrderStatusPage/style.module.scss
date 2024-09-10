@@ -1,0 +1,40 @@
+@use 'assets/styles/main' as partials;
+
+.filters {
+  display: flex;
+  gap: 20px;
+  font-size: 16px;
+  margin-block: 6px 12px;
+}
+
+.filterItem {
+  cursor: pointer;
+}
+
+.emptyOrder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  height: 300px;
+  width: 900px;
+  gap: 16px;
+  flex-direction: column;
+}
+
+.selected {
+  color: partials.theme(primary-purple-default);
+  border-bottom: 3px solid partials.theme(primary-purple-default);
+}
+.spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+}
+
+.breadcrumb {
+  & > ol {
+    margin-bottom: 4px;
+  }
+}

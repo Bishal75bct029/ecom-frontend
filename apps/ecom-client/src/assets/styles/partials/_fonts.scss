@@ -1,0 +1,73 @@
+$weight-400: 400;
+$weight-550: 550;
+$weight-700: 700;
+
+@font-face {
+  font-family: 'MST Font';
+  src: url('assets/fonts/Satoshi-Variable.ttf') format('truetype');
+}
+
+@mixin EcomFontRegularDefault($fs, $lh) {
+  font-family: 'MST Font', sans-serif !important;
+  line-height: $lh !important;
+  font-size: $fs !important;
+  font-weight: $weight-400;
+}
+
+@mixin EcomFontSemiBoldDefault($fs, $lh) {
+  font-family: 'MST Font', sans-serif !important;
+  line-height: $lh !important;
+  font-size: $fs !important;
+  font-weight: $weight-550;
+}
+
+@mixin EcomFontBoldDefault($fs, $lh) {
+  font-family: 'MST Font', sans-serif !important;
+  line-height: $lh !important;
+  font-size: $fs !important;
+  font-weight: $weight-700;
+}
+
+@mixin CaptionNormal {
+  @include EcomFontRegularDefault(12px, 16px);
+}
+
+@mixin CaptionSemiBold {
+  @include EcomFontSemiBoldDefault(12px, 16px);
+}
+
+@mixin SmallRegular {
+  @include EcomFontRegularDefault(14px, 20px);
+}
+
+@mixin SmallSemiBold {
+  @include EcomFontSemiBoldDefault(14px, 20px);
+}
+
+@mixin SmallBold {
+  @include EcomFontBoldDefault(14px, 20px);
+}
+
+@mixin BaseRegular {
+  @include EcomFontRegularDefault(16px, 24px);
+}
+
+@mixin BaseSemiBold {
+  @include EcomFontSemiBoldDefault(16px, 24px);
+}
+
+@mixin BaseBold {
+  @include EcomFontBoldDefault(16px, 24px);
+}
+
+@mixin LargeRegular {
+  @include EcomFontRegularDefault(20px, 32px);
+}
+
+@mixin LargeSemiBold {
+  @include EcomFontSemiBoldDefault(20px, 32px);
+}
+
+@mixin LargeBold {
+  @include EcomFontBoldDefault(20px, 32px);
+}

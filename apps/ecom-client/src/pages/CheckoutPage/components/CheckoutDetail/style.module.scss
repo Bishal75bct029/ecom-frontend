@@ -1,0 +1,76 @@
+@use 'assets/styles/main' as partials;
+
+.checkoutDetailContainer {
+  width: 75%;
+
+  .orderItem {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+
+    .productDetailContainer {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      width: 85%;
+
+      .imageContainer {
+        overflow: hidden;
+        border-radius: 4px;
+        background-color: #fff;
+        width: 120px;
+        height: 90px;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+
+      .nameHover {
+        cursor: pointer;
+        &:hover {
+          color: partials.theme(primary-purple-default);
+        }
+      }
+    }
+
+    .quantityLabel {
+      white-space: nowrap;
+    }
+  }
+
+  .addressContainer {
+    padding: 8px 16px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    gap: 16px;
+    background: partials.theme(primary-purple-light);
+    border-radius: 6px;
+
+    .leftAddressContainer {
+      display: flex;
+      gap: 16px;
+      width: calc(100% - 247px);
+
+      .address {
+        width: 100%;
+        overflow: hidden;
+      }
+
+      .wordNoBreak {
+        white-space: nowrap;
+      }
+    }
+
+    .rightAddressContainer {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 231px;
+    }
+  }
+}

@@ -1,0 +1,42 @@
+@use 'assets/styles/main' as partials;
+
+.inputLabel {
+  @include partials.SmallRegular;
+}
+
+.text-input-control {
+  @include partials.BaseRegular;
+  box-shadow: none !important;
+  &:disabled {
+    color: partials.theme(silver-500);
+    background: partials.theme(silver-100);
+    cursor: not-allowed;
+  }
+}
+
+.endIcon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  svg {
+    fill: partials.theme(gray-500);
+    path {
+      fill: partials.theme(gray-500);
+    }
+  }
+}
+
+.endIcon {
+  right: 16px;
+  cursor: pointer;
+}
+
+.hasEndIcon {
+  padding-right: 48px !important;
+}
+
+.labeledEndIcon {
+  transform: none;
+}
